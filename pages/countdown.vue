@@ -40,7 +40,7 @@
                     <span>00</span>
                   </span>
                 </span>
-                <!-- <span class="title">Days</span> -->
+                <span class="pt-2 text-xl text-white">Days</span>
               </div>
 
               <div class="flex items-center flex-col flex-nowrap">
@@ -54,7 +54,7 @@
                     <span>00</span>
                   </span>
                 </span>
-                <!-- <span class="title">Hours</span> -->
+                <span class="pt-2 text-xl text-white">Hours</span>
               </div>
 
               <div class="flex items-center flex-col flex-nowrap">
@@ -68,7 +68,7 @@
                     <span>00</span>
                   </span>
                 </span>
-                <!-- <span class="title">Minutes</span> -->
+                <span class="pt-2 text-xl text-white">Minutes</span>
               </div>
 
               <div class="flex items-center flex-col flex-nowrap">
@@ -82,7 +82,7 @@
                     <span>00</span>
                   </span>
                 </span>
-                <!-- <span class="">Seconds</span> -->
+                <span class="pt-2 text-xl text-white">Seconds</span>
               </div>
               <!-- </div> -->
               <!-- </div> -->
