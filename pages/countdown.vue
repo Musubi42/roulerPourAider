@@ -1,9 +1,9 @@
 <template>
   <div class="mx-4 md:mx-auto">
     <!-- Logo -->
-    <div class="h-screen flex flex-col gap-8 md:gap-14">
+    <div class="h-screen flex flex-col gap-8">
       <!-- gap-[10vh] -->
-      <div class="flex flex-1 justify-center items-center h-full">
+      <div class="flex  justify-center items-center h-full">
         <div class="md:w-1/3 mx-auto">
           <img
             class="w-8/12 mx-auto md:w-full"
@@ -14,7 +14,7 @@
       </div>
 
       <!-- Countdown -->
-      <div class="my-auto flex-1">
+      <div class="my-auto">
         <div
           class="flex relative bg-slate-900 overflow-hidden w-[90%] h-auto md:w-2/3 mx-auto py-[4vh] rounded-[10px] justify-center items-center"
         >
@@ -111,7 +111,7 @@
         </div>
         <div class="flex-1"></div>
       </div> -->
-      <div class="flex flex-1 font-omnes">
+      <!-- <div class="flex flex-1 font-omnes"> -->
         <Footer />
         <!-- <div class="xs:max-w-sm lg:w-full mx-auto gap-10">
           <div class="flex flex-wrap items-center -mx-4 mb-18">
@@ -166,7 +166,7 @@
             </div>
           </div>
         </div> -->
-      </div>
+      <!-- </div> -->
     </div>
   </div>
 </template>
