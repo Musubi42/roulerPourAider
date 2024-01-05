@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col md:flex-row w-screen mb-8 items-center md:items-start">
+  <footer class="flex flex-col md:flex-row w-screen py-8 items-center md:items-start bg-secondary">
     <div class="flex items-center justify-center w-full md:w-1/2 mb-9 md:mb-0">
       <div class="flex flex-col items-center">
         <span class="mb-6 font-extrabold text-xl">Nous suivre</span>
@@ -22,7 +22,7 @@
         >
       </div>
     </div>
-  </div>
+  </footer>
 </template>
 
 <script>
