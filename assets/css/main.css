@@ -25,6 +25,10 @@ body {
   /* To create unique component */
 }
 
+.active {
+  background-color: #2A5FA4;
+}
+
 .content {
   overflow: hidden;
   /* Hide scrollbars */
