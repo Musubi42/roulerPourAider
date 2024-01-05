@@ -1,12 +1,12 @@
 <template>
   <div class="mx-4 md:mx-auto">
     <!-- Logo -->
-    <div class="h-screen flex flex-col gap-8 md:gap-16">
+    <div class="h-screen flex flex-col gap-8 md:gap-14">
       <!-- gap-[10vh] -->
       <div class="flex flex-1 justify-center items-center h-full">
         <div class="md:w-1/3 mx-auto">
           <img
-            class="w-12/12 mx-auto md:w-full"
+            class="w-8/12 mx-auto md:w-full"
             src="/images/logoBig_roulerPourAider.png"
             alt="Logo lmlccommunication"
           />
@@ -112,7 +112,8 @@
         <div class="flex-1"></div>
       </div> -->
       <div class="flex flex-1 font-omnes">
-        <div class="xs:max-w-sm lg:w-full mx-auto gap-10">
+        <Footer />
+        <!-- <div class="xs:max-w-sm lg:w-full mx-auto gap-10">
           <div class="flex flex-wrap items-center -mx-4 mb-18">
             <div class="w-full lg:w-1/3 px-4 mb-12 lg:mb-0">
               <div class="flex items-center lg:justify-center">
@@ -163,19 +164,8 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="w-full lg:w-1/3 px-4">
-              <div class="flex items-center lg:justify-center">
-                <div class="flex flex-shrink-0 mr-5 sm:mr-8 items-center justify-center p-1 w-16 sm:w-20 h-16 sm:h-20 rounded-full bg-green-200">
-                  <img class="h-8" src="" alt="">
-                </div>
-                <div>
-                  <span class="text-lg text-gray-500">Adresse</span>
-                  <span class="block text-lg font-semibold text-gray-900">10 rue Jean Jaurès 60550, VERNEUIL-EN-HALATTE</span>
-                </div>
-              </div>
-            </div> -->
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
