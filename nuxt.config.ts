@@ -32,6 +32,10 @@ export default defineNuxtConfig({
   // },
   components: true,
   css: ["~/assets/css/main.css"],
+  plugins: [
+    '~/plugins/axios.js',
+    '~/plugins/analytics.client.js',
+  ],
   postcss: {
     plugins: {
       tailwindcss: {},
