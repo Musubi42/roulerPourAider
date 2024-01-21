@@ -16,6 +16,7 @@ export default {
         "footer-tuned": "url('/assets/images/footer-tuned.png')",
         "footer-questions": "url('/assets/images/footer-questions.png')",
         "fond-tableau": "url('/assets/images/BG-tableau.png')",
+        "logo-small": "url('/assets/images/logo-small.jpeg')",
       },
       colors: {
         primary: "#72BC7A",
