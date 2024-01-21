@@ -4,18 +4,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      MAINTENANCE: process.env.MAINTENANCE,
-      APIStreamAudioBaseUrl:
-        process.env.NODE_ENV === "development"
-          ? "http://localhost:3001"
-          : "https://stream.lmlc.musubi.dev",
+      strapiBaseUrl: "",
+      strapiToken: "",
+      env: {
+        baseUrl: "https://strapi.musubi.dev",  
+      },
     },
-  },
-  env: {
-    baseUrl:
-      process.env.NODE_ENV === "dev"
-        ? "http://localhost:3001"
-        : "https://stream.lmlc.musubi.dev",
   },
   alias: {
     "@": resolve(__dirname, "/"),
@@ -30,6 +24,10 @@ export default defineNuxtConfig({
   // router: {
   //   middleware: 'maintenance'
   // },
+  plugins: [
+    // '/plugins/axios.js',
+    // '/plugins/test.js',
+  ],
   components: true,
   css: ["~/assets/css/main.css"],
   postcss: {

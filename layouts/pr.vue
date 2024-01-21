@@ -1,8 +1,9 @@
 <template>
   <div>
     <Header />
-    <Pr-category-nav />
-    <NuxtPage />
-    <Footer />
+    <!-- <HeroNews /> -->
+    <!-- <Pr-category-nav /> -->
+    <NuxtPage class="pt-16" />
+    <Footer class="fixed bottom-0" />
   </div>
 </template>
