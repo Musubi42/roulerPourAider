@@ -7,16 +7,16 @@
       >
         <img
           class="h-4/5 aspect-square object-cover"
-          :src="songMetadata ? songMetadata.thumbnail : ''"
+          :url="currentPodcast ? currentPodcast.thumbnail : ''"
         />
         <div
           class="justify-center flex flex-col text-ellipsis whitespace-nowrap overflow-hidden"
         >
           <p class="hidden md:font-medium md:block">
-            {{ songMetadata ? songMetadata.author : "" }}
+            {{ currentPodcast ? currentPodcast.Title : "" }}
           </p>
           <p class="font-medium md:font-normal truncate">
-            {{ songMetadata ? songMetadata.title : "" }}
+            {{ currentPodcast ? currentPodcast.Resume : "" }}
           </p>
         </div>
       </div>
@@ -26,15 +26,15 @@
     <div class="flex mx-4 md:mx-10 items-center justify-center">
       <!-- Play previous song -->
       <button class="center-content mr-2" @click="playPreviousSong">
-        <iconsPrevious class="w-[24px]" />
+        <iconsPrevious class="w-[24px] text-black" />
       </button>
       <!-- Toggle song -->
       <button
         class="flex w-12 h-12 bg-black text-white rounded-full center-content justify-center items-center"
         @click="toggleAudio"
       >
-        <iconsLoading class="w-[24px]" v-if="isLoading" src="" alt="Loading..." />
-        <iconsStart class="ml-[3px] w-[24px]" v-if="!isPlaying && !isLoading" />
+        <iconsLoading class="w-[24px]" v-if="uLoading" src="" alt="Loading..." />
+        <iconsLecture class="ml-[3px] w-[24px] text-white" v-if="!isPlaying && !isLoading" />
         <iconsPause class="w-[24px]" v-if="isPlaying && !isLoading" />
       </button>
       <!-- Play next song -->
@@ -43,7 +43,7 @@
       </button>
 
       <div class="block md:hidden ml-4">
-        <iconsSoundOn @click="toggleSound" v-if="isSound" class="text-[24px]" />
+        <iconsSoundOn @click="toggleSound" v-if="uLoading" class="text-[24px]" />
         <iconsSoundOff @click="toggleSound" v-else class="text-[24px]" />
       </div>
     </div>
@@ -176,18 +176,34 @@ input[type="range"]::-moz-range-thumb {
 }
 </style>
 
+
 <script>
 import axios from "axios";
 
 export default {
+  setup() {
+    const isLoading = ref(false);
+    var podcasts = ref([]);
+
+    // Call the composable function
+    const loading = isPodcastLoading();
+    isLoading.value = loading;
+
+    const Podcast = usePodcast();
+    podcasts = Podcast.value;
+
+    console.log(podcasts);
+
+    return {
+      isLoading,
+      podcasts,
+    };
+  },
   data() {
     return {
       APIStreamAudioBaseUrl: "",
       trackID: "",
-      playlistMetadata: [],
-      playlistMetadataKeys: [],
-      playlistLenght: 0,
-      songMetadata: {},
+      currentPodcast: {},
       songAudio: {},
       audioSource: null,
       isPlaying: false,
@@ -210,7 +226,6 @@ export default {
     createAudioPlayer() {
       const runtimeConfig = useRuntimeConfig();
       this.APIStreamAudioBaseUrl = runtimeConfig.public.env.baseUrl;
-      console.log(this.APIStreamAudioBaseUrl);
     },
     async getPlaylistMetadata() {
       try {
@@ -236,10 +251,11 @@ export default {
     async loadAndPlayAudio(trackID) {
       try {
         this.isLoading = true;
-        var audioResponse = await fetch(`${this.APIStreamAudioBaseUrl}/uploads/${podcastID}`);
+        // var audioResponse = await fetch(`${this.APIStreamAudioBaseUrl}/uploads/${podcastID}`);
 
-        const blob = await audioResponse.blob();
-        this.audioSource = new Audio(URL.createObjectURL(blob));
+        // const blob = await audioResponse.blob();
+        this.audioSource = new Audio();
+        // this.audioSource = new Audio(URL.createObjectURL(blob));
         this.audioSource.volume = this.volume / 100;
         this.audioSource.play();
 
@@ -262,6 +278,8 @@ export default {
     },
 
     async toggleAudio() {
+      console.log(this.uLoading.value);
+      this.uLoading.value = !this.uLoading.value;
       if (!this.audioSource) {
         await this.loadAndPlayAudio(this.trackID);
         return;
@@ -328,9 +346,16 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() {
+    
+  },
   async created() {
     // // TODO: Faire une petite gestion d'erreur
+
+    // Get the podcast metadata
+    this.currentPodcast = this.podcasts[1];
+
+    console.log(this.currentPodcast);
     // // Function create the audio player
     this.createAudioPlayer();
 
