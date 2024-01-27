@@ -1,22 +1,37 @@
 <template>
   <div>
-    <h1>Nos passages radio</h1>
-    <ul class="w-[90%]">
-      <!-- <li v-for="article in articles">{{ article.attributes.Title }}</li> -->
-      <li class="flex flex-row w-full">
-        <!-- <img  
-          src="@/assets/images/logo-small.jpeg" 
+    <ul class="w-[90%] mx-auto">
+      <li v-for="(podcast, index) in podcasts" :key="index"
+        class="flex flex-row w-full border-b py-8 items-center" >
+        <img
+          :src="podcast.PodcastMediaThumbnailUrl"
           alt="Logo du podcast"
-          class="h-12 aspect-square object-cover"
-          > -->
-        <div class="flex flex-col">
-          <h2>Titre</h2>
-          <p>Contenu</p>
+          class="h-36 aspect-video object-cover mr-4"
+        />
+        <div class="flex flex-col ">
+          <h2 class="text-lg font-semibold" >{{ podcast.Title }}</h2>
+          <p class="text-sm font-normal">{{ podcast.Resume }}</p>
+          <div class="flex flex-row mt-2 gap-x-2" >
+            <div>
+              <button class="bg-black rounded-full w-8 h-8" >
+                <span class="flex justify-center" >
+                  <IconsLecture class="w-4 h-4 ml-1 text-white" />
+                </span>
+              </button>
+            </div>
+            <div class="flex items-center">
+              <!-- Date de création -->
+              <span>{{ podcast.Date_de_creation }}</span>
+              <!-- Séparateur -->
+              <span class="">&nbsp;•&nbsp;</span>
+              <span class="">{{ podcast.Duree }} min</span>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
 
-    <div class="fixed w-full p-4 bottom-0 z-10" > 
+    <div class="fixed w-full p-4 bottom-0 z-10">
       <LecteurAudio />
     </div>
   </div>
@@ -28,48 +43,67 @@ definePageMeta({
 });
 
 export default {
+  setup() {
+    const isLoading = ref(false);
+    var podcasts = ref([]);
+
+    // Call the composable function
+    const loading = isPodcastLoading();
+    isLoading.value = loading;
+
+    const Podcast = usePodcast();
+    podcasts = Podcast;
+
+    console.log(podcasts);
+
+    return {
+      isLoading,
+      podcasts,
+    };
+  },
   data() {
     return {
       articles: null,
-      baseUrl: "",
-      podcastID: 1,
+      strapiBaseUrl: "",
+      strapiToken: "",
     };
   },
   methods: {
-    // async fetchArticles() {
-    //   try {
-    //     console.log("non");
-    //     const response = await axios.get(
-    //       "https://strapi.roulerpouraider.fr/api/podcasts/1?populate=*",
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer 70e795be5b1a9c2f3a2cab6d11194c489d32ebd0b79c5d8ff944299e1966ebcaaa1661ae60480585178ca267057a02a8093d3cd256094950fd25ae57621cdf1de1ab393f2819d206d6eb049e68eb2fdaa99a83e071868f02a7dbd9af824c70e98af663272bf9169625747d337478632e4b48d02a478276fe2d8336fdc9d1b0a8`,
-    //         },
-    //       }
-    //     );
-    //     console.log(response.data.data);
-    //     this.articles = response.data.data;
-    //     // console.log(this.articles[0].attributes.title);
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // },
     async getPodcastMetadata() {
       try {
-        console.log("o");
-        // const podcastMetadata = Api
-        // const [error, data] = await api.get(`/api/podcasts`);
-        // console.log(data);
+        const url = `${this.strapiBaseUrl}/api/podcasts?populate=Thumbnail&populate=Podcast`;
 
-        // this.playlistMetadataKeys = Object.keys(response.data);
-        // this.playlistMetadata = response.data;
+        const { data, pending, error } = await useFetch(url, {
+          method: "get",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.strapiToken}`,
+          },
+          // body: {
+          //   username,
+          //   password,
+          // },
+        });
 
-        // this.trackID = this.playlistMetadataKeys[0];
-        // this.playlistLenght = this.playlistMetadataKeys.length;
+        this.podcasts = this.transformPodcastObject(data.value.data);
       } catch (error) {
-        console.log("oui");
         console.error(error);
       }
+    },
+    transformPodcastObject(Podcasts) {
+      const transformedObject = {};
+      for (var PodcastData of Podcasts) {
+        const { Podcast, Thumbnail, ...otherAttributes } = PodcastData.attributes;
+
+        const podcastMediaAudioUrl = `${this.strapiBaseUrl}${Podcast.data[0].attributes.url}`;
+        const podcastMediaThumbnailUrl = `${this.strapiBaseUrl}${Thumbnail.data[0].attributes.url}`;
+        transformedObject[PodcastData.id] = {
+          ...otherAttributes,
+          PodcastMediaThumbnailUrl: podcastMediaThumbnailUrl ? podcastMediaThumbnailUrl : undefined,
+          PodcastMediaAudioUrl: podcastMediaAudioUrl ? podcastMediaAudioUrl : undefined,
+        };
+      }
+      return transformedObject;
     },
     // loadMetaData(trackID) {
     //   this.trackID = trackID;
@@ -77,21 +111,16 @@ export default {
     // },
   },
   mounted() {
-    // this.fetchArticles();
   },
   async created() {
     // // TODO: Faire une petite gestion d'erreur
 
-    const runtimeConfig = useRuntimeConfig()
-    console.log(runtimeConfig.public.strapiBaseUrl);
-    // console.log(process.env.STRAPI_BASE_URL);
-    // api.setToken(process.env.STRAPI_TOKEN);
-    
-    // Get from the server the playlist metadata
-    // await this.getPodcastMetadata();
+    const runtimeConfig = useRuntimeConfig();
+    this.strapiBaseUrl = runtimeConfig.public.strapiBaseUrl;
+    this.strapiToken = runtimeConfig.public.strapiToken;
 
-    // Load metaData of the first podcast
-    // this.loadMetaData(this.podcastID);
+    // Get from the server the playlist metadata
+    await this.getPodcastMetadata();
   },
 };
 </script>

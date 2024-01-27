@@ -6,7 +6,7 @@
     viewBox="0 0 16 16"
   >
     <path
-      fill="transparent"
+      fill="currentColor"
       stroke="currentColor"
       stroke-linecap="round"
       stroke-linejoin="round"

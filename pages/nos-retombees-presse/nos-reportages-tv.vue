@@ -26,7 +26,7 @@ export default {
       try {
         const response = await axios.get('https://strapi.roulerpouraider.fr/api/articles', {
           headers: {
-            'Authorization': `Bearer 197719aa439f651404f73e67c7f0bbc1fe3aaa23ec9d1f519aef360fd6670278ecf7ca1546548a9858cf5ed37e1da4986ba55c078b7050a2d76be451a1799830a790c3bc107f9a7ef8e0c3942fdad3e576dc4ba4a7fe0cd6a32de9400cfda9a3090099ed17259aeee52970a7f5c2a557e6ee6f848d4ce95ee53bbf0a18ec3fd0`
+            'Authorization': `Bearer 70e795be5b1a9c2f3a2cab6d11194c489d32ebd0b79c5d8ff944299e1966ebcaaa1661ae60480585178ca267057a02a8093d3cd256094950fd25ae57621cdf1de1ab393f2819d206d6eb049e68eb2fdaa99a83e071868f02a7dbd9af824c70e98af663272bf9169625747d337478632e4b48d02a478276fe2d8336fdc9d1b0a8`
           }
         });
         console.log(response.data.data);
