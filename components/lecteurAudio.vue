@@ -12,11 +12,12 @@
         <div
           class="justify-center flex flex-col text-ellipsis whitespace-nowrap overflow-hidden"
         >
+        <!-- <p>{{ currentPodcast.value }}</p> -->
           <p class="hidden md:font-medium md:block">
-            {{ currentPodcast ? currentPodcast.Title : "" }}
+            {{ currentPodcast ? currentPodcast?.value?.Title : "" }}
           </p>
           <p class="font-medium md:font-normal truncate">
-            {{ currentPodcast ? currentPodcast.Resume : "" }}
+            {{ currentPodcast ? currentPodcast?.value?.Resume : "" }}
           </p>
         </div>
       </div>
@@ -33,7 +34,7 @@
         class="flex w-12 h-12 bg-black text-white rounded-full center-content justify-center items-center"
         @click="toggleAudio"
       >
-        <iconsLoading class="w-[24px]" v-if="uLoading" src="" alt="Loading..." />
+        <iconsLoading class="w-[24px]" v-if="isLoading" src="" alt="Loading..." />
         <iconsLecture class="ml-[3px] w-[24px] text-white" v-if="!isPlaying && !isLoading" />
         <iconsPause class="w-[24px]" v-if="isPlaying && !isLoading" />
       </button>
@@ -43,15 +44,14 @@
       </button>
 
       <div class="block md:hidden ml-4">
-        <iconsSoundOn @click="toggleSound" v-if="uLoading" class="text-[24px]" />
+        <iconsSoundOn @click="toggleSound" v-if="isLoading" class="text-[24px]" />
         <iconsSoundOff @click="toggleSound" v-else class="text-[24px]" />
       </div>
     </div>
 
     <!-- Control volume son -->
     <div
-      class="hidden md:flex md:flex-1 md:flex-row gap-4 ml-4 mr-4 content-end center-content items-center justify-end"
-    >
+      class="hidden md:flex md:flex-1 md:flex-row gap-4 ml-4 mr-4 content-end center-content items-center justify-end" >
       <!-- Music timeline -->
       <div class="flex w-full items-center">
         <div class="flex flex-row gap-1 cursor-default">
@@ -179,31 +179,33 @@ input[type="range"]::-moz-range-thumb {
 
 <script>
 import axios from "axios";
-
+    
 export default {
   setup() {
     const isLoading = ref(false);
-    var podcasts = ref([]);
+    let currentPodcast = ref(null);
 
     // Call the composable function
     const loading = isPodcastLoading();
     isLoading.value = loading;
 
-    const Podcast = usePodcast();
-    podcasts = Podcast.value;
+    const isCurrentPodcast = useCurrentPodcast();
+    currentPodcast = isCurrentPodcast.value;
 
-    console.log(podcasts);
+    watch(isCurrentPodcast, (newVal, oldVal) => {
+      currentPodcast.value = newVal;
+    });
 
     return {
       isLoading,
-      podcasts,
+      currentPodcast,
     };
   },
   data() {
     return {
       APIStreamAudioBaseUrl: "",
       trackID: "",
-      currentPodcast: {},
+      currentPodcaste: {},
       songAudio: {},
       audioSource: null,
       isPlaying: false,
@@ -213,15 +215,16 @@ export default {
       volume: 50,
       showVolume: false,
       currentTime: 0,
+      songMetadata: {},
     };
   },
-  watch: {
-    volume(newVolume) {
-      // Update the isSound property based on the new volume
-      this.isSound = newVolume > 0;
-      this.audioSource.volume = newVolume / 100;
-    },
-  },
+  // watch: {
+  //   volume(newVolume) {
+  //     // Update the isSound property based on the new volume
+  //     this.isSound = newVolume > 0;
+  //     this.audioSource.volume = newVolume / 100;
+  //   },
+  // },
   methods: {
     createAudioPlayer() {
       const runtimeConfig = useRuntimeConfig();
@@ -353,9 +356,9 @@ export default {
     // // TODO: Faire une petite gestion d'erreur
 
     // Get the podcast metadata
-    this.currentPodcast = this.podcasts[1];
+    // this.currentPodcast = this.podcasts[1];
 
-    console.log(this.currentPodcast);
+    // console.log(this.currentPodcast);
     // // Function create the audio player
     this.createAudioPlayer();
 

@@ -13,7 +13,7 @@
           <p class="text-sm font-normal">{{ podcast.Resume }}</p>
           <div class="flex flex-row mt-2 gap-x-2" >
             <div>
-              <button class="bg-black rounded-full w-8 h-8" >
+              <button class="bg-black rounded-full w-8 h-8" @click="setCurrentPodcast(podcast)" >
                 <span class="flex justify-center" >
                   <IconsLecture class="w-4 h-4 ml-1 text-white" />
                 </span>
@@ -46,19 +46,28 @@ export default {
   setup() {
     const isLoading = ref(false);
     var podcasts = ref([]);
+    var currentPodcast = ref([]);
 
     // Call the composable function
     const loading = isPodcastLoading();
     isLoading.value = loading;
 
-    const Podcast = usePodcast();
-    podcasts = Podcast;
+    const Podcast = useCurrentPodcast();
+    currentPodcast = Podcast;
 
-    console.log(podcasts);
 
+    function setCurrentPodcast(podcast) {
+      console.log(podcast);
+      currentPodcast.value = podcast;
+      console.log("currentPodcast", currentPodcast.value);  
+    }
+
+    // console.log("currentPodcast", currentPodcast.value);
     return {
       isLoading,
       podcasts,
+      currentPodcast,
+      setCurrentPodcast
     };
   },
   data() {
@@ -86,6 +95,7 @@ export default {
         });
 
         this.podcasts = this.transformPodcastObject(data.value.data);
+        // console.log(this.podcasts);
       } catch (error) {
         console.error(error);
       }
@@ -121,6 +131,8 @@ export default {
 
     // Get from the server the playlist metadata
     await this.getPodcastMetadata();
+
+    this.currentPodcast.value = this.podcasts[1];
   },
 };
 </script>
