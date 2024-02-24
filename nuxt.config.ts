@@ -21,9 +21,12 @@ export default defineNuxtConfig({
   svgo: {
     autoImportPath: "~/assets/icons/",
   },
-  // router: {
-  //   middleware: 'maintenance'
-  // },
+  image : {
+    autoImportPath: "~/assets/images/"
+  },
+  router: {
+    middleware: ['maintenance']
+  },
   plugins: [
     // '/plugins/axios.js',
     // '/plugins/test.js',
