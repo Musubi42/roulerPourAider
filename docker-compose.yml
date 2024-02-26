@@ -8,9 +8,9 @@ services:
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - traefik.http.routers.donation_api.rule=Host(`donation-api.roulerpouraider.fr`)
-      - traefik.http.routers.donation_api.entrypoints=websecure
-      - traefik.http.routers.donation_api.tls.certresolver=letsencryptresolver
+      - traefik.http.routers.donation-api.rule=Host(`donation-api.roulerpouraider.fr`)
+      - traefik.http.routers.donation-api.entrypoints=websecure
+      - traefik.http.routers.donation-api.tls.certresolver=letsencryptresolver
       - traefikk.ports=80
     networks:
       - traefik
