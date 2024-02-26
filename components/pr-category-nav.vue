@@ -25,7 +25,7 @@
         </li>
       </nuxt-link>
 
-      <nuxt-link to="/nos-retombees-presse/nos-passages-radio">
+      <nuxt-link to="/nos-retombees-presse/nos-passages-radio-test">
         <li class="bg-secondary/70 flex flex-col  items-center justify-center hover:bg-secondary" :class="{ active: isActive('nos-passages-radio') }">
           <div class="flex items-center my-3">
             <IconsRadio class="text-white text-5xl" />

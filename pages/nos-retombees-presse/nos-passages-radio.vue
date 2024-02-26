@@ -4,13 +4,13 @@
       <li v-for="(podcast, index) in podcasts" :key="index"
         class="flex flex-row w-full border-b py-8 items-center" >
         <img
-          :src="podcast.PodcastMediaThumbnailUrl"
+          :src="podcast.podcastMediaThumbnailUrl"
           alt="Logo du podcast"
-          class="h-36 aspect-video object-cover mr-4"
+          class="h-44 aspect-video object-cover mr-4 rounded-lg"
         />
         <div class="flex flex-col ">
-          <h2 class="text-lg font-semibold" >{{ podcast.Title }}</h2>
-          <p class="text-sm font-normal">{{ podcast.Resume }}</p>
+          <h2 class="text-lg font-semibold" >{{ podcast.title }}</h2>
+          <p class="text-sm font-normal">{{ podcast.resume }}</p>
           <div class="flex flex-row mt-2 gap-x-2" >
             <div>
               <button class="bg-black rounded-full w-8 h-8" @click="setCurrentPodcast(podcast)" >
@@ -21,10 +21,10 @@
             </div>
             <div class="flex items-center">
               <!-- Date de création -->
-              <span>{{ podcast.Date_de_creation }}</span>
+              <span>{{ podcast.date_de_creation }}</span>
               <!-- Séparateur -->
               <span class="">&nbsp;•&nbsp;</span>
-              <span class="">{{ podcast.Duree }} min</span>
+              <span>{{ formatTime(podcast ? podcast.duree : 0) }} min</span>
             </div>
           </div>
         </div>
@@ -32,7 +32,8 @@
     </ul>
 
     <div class="fixed w-full p-4 bottom-0 z-10">
-      <LecteurAudio />
+    <p>{{ currentPodcast }}</p>
+      <LecteurAudioTest :currentPodcast="currentPodcast" />
     </div>
   </div>
 </template>
@@ -57,12 +58,9 @@ export default {
 
 
     function setCurrentPodcast(podcast) {
-      console.log(podcast);
       currentPodcast.value = podcast;
-      console.log("currentPodcast", currentPodcast.value);  
     }
 
-    // console.log("currentPodcast", currentPodcast.value);
     return {
       isLoading,
       podcasts,
@@ -80,7 +78,7 @@ export default {
   methods: {
     async getPodcastMetadata() {
       try {
-        const url = `${this.strapiBaseUrl}/api/podcasts?populate=Thumbnail&populate=Podcast`;
+        const url = `${this.strapiBaseUrl}/api/podcasts?populate=thumbnail&populate=podcast`;
 
         const { data, pending, error } = await useFetch(url, {
           method: "get",
@@ -95,7 +93,6 @@ export default {
         });
 
         this.podcasts = this.transformPodcastObject(data.value.data);
-        // console.log(this.podcasts);
       } catch (error) {
         console.error(error);
       }
@@ -103,17 +100,22 @@ export default {
     transformPodcastObject(Podcasts) {
       const transformedObject = {};
       for (var PodcastData of Podcasts) {
-        const { Podcast, Thumbnail, ...otherAttributes } = PodcastData.attributes;
+        const { podcast, thumbnail, ...otherAttributes } = PodcastData.attributes;
 
-        const podcastMediaAudioUrl = `${this.strapiBaseUrl}${Podcast.data[0].attributes.url}`;
-        const podcastMediaThumbnailUrl = `${this.strapiBaseUrl}${Thumbnail.data[0].attributes.url}`;
+        const podcastMediaAudioUrl = `${this.strapiBaseUrl}${podcast.data[0].attributes.url}`;
+        const podcastMediaThumbnailUrl = `${this.strapiBaseUrl}${thumbnail.data[0].attributes.url}`;
         transformedObject[PodcastData.id] = {
           ...otherAttributes,
-          PodcastMediaThumbnailUrl: podcastMediaThumbnailUrl ? podcastMediaThumbnailUrl : undefined,
-          PodcastMediaAudioUrl: podcastMediaAudioUrl ? podcastMediaAudioUrl : undefined,
+          podcastMediaThumbnailUrl: podcastMediaThumbnailUrl ? podcastMediaThumbnailUrl : undefined,
+          podcastMediaAudioUrl: podcastMediaAudioUrl ? podcastMediaAudioUrl : undefined,
         };
       }
       return transformedObject;
+    },
+    formatTime(time) {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time % 60);
+      return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
     },
     // loadMetaData(trackID) {
     //   this.trackID = trackID;
