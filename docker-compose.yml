@@ -7,3 +7,12 @@ services:
       - "8080:80"
     environment:
       - CACHE_MINUTES=15
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.strapi.rule=Host(`donation-api.roulerpouraider.fr`)
+      - traefik.http.routers.strapi.entrypoints=websecure
+      - traefik.http.routers.strapi.tls.certresolver=letsencryptresolver
+
+networks:
+  traefik:
+    external: true
