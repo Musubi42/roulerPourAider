@@ -6,18 +6,18 @@
         class="flex flex-row gap-4 ml-4 mr-4 content-start center-content items-center"
       >
         <img
-          class="h-4/5 aspect-square object-cover"
-          :url="currentPodcast ? currentPodcast.thumbnail : ''"
+          class="h-4/5 aspect-square object-cover rounded"
+          :src="currentPodcast ? currentPodcast?.value?.podcastMediaThumbnailUrl : ''"
         />
         <div
           class="justify-center flex flex-col text-ellipsis whitespace-nowrap overflow-hidden"
         >
-        <!-- <p>{{ currentPodcast.value }}</p> -->
+          <!-- <p>{{ currentPodcast.value }}</p> -->
           <p class="hidden md:font-medium md:block">
-            {{ currentPodcast ? currentPodcast?.value?.Title : "" }}
+            {{ currentPodcast ? currentPodcast?.value?.title : "" }}
           </p>
           <p class="font-medium md:font-normal truncate">
-            {{ currentPodcast ? currentPodcast?.value?.Resume : "" }}
+            {{ currentPodcast ? currentPodcast?.value?.resume : "" }}
           </p>
         </div>
       </div>
@@ -25,22 +25,17 @@
 
     <!-- Pause/start previous/next -->
     <div class="flex mx-4 md:mx-10 items-center justify-center">
-      <!-- Play previous song -->
-      <button class="center-content mr-2" @click="playPreviousSong">
-        <iconsPrevious class="w-[24px] text-black" />
-      </button>
       <!-- Toggle song -->
       <button
         class="flex w-12 h-12 bg-black text-white rounded-full center-content justify-center items-center"
         @click="toggleAudio"
       >
         <iconsLoading class="w-[24px]" v-if="isLoading" src="" alt="Loading..." />
-        <iconsLecture class="ml-[3px] w-[24px] text-white" v-if="!isPlaying && !isLoading" />
+        <iconsLecture
+          class="ml-[3px] w-[24px] text-white"
+          v-if="!isPlaying && !isLoading"
+        />
         <iconsPause class="w-[24px]" v-if="isPlaying && !isLoading" />
-      </button>
-      <!-- Play next song -->
-      <button class="center-content" @click="playNextSong" >
-        <iconsNext class="w-[24px] ml-2" />
       </button>
 
       <div class="block md:hidden ml-4">
@@ -51,19 +46,20 @@
 
     <!-- Control volume son -->
     <div
-      class="hidden md:flex md:flex-1 md:flex-row gap-4 ml-4 mr-4 content-end center-content items-center justify-end" >
+      class="hidden md:flex md:flex-1 md:flex-row gap-4 ml-4 mr-4 content-end center-content items-center justify-end"
+    >
       <!-- Music timeline -->
       <div class="flex w-full items-center">
         <div class="flex flex-row gap-1 cursor-default">
           <p ref="audioRef">{{ formatTime(currentTime) }}</p>
           /
-          <p>{{ formatTime(songMetadata ? songMetadata.duration : 0) }}</p>
+          <p>{{ formatTime(currentPodcast ? currentPodcast?.value?.duree : 0) }}</p>
         </div>
         <input
           type="range"
           class="rounded-full ml-2"
           min="0"
-          :max="songMetadata ? songMetadata.duration : 0"
+          :max="currentPodcast ? currentPodcast?.value?.duree : 0"
           v-model="currentTime"
           @input="changeTime"
         />
@@ -87,8 +83,7 @@
       <div
         class="flex flex-col relative h-20 justify-center items-center cursor-pointer"
         @mouseenter="showVolume = true"
-        @mouseleave="showVolume = false"
-      >
+        @mouseleave="showVolume = false" >
         <div class="z-10">
           <iconsSoundOn @click="toggleSound" v-if="isSound" class="w-[24px]" />
           <iconsSoundOff @click="toggleSound" v-else class="w-[24px]" />
@@ -176,10 +171,9 @@ input[type="range"]::-moz-range-thumb {
 }
 </style>
 
-
 <script>
 import axios from "axios";
-    
+
 export default {
   setup() {
     const isLoading = ref(false);
@@ -194,6 +188,7 @@ export default {
 
     watch(isCurrentPodcast, (newVal, oldVal) => {
       currentPodcast.value = newVal;
+      // changePodcast();
     });
 
     return {
@@ -203,10 +198,6 @@ export default {
   },
   data() {
     return {
-      APIStreamAudioBaseUrl: "",
-      trackID: "",
-      currentPodcaste: {},
-      songAudio: {},
       audioSource: null,
       isPlaying: false,
       isPaused: false,
@@ -215,74 +206,85 @@ export default {
       volume: 50,
       showVolume: false,
       currentTime: 0,
-      songMetadata: {},
     };
   },
-  // watch: {
-  //   volume(newVolume) {
-  //     // Update the isSound property based on the new volume
-  //     this.isSound = newVolume > 0;
-  //     this.audioSource.volume = newVolume / 100;
-  //   },
-  // },
+  watch: {
+    volume(newVolume) {
+      // Update the isSound property based on the new volume
+      this.isSound = newVolume > 0;
+      this.audioSource.volume = newVolume / 100;
+    },
+  },
   methods: {
-    createAudioPlayer() {
-      const runtimeConfig = useRuntimeConfig();
-      this.APIStreamAudioBaseUrl = runtimeConfig.public.env.baseUrl;
+    // async loadAndPlayAudio(trackID) {
+    //   try {
+    //     this.isLoading = true;
+
+    //     var audioResponse = await fetch(`${this.currentPodcast.value.podcastMediaAudioUrl}`);
+
+    //     const blob = await audioResponse.blob();
+    //     this.audioSource = new Audio(URL.createObjectURL(blob));
+    //     this.audioSource.volume = this.volume / 100;
+    //     this.audioSource.play();
+
+    //     this.audioSource.ontimeupdate = () => {
+    //       this.currentTime = this.audioSource.currentTime;
+    //       if (this.currentTime >= this.audioSource.duration) {
+    //         this.playNextSong();
+    //       }
+    //     };
+
+    //     this.trackID = trackID;
+    //     this.isLoading = false;
+    //     this.isPlaying = true;
+    //   } catch (error) {
+    //     this.isLoading = false;
+    //     console.error("An error occurred:", error);
+    //     // TODO: Handle the error as you see fit
+    //   }
+    // },
+
+    changePodcast() {
+      this.isPlaying = false;
+      this.loadAudio(this.currentPodcast.value.id);
     },
-    async getPlaylistMetadata() {
-      try {
-        var response;
-        if (process.env.NODE_ENV === "development") {
-          response = await axios.get(`${this.APIStreamAudioBaseUrl}/playlistMetadata`);
-        } else {
-          response = await axios.get(
-            `${this.APIStreamAudioBaseUrl}/playlistMetadata.json`
-          );
-        }
 
-        this.playlistMetadataKeys = Object.keys(response.data);
-        this.playlistMetadata = response.data;
-
-        this.trackID = this.playlistMetadataKeys[0];
-        this.playlistLenght = this.playlistMetadataKeys.length;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    async loadAndPlayAudio(trackID) {
+    async loadAudio(trackID) {
       try {
         this.isLoading = true;
-        // var audioResponse = await fetch(`${this.APIStreamAudioBaseUrl}/uploads/${podcastID}`);
 
-        // const blob = await audioResponse.blob();
-        this.audioSource = new Audio();
-        // this.audioSource = new Audio(URL.createObjectURL(blob));
+        var audioResponse = await fetch(
+          `${this.currentPodcast.value.podcastMediaAudioUrl}`
+        );
+
+        const blob = await audioResponse.blob();
+        this.audioSource = new Audio(URL.createObjectURL(blob));
         this.audioSource.volume = this.volume / 100;
-        this.audioSource.play();
 
         this.audioSource.ontimeupdate = () => {
           this.currentTime = this.audioSource.currentTime;
+          // Pauser la musique si elle est terminée
+          // if (this.currentTime >= this.audioSource.duration) {
+          //   this.playNextSong();
+          // }
         };
 
-        this.trackID = trackID;
         this.isLoading = false;
-        this.isPlaying = true;
       } catch (error) {
         this.isLoading = false;
         console.error("An error occurred:", error);
         // TODO: Handle the error as you see fit
       }
     },
-    loadMetaData(trackID) {
-      this.trackID = trackID;
-      this.songMetadata = this.playlistMetadata[trackID];
+
+    playAudio() {
+      if (this.audioSource) {
+        this.audioSource.play();
+        this.isPlaying = true;
+      }
     },
 
     async toggleAudio() {
-      console.log(this.uLoading.value);
-      this.uLoading.value = !this.uLoading.value;
       if (!this.audioSource) {
         await this.loadAndPlayAudio(this.trackID);
         return;
@@ -297,34 +299,6 @@ export default {
       }
     },
 
-    async playNextSong() {
-      const nextTrackPosition =
-        (this.playlistMetadataKeys.indexOf(this.trackID) + 1) % this.playlistLenght;
-      const nextTrackID = this.playlistMetadataKeys[nextTrackPosition];
-      this.loadMetaData(nextTrackID);
-      this.audioSource.pause();
-      this.audioSource = null;
-      if (this.isPlaying) {
-        this.isPlaying = false;
-        await this.loadAndPlayAudio(nextTrackID);
-      }
-    },
-
-    async playPreviousSong() {
-      const previousTrackPosition =
-        (this.playlistMetadataKeys.indexOf(this.trackID) - 1) % this.playlistLenght;
-      const previousTrackID =
-        previousTrackPosition < 0
-          ? this.playlistMetadataKeys[this.playlistLenght - 1]
-          : this.playlistMetadataKeys[previousTrackPosition];
-      this.loadMetaData(previousTrackID);
-      this.audioSource.pause();
-      this.audioSource = null;
-      if (this.isPlaying) {
-        this.isPlaying = false;
-        await this.loadAndPlayAudio(nextTrackID);
-      }
-    },
     changeTime(event) {
       // Change the current time of the music when the slider value changes
       this.audioSource.currentTime = event.target.value;
@@ -349,24 +323,9 @@ export default {
     },
   },
 
-  mounted() {
-    
-  },
+  mounted() {},
   async created() {
     // // TODO: Faire une petite gestion d'erreur
-
-    // Get the podcast metadata
-    // this.currentPodcast = this.podcasts[1];
-
-    // console.log(this.currentPodcast);
-    // // Function create the audio player
-    this.createAudioPlayer();
-
-    // // Get from the server the playlist metadata
-    // await this.getPlaylistMetadata();
-
-    // // Load metaData of the first song
-    // this.loadMetaData(this.trackID);
   },
   beforeUnmount() {
     // Remove event listeners
