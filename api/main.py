@@ -9,7 +9,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 URL = "https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr"
-CACHE_MINUTES = os.getenv("CACHE_MINUTES", 15)
+CACHE_MINUTES = int(os.getenv("CACHE_MINUTES", 15))
 
 
 def get_donations():
