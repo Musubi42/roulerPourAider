@@ -6,9 +6,6 @@ export default defineNuxtConfig({
     public: {
       strapiBaseUrl: "",
       strapiToken: "",
-      env: {
-        baseUrl: "https://strapi.musubi.dev",  
-      },
     },
   },
   alias: {

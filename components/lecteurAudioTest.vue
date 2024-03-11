@@ -7,13 +7,12 @@
       >
         <img
           class="h-4/5 aspect-square object-cover rounded"
+          :src="currentPodcast?.podcastMediaThumbnailUrl ? currentPodcast?.podcastMediaThumbnailUrl : ''"
         />
         <!-- 
           :src="currentPodcast ? currentPodcast?.podcastMediaThumbnailUrl : ''" -->
         <div
-          class="justify-center flex flex-col text-ellipsis whitespace-nowrap overflow-hidden"
-          :src="currentPodcast?.podcastMediaThumbnailUrl"
-        >
+          class="justify-center flex flex-col text-ellipsis whitespace-nowrap overflow-hidden" >
           <!-- <p>{{ currentPodcast }}</p> -->
           <p class="hidden md:font-medium md:block">
             {{ currentPodcast ? currentPodcast?.title : "" }}
@@ -58,11 +57,12 @@
         </div>
         <input
           type="range"
-          class="rounded-full ml-2"
+          class="rounded-full ml-2 w-full progress-slider"
           min="0"
           :max="currentPodcast ? currentPodcast?.duree : 0"
           v-model="currentTime"
           @input="changeTime"
+          :style="progressBarStyle"
         />
       </div>
       <!-- Volume -->
@@ -91,18 +91,20 @@
         </div>
         <!-- <transition name="slide"> -->
         <div
+          id="volume"
           class="absolute bottom-full transform translate-y-full mb-[25px]"
           v-show="showVolume"
         >
           <input
             type="range"
-            :title="`volume ${volume}%`"
+            :title="`volume ${roundNumber(volume)}%`"
             min="0"
             max="100"
             step="0.5"
             v-model="volume"
             class="vertical rotate-[270deg] rounded-full"
             style="--inputValue: 100%; width: 80px"
+            :style="volumeBarStyle"
           />
         </div>
       </div>
@@ -110,9 +112,57 @@
   </div>
 </template>
 
+<style scoped>
+#volume::after {
+  transform: rotate(90deg);
+  background-color: rgb(148 163 184 / 0.5);
+  border-radius: 4px;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -25px;
+  width: 160%;
+  height: 150%;
+  z-index: -1; /* Place the background behind the input */
+  transition: top 0.5s ease-in-out;
+}
+
+/* #volume:hover::after {
+  top: 0; 
+} */
+
+input[type="range"] {
+  /* Remove the default appearance */
+  -webkit-appearance: none; /* for Chrome */
+  appearance: none;
+  width: 100%; /* Full width */
+  height: 10px; /* Specified height */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (it will be visible when mouse hover) */
+  transition: opacity 0.2s; /* Transition effect when mouse hover */
+}
+
+input[type="range"]:hover {
+  opacity: 1; /* Fully visible when mouse hover */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* for Chrome */
+  appearance: none;
+  width: 15px; /* Set a specific slider handle width */
+  height: 15px; /* Slider handle height */
+  background: rgba(114, 188, 121, 1); /* Green background */ 
+  /* filter: brightness(0.75); */
+  border-radius: 9999px;
+}
+
+
+</style>
+
 <script lang="ts">
 // import { ref, watch, onMounted, onBeforeUnmount, defineProps, Ref } from 'vue';
 import { defineProps, defineEmits } from 'vue';
+
 import axios from 'axios';
 
 // TypeScript interface for the podcast
@@ -161,31 +211,33 @@ export default {
       }
     });
 
-
-
     watch(isPlaying, (newVal) => { 
-      console.log(newVal);
-
       // const emit = defineEmits(['update:isPlaying']);
         emit('update:isPlaying', newVal);
       }
     );
 
     // Methods
-    const changePodcast = () => {
+    const changePodcast = async () => {
       if (audioSource.value) {
         audioSource.value.pause();
         audioSource.value.src = ''; // Release the audio resource
       }
       isPlaying.value = false;
-      loadAudio(props.currentPodcast.id);
-      
+      await loadAudio(props.currentPodcast.id);
+      await playAudio();
 
+      console.log("salut");
+      
       // Function to update and emit isPlaying status
       const setIsPlaying = (newStatus) => {
         // ... logic to change isPlaying status
+        console.log("Audio : ", newStatus);
         emit('update:isPlaying', newStatus);
       };
+
+      isPlaying.value = true;
+      emit('update:isPlaying', isPlaying.value);
     };
 
     const loadAudio = async (trackID: number) => {
@@ -209,8 +261,8 @@ export default {
       if (audioSource.value) {
         audioSource.value.play();
         isPlaying.value = true;
-
       }
+      console.log("non");
     };
 
     const toggleAudio = async () => {
@@ -247,6 +299,26 @@ export default {
       }
     };
 
+    const roundNumber = (num: number): number => {
+      return Math.round(num * 100) / 100;
+    };
+
+    const volumeBarStyle = computed(() => {
+      const progress = volume.value;
+      return {
+        background: `linear-gradient(to right, green ${progress}%, grey ${progress}%, grey 100%)`
+      };
+    });
+    
+
+    const progressBarStyle = computed(() => {
+      const duration = currentPodcast.value?.duree || 0;
+      const progress = (currentTime.value / duration) * 100;
+      return {
+        background: `linear-gradient(to right, green ${progress}%, #fff ${progress}%)`
+      };
+    });
+
     // Lifecycle hooks
     onMounted(() => {
       // Your mounted logic
@@ -259,6 +331,7 @@ export default {
         audioSource.value.src = ''; // Release the audio resource
       }
     });
+
 
     return {
       isLoading,
@@ -275,7 +348,10 @@ export default {
       toggleAudio,
       changeTime,
       formatTime,
-      toggleSound
+      toggleSound,
+      roundNumber,
+      progressBarStyle,
+      volumeBarStyle,
     };
   },
 };
