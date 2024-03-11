@@ -10,19 +10,28 @@
       <div v-if="isHovered" class="absolute left-0 top-16 w-full h-16 bg-white border-t-[1px] border-b-[1px] border-gray-400/50">
         <ul class="flex gap-6 items-center h-full justify-center">
           <li class="" >
-            <nuxt-link class="" to="/nos-retombees-presse/nos-articles-de-presse">
+            <!-- <nuxt-link class="" to="/nos-retombees-presse/nos-articles-de-presse">
               Nos articles de presse
-            </nuxt-link>
+            </nuxt-link> -->
+            <HeadersLinkDesktop to="/nos-retombees-presse/nos-articles-de-presse"
+              >Nos articles de presse</HeadersLinkDesktop
+            >
           </li>
           <li class="" >
-            <nuxt-link class="" to="/nos-retombees-presse/nos-reportages-tv">
+            <!-- <nuxt-link class="" to="/nos-retombees-presse/nos-reportages-tv">
               Nos reportages TV
-            </nuxt-link>
+            </nuxt-link> -->
+            <HeadersLinkDesktop to="/nos-retombees-presse/nos-reportages-tv"
+              >Nos reportages TV</HeadersLinkDesktop
+            >
           </li>
           <li class="" >
-            <nuxt-link class="" to="/nos-retombees-presse/nos-passages-radio">
+            <!-- <nuxt-link class="" to="/nos-retombees-presse/nos-passages-radio">
               Nos passages radio
-            </nuxt-link>
+            </nuxt-link> -->
+            <HeadersLinkDesktop to="/nos-retombees-presse/nos-passages-radio"
+              >Nos passages radio</HeadersLinkDesktop
+            >
           </li>
         </ul>
       </div>

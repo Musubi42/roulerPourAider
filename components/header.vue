@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed block w-full" :class="{ 'bg-white': isHovered || !isAccueilPage }">
+  <header class="fixed block w-full z-50" :class="{ 'bg-white': isHovered || !isAccueilPage }">
     <!-- Partie Desktop -->
     <nav class="relative h-16 bg-transparent z-50" :style="dynamicStyle">
       <div class="container px-4 mx-auto">
@@ -53,106 +53,23 @@
           <!-- Les différentes sections -->
           <ul class="hidden lg:flex ml-14 lg:w-auto lg:space-x-12 h-16 items-stretch">
             <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
-            <!-- Sous menu -->
-            <div
-              class="hidden group-hover:block absolute top-full left-0 min-w-max max-w-xs p-4 z-50"
-            >
-              <div
-                class="-mb-2 ml-8 w-4 h-4 rounded-sm bg-white border-l border-t border-gray-200 transform rotate-45"
-              ></div>
-              <div
-                class="w-full max-w-xs bg-white border border-gray-100 rounded-3xl pt-4 pb-4 px-4"
-              >
-                <div class="pb-3 mb-3 border-b border-gray-100">
-                  <a
-                    class="block py-3 px-4 text-sm text-gray-900 hover:bg-orange-50 rounded-lg"
-                    href="#"
-                    >Featured</a
-                  ><a
-                    class="block py-3 px-4 text-sm text-gray-900 hover:bg-orange-50 rounded-lg"
-                    href="#"
-                    >Solutions</a
-                  >
-                </div>
-                <div class="pb-3 mb-3 border-b border-gray-100">
-                  <a
-                    class="flex mb-2 items-center py-3 px-4 text-sm text-gray-900 hover:bg-orange-50 rounded-lg"
-                    href="#"
-                  >
-                    <!-- <img src="saturn-assets/images/headers/icon-download.svg" alt=""> -->
-                    <span class="ml-3">Download</span>
-                  </a>
-                  <a
-                    class="flex mb-2 items-center py-3 px-4 text-sm text-gray-900 hover:bg-orange-50 rounded-lg"
-                    href="#"
-                  >
-                    <!-- <img src="saturn-assets/images/headers/icon-slack.svg" alt=""> -->
-                    <span class="ml-3">Community</span>
-                  </a>
-                  <a
-                    class="flex mb-2 items-center py-3 px-4 text-sm text-gray-900 hover:bg-orange-50 rounded-lg"
-                    href="#"
-                  >
-                    <!-- <img src="saturn-assets/images/headers/icon-help.svg" alt=""> -->
-                    <span class="ml-3">Help</span>
-                  </a>
-                </div>
-                <div class="flex items-center pb-3 mb-3 border-b border-gray-100">
-                  <a
-                    class="inline-block px-4 py-3 mr-6 text-sm font-semibold text-orange-900 hover:text-gray-900"
-                    href="#"
-                    >Sign In</a
-                  ><a
-                    class="inline-block py-3 px-4 text-sm font-semibold text-orange-900 hover:text-white border border-gray-200 hover:border-orange-600 hover:bg-orange-900 rounded-md transition duration-200"
-                    href="#"
-                    >Create an account</a
-                  >
-                </div>
-                <div class="flex items-center">
-                  <div
-                    class="flex w-10 h-10 items-center justify-center bg-orange-50 rounded-full"
-                  >
-                    <!-- <img src="saturn-assets/images/headers/icon-email-me.svg" alt=""> -->
-                  </div>
-                  <div class="ml-3">
-                    <span class="block text-xs text-gray-500">Drop us a line</span>
-                    <a
-                      class="text-sm font-semibold text-black hover:text-orange-900"
-                      href="#"
-                      >hello@shuffle.dev</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-            <HeadersLinkDesktop to="/qui-sommes-nous"
-              >Qui sommes nous ?</HeadersLinkDesktop
-            >
+            <HeadersLinkDesktop to="/faire-un-don">Faire un don</HeadersLinkDesktop>
+            <HeadersLinkDesktop to="/qui-sommes-nous">Qui sommes nous ?</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/1ere-edition">1ère édition</HeadersLinkDesktop>
+            <HeadersLinkDesktop to="/nos-partenaires">Nos partenaires</HeadersLinkDesktop>
             <HeadersSubNav
               to="/nos-relations-publiques"
               @mouseEnter="handleMouseEnter"
-              @mouseLeave="handleMouseLeave"
-            >
+              @mouseLeave="handleMouseLeave" >
               Nos relations publiques
             </HeadersSubNav>
-            <HeadersLinkDesktop to="/faq">FAQ</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/contact">Contact</HeadersLinkDesktop>
           </ul>
 
           <!-- Le changement de langue -->
-          <div class="flex">
+          <!-- <div class="flex">
             <switchLanguage />
-          </div>
-          <!-- <div class="hidden lg:block ml-auto">
-          <div class="flex items-center">
-            <a class="inline-block mr-9 text-sm font-semibold text-orange-900 hover:text-gray-900" href="#">Sign In</a>
-            <a class="relative group inline-block py-3 px-4 text-sm font-semibold text-orange-900 hover:text-white border border-gray-200 rounded-md overflow-hidden transition duration-300" href="#">
-              <div class="absolute top-0 right-full w-full h-full bg-orange-900 transform group-hover:translate-x-full group-hover:scale-102 transition duration-500"></div>
-              <span class="relative">Create an account</span>
-            </a>
-          </div>
-        </div> -->
+          </div> -->
         </div>
       </div>
     </nav>

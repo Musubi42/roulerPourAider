@@ -1,7 +1,9 @@
 <template>
   <div>
     <Header :dynamicStyle="headerStyle" />
+    <Hero />
     <NuxtPage />
+    <SocialMedia />
     <Footer />
   </div>
 </template>

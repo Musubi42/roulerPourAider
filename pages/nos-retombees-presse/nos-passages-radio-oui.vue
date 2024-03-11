@@ -13,19 +13,8 @@
           <div class="flex flex-row mt-2 gap-x-2">
             <div>
               <button class="bg-black rounded-full w-8 h-8" @click="setCurrentPodcast(podcast)">
-                <!-- <span class="flex justify-center">
+                <span class="flex justify-center">
                   <IconsLecture class="w-4 h-4 ml-1 text-white" />
-                </span> -->
-                <!-- <p>{{ podcast.isPlaying }}</p> -->
-                <span class="flex justify-center" >
-                
-                  <iconsLoading class="w-4 h-4 text-white" v-if="podcast.isLoading" src="" alt="Loading..." />
-                  <iconsLecture
-                    class="w-4 h-4 ml-1 text-white"
-                    v-if="!podcast.isPlaying && !podcast.isLoading"
-                    alt="Lecture"
-                  />
-                  <iconsPause class="w-4 h-4 text-white" v-if="podcast.isPlaying && !podcast.isLoading" alt="Pause" />
                 </span>
               </button>
             </div>
@@ -40,14 +29,12 @@
     </ul>
 
     <div class="fixed w-full p-4 bottom-0 z-10">
-      <LecteurAudioTest :currentPodcast="currentPodcast" @update:isPlaying="handleIsPlayingUpdate" />
+      <LecteurAudioTest :currentPodcast="currentPodcast" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
-
 definePageMeta({
   layout: "pr",
 });
@@ -59,8 +46,6 @@ interface Podcast {
   podcastMediaThumbnailUrl: string;
   podcastMediaAudioUrl: string;
   duree: number;
-  isPlaying: boolean;
-  isLoading: boolean;
 }
 
 const podcasts = ref<Podcast[]>([]);
@@ -68,20 +53,7 @@ const currentPodcast = ref<Podcast | null>(null);
 const runtimeConfig = useRuntimeConfig();
 const { public: { strapiBaseUrl, strapiToken } } = runtimeConfig;
 
-const handleIsPlayingUpdate = (newStatus) => {
-  if (currentPodcast.value) {
-    const podcastIndex = podcasts.value.findIndex(podcast => podcast.id === currentPodcast.value.id);
-    if (podcastIndex !== -1) {
-      podcasts.value[podcastIndex].isLoading = false;
-      podcasts.value[podcastIndex].isPlaying = newStatus;
-    }
-  }
-}
-
 const setCurrentPodcast = (podcast: Podcast) => {
-  // Le isPlaying il faut le récupérer de l'autre component quand il a récupéré l'audio
-  // podcast.isPlaying = !podcast.isPlaying; 
-  podcast.isLoading = true; // set isLoading state to true
   currentPodcast.value = podcast;
 };
 
@@ -99,7 +71,6 @@ const transformPodcastObject = (podcastData) => {
       podcastMediaThumbnailUrl: strapiBaseUrl + thumbnail.data[0].attributes.url,
       podcastMediaAudioUrl: strapiBaseUrl + podcast.data[0].attributes.url,
       id: data.id,
-      isPlaying: false,
     };
   });
 };
@@ -114,20 +85,19 @@ const getPodcastMetadata = async () => {
       Authorization: `Bearer ${strapiToken}`,
     },
   });
+  console.log("");
 
-  console.log(data.value);
-
-  if (!error.value && !pending.value && data.value) {
+  if (!error.value) {
     podcasts.value = transformPodcastObject(data.value.data);
     if (podcasts.value.length > 0) {
       currentPodcast.value = podcasts.value[0];
     }
   } else {
-    console.error(error);
+    console.error(error.value);
   }
 };
 
-onMounted(() => {
-  getPodcastMetadata();
+onMounted(async () => {
+  await getPodcastMetadata();
 });
 </script>

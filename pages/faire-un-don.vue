@@ -1,5 +1,5 @@
 <template>
-  <div>faq</div>
+  <div>Faire un don</div>
 </template>
 
 <script>
