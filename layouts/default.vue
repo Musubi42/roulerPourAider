@@ -4,7 +4,7 @@
     <Hero />
     <NuxtPage />
     <SocialMedia />
-    <Footer />
+    <FooterTest />
   </div>
 </template>
 

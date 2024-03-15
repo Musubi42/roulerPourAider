@@ -11,7 +11,20 @@ export default defineNuxtConfig({
   alias: {
     "@": resolve(__dirname, "/"),
   },
-  modules: ["nuxt-svgo", "@nuxt/image", "@nuxtjs/i18n"],
+  mail: {
+    message: {
+      to: 'roulerpouraider60@gmail.com',
+    },
+    smtp: {
+        host: "smtp.gmail.com",
+        port: 587,
+        auth: {
+          user: 'roulerpouraider60@gmail.com',
+          pass: 'mcja uwje xwxn lvlq',
+        },
+      },
+  },
+  modules: ["nuxt-svgo", "@nuxt/image", "@nuxtjs/i18n", "nuxt-mail"],
   i18n: {
     vueI18n: "./i18n.config.js", // if you are using custom path, default
   },
