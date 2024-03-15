@@ -4,10 +4,12 @@
       :class="{ 'is-active': showIcons }" >
       <IconsSocialNetworks class="icon-networks h-6 w-6 absolute right-[14px] text-secondary" />
       <transition-group name="social-icon-animation" tag="div" class="social-icons">
-        <IconsLinkedin v-if="showIcons" class="icon text-secondary" key="linkedin" />
-        <IconsFacebook v-if="showIcons" class="icon text-secondary" key="facebook" />
-        <IconsTiktok v-if="showIcons" class="icon text-secondary" key="tiktok" />
-        <IconsInstagram v-if="showIcons" class="icon text-secondary" key="instagram" />
+        <NuxtLink to="/linkedin" v-if="showIcons" class="icon cursor-default" key="linkedin">
+          <IconsLinkedin />
+        </NuxtLink>
+        <IconsFacebook v-if="showIcons" class="icon" key="facebook" />
+        <IconsTiktok v-if="showIcons" class="icon" key="tiktok" />
+        <IconsInstagram v-if="showIcons" class="icon" key="instagram" />
       </transition-group>
     </div>
   </div>
@@ -35,10 +37,6 @@ const showIcons = ref(false);
   transition: width 0.3s ease-in-out;
 }
 
-.icon-networks {
-  /* Style your default network icon */
-}
-
 .social-icons {
   display: flex;
   flex-direction: row;
@@ -57,10 +55,10 @@ const showIcons = ref(false);
   transform: translateX(calc(-100% - 50px)); /* Move icons to the left by their width plus the button width */
 }
 
-.icon {
+/* .icon {
   margin: 5px 0;
-  width: 50px; /* Same as the button to ensure a clean appearance from center */
-}
+  width: 50px; 
+} */
 
 .social-icon-animation-enter-active,
 .social-icon-animation-leave-active {
