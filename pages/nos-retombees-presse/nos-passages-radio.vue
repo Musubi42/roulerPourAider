@@ -48,9 +48,10 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue'
 
-definePageMeta({
-  layout: "pr",
-});
+// Avec le nouveau design plus besoin
+// definePageMeta({
+//   layout: "pr",
+// });
 
 interface Podcast {
   id: number;
@@ -116,8 +117,6 @@ const getPodcastMetadata = async () => {
       Authorization: `Bearer ${strapiToken}`,
     },
   });
-
-  console.log(data.value);
 
   if (!error.value && !pending.value && data.value) {
     podcasts.value = transformPodcastObject(data.value.data);
