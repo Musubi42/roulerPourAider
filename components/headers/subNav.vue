@@ -1,7 +1,7 @@
 <template>
     <div @mouseenter="hover" @mouseleave="leave">
       <li class="hover-effect h-full" >
-        <nuxt-link class="flex items-center h-full text-sm text-secondary hover:text-primary transition-colors duration-300 font-medium" :to="to">
+        <nuxt-link class="flex items-center h-full text-sm hover:text-primary transition-colors duration-300 font-medium" :to="to">
           <!-- You can use slots to make the component's content dynamic -->
           <slot></slot>
         </nuxt-link>

@@ -1,7 +1,13 @@
 <template>
-  <header class="fixed block w-full z-50" :class="{ 'bg-white': isHovered || !isAccueilPage }">
+<!-- :class="{ 'bg-white': isHovered || !isAccueilPage }" -->
+<!-- TODO: Quand scroll rajouter le shadow comme sur Vinci -->
+  <header class="fixed block w-full z-50" 
+    :class="{ 'bg-white': isHovered }"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave" >
     <!-- Partie Desktop -->
-    <nav class="relative h-16 bg-transparent z-50" :style="dynamicStyle">
+    <nav class="relative h-16 bg-transparent z-50" 
+      :style="{ 'background-color': dynamicStyle ? 'white' : '' }" >
       <div class="container px-4 mx-auto">
         <div class="flex items-center justify-between">
           <!-- Logo -->
@@ -51,16 +57,15 @@
           </div>
 
           <!-- Les différentes sections -->
-          <ul class="hidden lg:flex ml-14 lg:w-auto lg:space-x-12 h-16 items-stretch">
+          <ul class="hidden lg:flex ml-14 lg:w-auto lg:space-x-12 h-16 items-stretch"
+            :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }">
             <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/faire-un-don">Faire un don</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/qui-sommes-nous">Qui sommes nous ?</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/1ere-edition">1ère édition</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/nos-partenaires">Nos partenaires</HeadersLinkDesktop>
             <HeadersSubNav
-              to="/nos-relations-publiques"
-              @mouseEnter="handleMouseEnter"
-              @mouseLeave="handleMouseLeave" >
+              to="/nos-relations-publiques" >
               Nos relations publiques
             </HeadersSubNav>
             <HeadersLinkDesktop to="/contact">Contact</HeadersLinkDesktop>

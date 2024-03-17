@@ -4,7 +4,7 @@
     <Hero />
     <NuxtPage />
     <SocialMedia />
-    <FooterTest />
+    <Footer />
   </div>
 </template>
 
@@ -19,9 +19,9 @@ export default {
     };
   },
   methods: {
+    // Pour le bug safari scroll top en négatif
     handleScroll() {
-      const scrollY = window.scrollY || window.pageYOffset;
-      this.headerStyle.backgroundColor = scrollY > 20 ? 'white' : 'transparent';
+      this.headerStyle = (window.scrollY || window.pageYOffset) <= 0 ? 0 : 1;
     },
   },
   mounted() {

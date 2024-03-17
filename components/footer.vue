@@ -1,35 +1,76 @@
 <template>
-  <footer class="flex flex-col md:flex-row w-screen py-8 items-center md:items-start bg-secondary">
-    <div class="flex items-center justify-center w-full md:w-1/2 mb-9 md:mb-0">
-      <div class="flex flex-col items-center">
-        <span class="mb-6 font-extrabold text-xl">Nous suivre</span>
-        <div class="flex flex-row gap-10">
-          <a href="https://www.facebook.com/" target="_blank"><IconsFacebook class="text-4xl" /></a>
-          <a href="https://www.instagram.com/" target="_blank"><IconsInstagram class="text-4xl" /></a>
-          <a href="https://www.linkedin.com/" target="_blank"><IconsLinkedin class="text-4xl" /></a>
+  <footer class="relative bottom-0 w-screen font-extralight text-sm text-secondary"
+    :style="{ 'margin-bottom': isRadioPage ? '80px' : '' }">
+    <div class="mx-auto">
+      <div class="flex justify-center items-center gap-10">
+        <NuxtLink to="/" class="block">
+          <img src="/images/logoBig_roulerPourAider.png" alt="logo" class="w-32 h-32" />
+        </NuxtLink>
+        <!-- CTA -->
+        <div class="max-w-[33vw] mt-12">
+          <button type="" class=" mb-5">
+            <NuxtLink to="/faire-un-don" class="text-white bg-primary py-3 px-5 rounded-xl">
+              Faites un don
+            </NuxtLink>
+          </button>
+          <p class="">Un don est un enfant en meilleur santé lorem lorem lorem lorem lorem lorem  lorem lorem lorem lorem  lorem lorem lorem lorem </p>
+        </div>
+        <!-- Réseaux sociaux -->
+        <div class="mt-8">
+          <h2 class="mb-2">Nous suivre</h2>
+          <div class="flex flex-row text-xl">
+            <NuxtLink to="https://www.facebook.com/roulerpouraider" class="mr-4">
+              <IconsLinkedin class="" />
+            </NuxtLink>
+            <NuxtLink to="https://www.facebook.com/roulerpouraider" class="mr-4">
+              <IconsFacebook class="" />
+            </NuxtLink>
+            <NuxtLink to="https://www.facebook.com/roulerpouraider" class="mr-4">
+              <IconsTiktok class="" />
+            </NuxtLink>
+            <NuxtLink to="https://www.facebook.com/roulerpouraider" class="mr-4">
+              <IconsInstagram class="" />
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </div>
-    <div class="flex items-center justify-center w-full md:w-1/2">
-      <div class="flex flex-col items-center">
-        <span class="mb-4 font-extrabold text-xl">Contactez nous</span>
-        <p>Une questions ? Une remarque ? Des suggestions ?</p>
-        <p>N'hésitez pas à nous contacter</p>
-        <span class="block text-lg font-semibold"
-          ><a href="mailto:roulerpouraider60@gmail.com"
-            >roulerpouraider60@gmail.com</a
-          ></span
-        >
+
+    <div class="border-t border-gray-300 mt-10 py-6">
+      <div class="flex justify-center flex-row my-auto">
+        <div class="flex items-center cursor-default">Rouler pour aider © 2024</div>
+        <nav class="">
+          <ul class="list-none flex">
+            <li class="">
+              <NuxtLink to="/cookies" class="mt-4 mb-6 cursor-pointer hover:text-primary"
+                >Cookies</NuxtLink
+              >
+            </li>
+            <li class="">
+              <NuxtLink
+                to="/mentions-legales"
+                class="mt-4 mb-6 cursor-pointer hover:text-primary"
+                >Mentions légales</NuxtLink
+              >
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </footer>
 </template>
 
-<script>
-export default {
-  data() {
-    return {};
-  },
-  methods: {},
-};
+<style scoped>
+ul > li::before {
+  content: "•";
+  margin-left: 1rem;
+  margin-right: 0.5rem;
+}
+</style>
+
+<script setup>
+
+// Ajouter du margin pour voir correctement le footer
+const route = useRoute();
+const isRadioPage = computed(() => route.path === '/nos-retombees-presse/nos-passages-radio');
 </script>
