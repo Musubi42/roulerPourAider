@@ -7,9 +7,15 @@
         <NuxtLink to="/linkedin" v-if="showIcons" class="icon cursor-default" key="linkedin">
           <IconsLinkedin />
         </NuxtLink>
-        <IconsFacebook v-if="showIcons" class="icon" key="facebook" />
-        <IconsTiktok v-if="showIcons" class="icon" key="tiktok" />
-        <IconsInstagram v-if="showIcons" class="icon" key="instagram" />
+        <NuxtLink to="/facebook" v-if="showIcons" class="icon cursor-default" key="facebook">
+          <IconsFacebook />
+        </NuxtLink>
+        <NuxtLink to="/tiktok" v-if="showIcons" class="icon cursor-default" key="tiktok">
+          <IconsTiktok />
+        </NuxtLink>
+        <NuxtLink to="/instagram" v-if="showIcons" class="icon cursor-default" key="instagram">
+          <IconsInstagram />
+        </NuxtLink>
       </transition-group>
     </div>
   </div>
@@ -42,7 +48,7 @@ const showIcons = ref(false);
   flex-direction: row;
   position: absolute;
   bottom: 25%; /* Align icons to expand from the center of the button */
-  left: 100%;
+  left: 105%;
   transform: translateX(0);
   transition: transform 0.3s ease;
 }
@@ -55,10 +61,10 @@ const showIcons = ref(false);
   transform: translateX(calc(-100% - 50px)); /* Move icons to the left by their width plus the button width */
 }
 
-/* .icon {
+.icon {
   margin: 5px 0;
   width: 50px; 
-} */
+}
 
 .social-icon-animation-enter-active,
 .social-icon-animation-leave-active {
