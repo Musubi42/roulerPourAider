@@ -94,7 +94,7 @@ const transformArticleObject = (articleTvData) => {
   });
 };
 
-const getArticle = async () => {
+const getArticles = async () => {
   const url = `${strapiBaseUrl}/api/articles?populate=*`;
 
   const { data, pending, error } = await useFetch(url, {
@@ -110,11 +110,9 @@ const getArticle = async () => {
   } else {
     console.error(error);
   }
-
-  console.log("reportagde", articles.value);
 };
 
 onMounted(() => {
-  getArticle();
+  getArticles();
 });
 </script>
