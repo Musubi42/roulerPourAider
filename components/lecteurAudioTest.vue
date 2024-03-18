@@ -160,8 +160,6 @@ input[type="range"]::-webkit-slider-thumb {
 </style>
 
 <script lang="ts">
-// import { ref, watch, onMounted, onBeforeUnmount, defineProps, Ref } from 'vue';
-import { defineProps, defineEmits } from 'vue';
 
 import axios from 'axios';
 

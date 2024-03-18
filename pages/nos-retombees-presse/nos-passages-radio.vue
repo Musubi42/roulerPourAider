@@ -46,7 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
 
 // Avec le nouveau design plus besoin
 // definePageMeta({
@@ -93,10 +92,8 @@ const formatTime = (time: number): string => {
 };
 
 const transformPodcastObject = (podcastData) => {
-  console.log("podcastData", podcastData);
   return podcastData.map((data) => {
     const { podcast, thumbnail, ...otherAttributes } = data.attributes;
-    console.log("thumbnail", thumbnail.data);
     return {
       ...otherAttributes,
       podcastMediaThumbnailUrl: strapiBaseUrl + thumbnail.data.attributes.url,
