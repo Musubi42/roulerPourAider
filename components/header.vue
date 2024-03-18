@@ -2,6 +2,7 @@
 <!-- :class="{ 'bg-white': isHovered || !isAccueilPage }" -->
 <!-- TODO: Quand scroll rajouter le shadow comme sur Vinci -->
   <header class="fixed block w-full z-50" 
+    :style="{ 'box-shadow': dynamicStyle ? 'var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)' : 'de', '--tw-shadow-colored': dynamicStyle ? '0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color)' : '', '--tw-shadow': dynamicStyle ? '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)' : '' }"
     :class="{ 'bg-white': isHovered }"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave" >
