@@ -30,6 +30,6 @@ export default {
       },
     },
   },
-  safelist: ["lilas-pop", "rose-neon", "bleu-ciel", "jaune-citron", "w-20"],
+  safelist: ["lilas-pop", "rose-neon", "bleu-ciel", "jaune-citron", "w-20", "flex-row-reverse"],
   plugins: [],
 };

@@ -7,7 +7,7 @@
     <div class="content-container my-auto pl-20">
       <h1 class="font-bold text-7xl text-white">{{ hero.title }}</h1>
       <p class="text-white text-lg pb-5">{{ hero.description }}</p>
-      <button class="bg-white text-primary hover:text-white hover:bg-primary py-3 px-5 rounded-full">Faites un don</button>
+      <button v-if="hero.bouttonVisible" class="bg-white text-primary hover:text-white hover:bg-primary py-3 px-5 rounded-full">Faites un don</button>
     </div>
   </div>
   <!-- TODO: mieux gérer le chargement -->
@@ -38,6 +38,7 @@ interface PageHero {
   title: string;
   description: string;
   heroImage: string;
+  buttonVisible?: boolean;
 }
 
 const hero = ref<PageHero | null>(null);
@@ -63,8 +64,6 @@ const fetchHeroData = async (pageSlug: string) => {
     },
   });
 
-  console.log(data.value);
-
   if (!error.value && !pending.value && data.value) {
     hero.value = data.value.data[0]?.attributes ? {
       title: data.value.data[0].attributes.title,
@@ -78,7 +77,6 @@ const fetchHeroData = async (pageSlug: string) => {
 
 watchEffect(() => {
   const pageSlug = route.path;
-  console.log("pageSlug", route.path);
   fetchHeroData(pageSlug);
 });
 </script>

@@ -3,7 +3,7 @@
     <!-- En attendant d'avoir les éléments de déco, filigrane -->
     <div class="absolute inset-0">
       <svg
-        class="mx-auto mt-10"
+        class="mx-auto"
         width="736"
         height="736"
         viewbox="0 0 736 736"
@@ -25,13 +25,21 @@
         </g>
       </svg>
     </div>
+    <div class="max-w-3xl mx-auto mb-12 md:mb-20 text-center -mt-14">
+      <!-- <span class="text-blue-400 uppercase font-semibold tracking-widest">New feature</span> -->
+      <h2 class="mt-4 mb-6 text-4xl font-bold text-white font-heading">{{ descriptionAsso.title }}</h2>
+      <p class="text-lg text-gray-50">{{ descriptionAsso.description }}</p>
+    </div>
     <div v-for="(person, index) in persons" :key="index"
       class="container px-4 mx-auto" >
       <div class="relative max-w-5xl mx-auto mb-20">
-        <div class="bg-white md:clip-path-right-top-sm rounded-lg">
-          <div class="flex flex-row items-center" :class="{ 'flex-row-reverse': index % 2 === 1 }">
+        <div class="bg-white md:clip-path-right-top-sm rounded-lg" >
+          <div class="flex flex-col md:flex-row items-center" 
+            :class="{ 'md:flex-row-reverse': index % 2 === 1, 'md:flex-row': index % 2 === 0 }" 
+             >
             <NuxtImg
-              class="w-full md:w-80 h-[350px] object-cover md:clip-path-right-top rounded-l-lg"
+              class="w-full md:w-80 h-[350px] object-cover md:clip-path-right-top"
+              :class="{ 'md:rounded-l-lg': index % 2 === 0, 'rounded-t-lg': index % 2 === 0, 'rounded-r-lg': index % 2 === 1 }" 
               :src="person?.personPhotoUrl"
               alt=""
             />
@@ -92,7 +100,13 @@ interface Person {
   };
 }
 
+interface DescriptionAsso {
+  title: string;
+  description: string;
+}
+
 const persons = ref<Person[]>([]);
+const descriptionAsso = ref<string>("");
 
 const runtimeConfig = useRuntimeConfig();
 const { public: { strapiBaseUrl, strapiToken } } = runtimeConfig;
@@ -121,7 +135,25 @@ const getPersons = async () => {
   if (!error.value && !pending.value && data.value) {
     persons.value = transformPersonObject(data.value.data);
   } else {
-    console.error(error);
+    console.error(error.value);
+  }
+};
+
+const getDescriptionAsso = async () => {
+  const url = `${strapiBaseUrl}/api/description-asso`;
+
+  const { data, pending, error } = await useFetch(url, {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${strapiToken}`,
+    },
+  });
+
+  if (!error.value && !pending.value && data.value) {
+    descriptionAsso.value = data.value.data.attributes;
+  } else {
+    console.error(error.value);
   }
 };
 
@@ -131,6 +163,7 @@ const capitalizePrenom = (prenom: string) => {
 
 onMounted(() => {
   getPersons();
+  getDescriptionAsso();
 });
 </script>
 

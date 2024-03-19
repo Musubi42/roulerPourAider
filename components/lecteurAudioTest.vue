@@ -183,13 +183,23 @@ export default {
     }
   },
   setup(props, { emit }) {
-    watch(() => props.currentPodcast, (newVal) => {
+    watch(() => props.currentPodcast, (newVal, oldVal) => {
       if (newVal) {
         // Safely access properties of newVal
         currentPodcast.value = newVal;
-        changePodcast();
+        changePodcast(newVal, oldVal);
       }
     });
+
+    // watch(() => props.currentPodcast, (newVal, oldVal) => {
+    //   console.log("newVal", newVal);
+    //   console.log("oldVal", oldVal);
+    //   console.log(newVal.value !== oldVal);
+    //     currentPodcast.value = newVal;
+    //   if (!(newVal !== oldVal)) {
+    //     changePodcast();
+    //   }
+    // });
 
     // Reactive states
     const currentPodcast = ref<Podcast | null>(null);
@@ -216,26 +226,20 @@ export default {
     );
 
     // Methods
-    const changePodcast = async () => {
+    const changePodcast = async (newVal, oldVal) => {
       if (audioSource.value) {
         audioSource.value.pause();
         audioSource.value.src = ''; // Release the audio resource
       }
       isPlaying.value = false;
       await loadAudio(props.currentPodcast.id);
-      await playAudio();
-
-      console.log("salut");
+      if (oldVal !== null) {
+        await playAudio();
+        isPlaying.value = true;
+        emit('update:isPlaying', isPlaying.value);
+      }
       
-      // Function to update and emit isPlaying status
-      const setIsPlaying = (newStatus) => {
-        // ... logic to change isPlaying status
-        console.log("Audio : ", newStatus);
-        emit('update:isPlaying', newStatus);
-      };
 
-      isPlaying.value = true;
-      emit('update:isPlaying', isPlaying.value);
     };
 
     const loadAudio = async (trackID: number) => {
@@ -260,7 +264,6 @@ export default {
         audioSource.value.play();
         isPlaying.value = true;
       }
-      console.log("non");
     };
 
     const toggleAudio = async () => {

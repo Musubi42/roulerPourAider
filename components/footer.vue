@@ -38,7 +38,7 @@
 
     <div class="border-t border-gray-300 mt-10 py-6">
       <div class="flex justify-center flex-row my-auto">
-        <div class="flex items-center cursor-default">Rouler pour aider © 2024</div>
+        <div class="flex items-center cursor-default">Rouler pour aider © {{ actualYear() }}</div>
         <nav class="">
           <ul class="list-none flex">
             <li class="">
@@ -49,9 +49,16 @@
             <li class="">
               <NuxtLink
                 to="/mentions-legales"
-                class="mt-4 mb-6 cursor-pointer hover:text-primary"
-                >Mentions légales</NuxtLink
-              >
+                class="mt-4 mb-6 cursor-pointer hover:text-primary" >
+                  Mentions légales
+                </NuxtLink>
+            </li>
+            <li class="">
+              <NuxtLink
+                to="/calendrier"
+                class="mt-4 mb-6 cursor-pointer hover:text-primary" >
+                  Calendrier
+                </NuxtLink>
             </li>
           </ul>
         </nav>
@@ -73,4 +80,9 @@ ul > li::before {
 // Ajouter du margin pour voir correctement le footer
 const route = useRoute();
 const isRadioPage = computed(() => route.path === '/nos-retombees-presse/nos-passages-radio');
+
+const actualYear = () => {
+  const date = new Date();
+  return date.getFullYear();
+};
 </script>
