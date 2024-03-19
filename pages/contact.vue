@@ -144,27 +144,16 @@
                   >
                   <input
                     class="w-full rounded-full p-4 outline-none border border-gray-100 shadow placeholder-gray-500 focus:ring focus:ring-secondary transition duration-200"
-                    id="firstName"
+                    v-model="firstName"
                     type="text"
                     placeholder="Prénom"
                   />
                 </div>
-                <!-- <div class="w-full lg:w-1/2 p-4">
-                  <label class="text-sm font-medium mb-2 block" for="textInput2"
-                    >Last name</label
-                  >
-                  <input
-                    class="w-full rounded-full p-4 outline-none border border-gray-100 shadow placeholder-gray-500 focus:ring focus:ring-orange-200 transition duration-200"
-                    id="textInput2"
-                    type="text"
-                    placeholder="Last name"
-                  />
-                </div> -->
               </div>
               <label class="text-sm font-medium mb-2 block" for="textInput3">Email</label>
               <input
                 class="w-full mb-4 rounded-full p-4 outline-none border border-gray-100 shadow placeholder-gray-500 focus:ring focus:ring-secondary transition duration-200"
-                id="email"
+                v-model="email"
                 type="text"
                 placeholder="john@email.com"
               />
@@ -173,7 +162,7 @@
               >
               <textarea
                 class="resize-none w-full h-[220px] rounded-3xl p-4 mb-8 outline-none border border-gray-100 placeholder-gray-500 focus:ring focus:ring-secondary transition duration-200"
-                id="message"
+                v-model="message"
                 rows="5"
                 placeholder="Écrivez votre message ici..."
               ></textarea>
@@ -199,44 +188,17 @@
 // import nodemailer from "nodemailer";
 const mail = useMail();
 
+const firstName = ref("");
+const email = ref("");
+const message = ref("");
+
 const sendEmail = () => {
+  const messageBody = `---\nPrénom: ${firstName.value}\nEmail: ${email.value}\n---\n\n${message.value}`;
   mail.send({
-    from: "John Doe",
-    subject: "Incredible",
-    text: "This is an incredible test message",
+    from: "",
+    subject: "Contact form submission",
+    text: messageBody,
   });
 };
-
-// const runtimeConfig = useRuntimeConfig();
-// const {public: { strapiBaseUrl, strapiToken }} = runtimeConfig;
-
-// const transporter = nodemailer.createTransport({
-//   service: "Gmail",
-//   host: "smtp.gmail.com",
-//   port: 465,
-//   secure: true,
-//   auth: {
-//     user: "raphaelthi59@gmail.com",
-//     pass: "tekt cgkg hvts thbk",
-//   },
-// });
-
-// const mailOptions = {
-//   from: "raphaelthi59@gmail.com",
-//   to: "raphaelthi59@example.com",
-//   subject: "Hello from Nodemailer",
-//   text: "This is a test email sent using Nodemailer.",
-// };
-
-// const sendEmail = () => {
-//   transporter.sendMail(mailOptions, (error, info) => {
-//     if (error) {
-//       console.error("Error sending email: ", error);
-//     } else {
-//       console.log("Email sent: ", info.response);
-//     }
-//   });
-// };
-
 onMounted(async () => {});
 </script>

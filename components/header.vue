@@ -15,7 +15,7 @@
           <a class="flex text-lg font-bold" href="#">
             <img
               class="h-16 w-auto cursor-pointer"
-              src="/assets/images/logo-small.jpeg"
+              src="/public/images/logoBig_roulerPourAider.png"
               alt="Logo rouler pour aider"
             />
           </a>
@@ -62,13 +62,18 @@
             :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }">
             <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/faire-un-don">Faire un don</HeadersLinkDesktop>
-            <HeadersLinkDesktop to="/qui-sommes-nous">Qui sommes nous ?</HeadersLinkDesktop>
+            <HeadersSubNavTest
+              :subMenus="subMenuItemsWhoAreWe"
+              to="/qui-sommes-nous/association" >
+              Qui sommes nous
+            </HeadersSubNavTest>
             <HeadersLinkDesktop to="/1ere-edition">1ère édition</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/nos-partenaires">Nos partenaires</HeadersLinkDesktop>
-            <HeadersSubNav
-              to="/nos-relations-publiques" >
+            <HeadersSubNavTest
+              :subMenus="subMenuItemsPress"
+              to="/nos-retombees-presse/nos-articles-de-presse" >
               Nos relations publiques
-            </HeadersSubNav>
+            </HeadersSubNavTest>
             <HeadersLinkDesktop to="/contact">Contact</HeadersLinkDesktop>
           </ul>
 
@@ -221,6 +226,16 @@ export default {
     return {
       isHovered: false,
       isAccueilPage: this.$route.fullPath === "/",
+      subMenuItemsPress: [
+        { name: 'Nos articles de presse', path: '/nos-retombees-presse/nos-articles-de-presse' },
+        { name: 'Nos reportages TV', path: '/nos-retombees-presse/nos-reportages-tv' },
+        { name: 'Nos passages radio', path: '/nos-retombees-presse/nos-passages-radio' },
+      ],
+      subMenuItemsWhoAreWe: [
+        { name: "L'association", path: '/qui-sommes-nous/association' },
+        { name: "L'Hôpital Necker", path: '/qui-sommes-nous/hopital-necker' },
+        { name: 'Gallerie photo', path: '/qui-sommes-nous/gallerie-photo' },
+      ],
     };
   },
   methods: {
