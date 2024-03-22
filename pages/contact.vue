@@ -33,7 +33,7 @@
               class="rounded-3xl bg-primary shadow-sm py-8" >
               <div class="relative">
                 <div class="absolute top-0 left-0 bg-orange-50 w-1 h-8"></div>
-                <div class="flex flex-row justify-between items-center">
+                <div class="flex flex-col md:flex-row justify-between items-center">
                   <div class="px-8">
                     <h2 class="text-white text-xl font-medium font-heading mb-6">
                       {{ contact.prenom }} {{ contact.nom }}, {{ contact.role }}
@@ -49,7 +49,7 @@
                     </span>
                   </div>
                   <!-- Avatar -->
-                  <div class="pr-8">
+                  <div class="mt-10 md:mt-0 md:pr-8">
                     <img
                       class="w-24 h-24 rounded-full object-cover"
                       :src="contact.contactPhotoUrl"
