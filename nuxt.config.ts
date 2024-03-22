@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     public: {
       strapiBaseUrl: "",
       strapiToken: "",
+      strapiGalleriePutLike: "",
     },
   },
   alias: {
@@ -24,7 +25,7 @@ export default defineNuxtConfig({
         },
       },
   },
-  modules: ["nuxt-svgo", "@nuxt/image", "@nuxtjs/i18n", "nuxt-mail"],
+  modules: ["nuxt-svgo", "@nuxt/image", "@nuxtjs/i18n", "nuxt-mail", "nuxt-swiper"],
   i18n: {
     vueI18n: "./i18n.config.js", // if you are using custom path, default
   },

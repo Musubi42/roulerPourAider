@@ -3,11 +3,11 @@
     <section
       v-for="(partenaire, index) in partenaires"
       :key="index"
-      class="flex flex-row w-full"
-    >
+      class="flex flex-col w-full container mx-auto justify-between"
+      :class="{ 'md:flex-row-reverse': index % 2 === 1, 'md:flex-row': index % 2 === 0 }" >
       <div class="flex flex-col gap-4 justify-center items-center align-middle w-7/12">
         <!-- Title -->
-        <div class="font-black text-3xl" >
+        <div class="font-semibold text-3xl" >
           BMW
           <!-- {{ partenaire.title }} -->
         </div>
@@ -47,7 +47,7 @@
         </div>
       </div>
       <!-- Image -->
-      <div class="w-5/12">
+      <div class="">
         <NuxtImg src="/images/logoBig_roulerPourAider.png" class="h-72" alt="" />
       </div>
     </section>

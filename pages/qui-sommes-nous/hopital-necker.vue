@@ -1,7 +1,7 @@
 <template>
-  <section class="relative py-24 bg-blue-800 overflow-hidden">
+  <section class="relative py-24 container mx-auto">
     <!-- En attendant d'avoir les éléments de déco, filigrane -->
-    <div class="absolute inset-0">
+    <!-- <div class="absolute inset-0">
       <svg
         class="mx-auto mt-10"
         width="736"
@@ -24,63 +24,58 @@
           ></path>
         </g>
       </svg>
-    </div>
-    <div v-for="(person, index) in persons" :key="index"
-      class="container px-4 mx-auto" >
-      <div class="relative max-w-5xl mx-auto mb-20">
-        <div class="bg-white md:clip-path-right-top-sm rounded-lg" >
-          <div class="flex flex-col md:flex-row items-center" 
-            :class="{ 'md:flex-row-reverse': index % 2 === 1, 'md:flex-row': index % 2 === 0 }" 
-             >
-            <NuxtImg
-              class="w-full md:w-80 h-[350px] object-cover md:clip-path-right-top"
-              :class="{ 'md:rounded-l-lg': index % 2 === 0, 'rounded-t-lg': index % 2 === 0, 'rounded-r-lg': index % 2 === 1 }" 
-              :src="person?.personPhotoUrl"
-              alt=""
-            />
-            <div class="pl-8 py-10 lg:py-0">
-              <h3 class="mb-1 text-3xl font-semibold font-heading text-blue-800">
-                {{ capitalizePrenom(person?.prenom) }} {{ person?.nom }}
-              </h3>
-              <p class="mb-4 text-blue-500">{{ person?.Poste }}</p>
-              <p class="text-blue-800 mb-4 mr-4">
-                {{ person.description }}
-              </p>
-              <div class="flex items-center">
-                <NuxtLink
-                  v-if="person?.reseaux?.facebook"
-                  class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                  :to="`${person?.facebook}`" >
-                  <IconsFacebook />
-                </NuxtLink>
-                <NuxtLink
-                  v-if="person?.reseaux?.twitter"
-                  class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                  :to="`${person?.twitter}`" >
-                  <IconsTwitter />
-                </NuxtLink>
-                <NuxtLink
-                  v-if="person?.reseaux?.linkedin"
-                  class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                  :to="`${person?.linkedin}`" >
-                  <IconsLinkedin />
-                </NuxtLink>
-                <NuxtLink
-                  v-if="person?.reseaux?.instagram"
-                  class="inline-flex items-center justify-center w-12 h-12 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                  :to="`${person?.instagram}`" >
-                  <IconsInstagram />
-                </NuxtLink>
-              </div>
-            </div>
+    </div> -->
+    <section class="flex flex-col md:flex-row w-full h-96 gap-6 mb-8" >
+      <!-- PP -->
+      <div class="h-full w-full md:w-1/2" >
+        <NuxtImg src="/hopital-necker.jpeg" alt="Photo de l'hôpital Necker"
+        class="h-full w-full object-cover rounded-lg" />
+      </div>
+      <!-- Texte -->
+      <div class="flex flex-col h-full w-full md:w-1/2 content-between justify-between gap-6 text-xl" >
+        <div class="px-8 flex items-center h-full bg-[#F7F7FA] rounded-lg" >
+          <p>Peu importe d’où l’on vient en France, quand un enfant est touché par la maladie et en particulier par une maladie rare, Necker est un hôpital de référence.</p>
+        </div>
+        <div class="px-8 flex items-center h-full bg-[#F7F7FA] rounded-lg" >
+          <p>Nous avons choisi cet hôpital car leurs besoins sont grands et ils se doivent de constamment faire évoluer leurs équipements et leurs prises en charge.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="font-bold text-3xl mb-4" >Chiffres clés de l'hôpital</h2>
+      <div class="bg-[#F7F7FA] rounded-lg flex flex-col px-10 py-5 gap-6">
+      <!-- Mettre 3 par div -->
+        <div class="flex flex-row justify-between" >
+          <div ref="addToRefs" v-for="(item, index) in keyNumbers.slice(0, 3)" :key="index"
+            class="w-1/4" >
+            <CountUp class="font-bold text-primary text-3xl" :end="isVisible[index] ? item.number : 0" />
+            <p class="flex flex-wrap" >{{ item.text }}</p>
+          </div>
+        </div>
+        <!-- Seconde ligne -->
+        <div class="flex flex-row justify-between" >
+          <div ref="addToRefs" v-for="(item, index) in keyNumbers.slice(3)" :key="index"
+            class="w-1/4" >
+            <CountUp class="font-bold text-primary text-3xl" :end="isVisible[index] ? item.number : 0" />
+            <p class="flex flex-wrap" >{{ item.text }}</p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </section>
 </template>
 
 <script setup lang="ts">
+const keyNumbers = [
+  { number: 506029, text: 'Prise en charge' },
+  { number: 82425, text: 'Passages aux urgences' },
+  { number: 582, text: 'Lits toutes disciplines confondues' },
+  { number: 61, text: 'Centres de référence maladies rares' },
+  { number: 4777, text: 'Professionnels au services des patients' },
+  { number: 1079, text: 'Publications scientifiques' },
+];
+
 interface Person {
   personPhotolUrl: string;
   prenom: string;
@@ -128,12 +123,30 @@ const getPersons = async () => {
   }
 };
 
-const capitalizePrenom = (prenom: string) => {
-  return prenom.charAt(0).toUpperCase() + prenom.slice(1);
-};
+const counters = ref([]);
+const isVisible = reactive(keyNumbers.map(() => false));
+
+let observer;
+
+const addToRefs = ref([]);
 
 onMounted(() => {
-  getPersons();
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      console.log("entry", entry.isIntersecting);
+      isVisible[index] = entry.isIntersecting;
+    });
+  }, {
+    threshold: 0.5
+  });
+
+  addToRefs.value.forEach(ref => {
+    observer.observe(ref);
+  });
+});
+
+onUnmounted(() => {
+  counters.value.forEach(addToRefs => observer.unobserve(counter));
 });
 </script>
 

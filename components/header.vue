@@ -58,7 +58,7 @@
           </div>
 
           <!-- Les différentes sections -->
-          <ul class="hidden lg:flex ml-14 lg:w-auto lg:space-x-12 h-16 items-stretch"
+          <ul class="hidden lg:flex lg:w-auto lg:space-x-12 h-16 items-stretch"
             :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }">
             <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/faire-un-don">Faire un don</HeadersLinkDesktop>
