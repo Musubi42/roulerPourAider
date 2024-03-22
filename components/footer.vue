@@ -1,19 +1,28 @@
 <template>
-  <footer class="relative bottom-0 w-screen text-sm font-normal text-secondary"
-    :style="{ 'margin-bottom': isRadioPage ? '80px' : '' }">
+  <footer
+    class="relative bottom-0 w-screen text-sm font-normal text-secondary"
+    :style="{ 'margin-bottom': isRadioPage ? '80px' : '' }"
+  >
     <div class="mx-auto">
-      <div class="flex justify-center items-center gap-10">
-        <NuxtLink to="/" class="block">
-          <img src="/images/logoBig_roulerPourAider.png" alt="logo" class="w-32 h-32" />
-        </NuxtLink>
-        <!-- CTA -->
-        <div class="max-w-[33vw] mt-12">
-          <button type="" class=" mb-5">
-            <NuxtLink to="/faire-un-don" class="text-white bg-primary py-3 px-5 rounded-xl">
-              Faites un don
-            </NuxtLink>
-          </button>
-          <p class="">Un don est un enfant en meilleur santé lorem lorem lorem lorem lorem lorem  lorem lorem lorem lorem  lorem lorem lorem lorem </p>
+      <div class="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-10">
+        <div class="flex flex-row items-center w-full gap-4" >
+          <NuxtLink to="/" class="block w-1/3">
+            <img src="/images/logoBig_roulerPourAider.png" alt="logo" class="w-32 h-32" />
+          </NuxtLink>
+          <!-- CTA -->
+          <div class="w-2/3 md:max-w-[33vw] mt-12">
+            <button type="" class="mb-5">
+              <NuxtLink
+                to="/faire-un-don"
+                class="text-white bg-primary py-3 px-5 rounded-xl" >
+                Faites un don
+              </NuxtLink>
+            </button>
+            <p class="">
+              Un don est un enfant en meilleur santé lorem lorem lorem lorem lorem lorem
+              lorem lorem lorem lorem lorem lorem lorem lorem
+            </p>
+          </div>
         </div>
         <!-- Réseaux sociaux -->
         <div class="mt-8">
@@ -37,10 +46,12 @@
     </div>
 
     <div class="border-t border-gray-300 mt-10 py-6">
-      <div class="flex justify-center flex-row my-auto">
-        <div class="flex items-center cursor-default">Rouler pour aider © {{ actualYear() }}</div>
+      <div class="flex justify-center flex-col md:flex-row my-auto gap-4">
+        <div class="flex items-center cursor-default justify-center">
+          Rouler pour aider © {{ actualYear() }}
+        </div>
         <nav class="">
-          <ul class="list-none flex">
+          <ul class="list-none flex flex-col md:flex-row items-center -ml-[17px]">
             <li class="">
               <NuxtLink to="/cookies" class="mt-4 mb-6 cursor-pointer hover:text-primary"
                 >Cookies</NuxtLink
@@ -49,16 +60,18 @@
             <li class="">
               <NuxtLink
                 to="/mentions-legales"
-                class="mt-4 mb-6 cursor-pointer hover:text-primary" >
-                  Mentions légales
-                </NuxtLink>
+                class="mt-4 mb-6 cursor-pointer hover:text-primary"
+              >
+                Mentions légales
+              </NuxtLink>
             </li>
             <li class="">
               <NuxtLink
                 to="/calendrier"
-                class="mt-4 mb-6 cursor-pointer hover:text-primary" >
-                  Calendrier
-                </NuxtLink>
+                class="mt-4 mb-6 cursor-pointer hover:text-primary"
+              >
+                Calendrier
+              </NuxtLink>
             </li>
           </ul>
         </nav>
@@ -76,10 +89,11 @@ ul > li::before {
 </style>
 
 <script setup>
-
 // Ajouter du margin pour voir correctement le footer
 const route = useRoute();
-const isRadioPage = computed(() => route.path === '/nos-retombees-presse/nos-passages-radio');
+const isRadioPage = computed(
+  () => route.path === "/nos-retombees-presse/nos-passages-radio"
+);
 
 const actualYear = () => {
   const date = new Date();
