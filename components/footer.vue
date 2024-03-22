@@ -1,5 +1,5 @@
 <template>
-  <footer class="relative bottom-0 w-screen font-extralight text-sm text-secondary"
+  <footer class="relative bottom-0 w-screen text-sm font-normal text-secondary"
     :style="{ 'margin-bottom': isRadioPage ? '80px' : '' }">
     <div class="mx-auto">
       <div class="flex justify-center items-center gap-10">

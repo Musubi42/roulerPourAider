@@ -39,9 +39,11 @@
                 </span>
                 <div class="flex items-center">
                 <!-- <iconsLoading class="w-4 h-4 text-white" v-if="podcast.isLoading" src="" alt="Loading..." /> -->
-                  <div class="cursor-pointer" @click="toggleHeart">
-                    <IconsHeartEmpty v-if="!isHeartFilled" class="text-orange-400 mr-2" />
-                    <IconsHeartFill v-else class="text-orange-400 mr-2" />
+                  <div class="cursor-pointer" @click="toggleHeart(index)">
+                    <transition name="like">
+                      <IconsHeartEmpty v-if="!gallerie.liked" class="text-orange-400 mr-2" :class="{ 'like-animation': gallerie.isAnimating }" @animationend="gallerie.isAnimating = false" />
+                      <IconsHeartFill v-else class="text-orange-400 mr-2" :class="{ 'like-animation': gallerie.isAnimating }" @animationend="gallerie.isAnimating = false" />
+                    </transition>
                   </div>
                   <span class="text-sm text-gray-500">{{ gallerie.nombreLike }}</span>
                 </div>
@@ -55,17 +57,37 @@
   </section>
 </template>
 
+<style scoped>
+.like-animation {
+  animation: like 0.3s ease-in-out;
+}
+
+@keyframes like {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+</style>
+
 <script setup lang="ts">
 interface Gallerie {
   galleriePhotolUrl: string;
   description: string;
   nombreLike: number;
+  format: {
+    paysage: boolean;
+    portrait: boolean;
+    carre: boolean;
+  }
 }
 
 const galleries = ref<Gallerie[]>([]);
 
 const runtimeConfig = useRuntimeConfig();
-const { public: { strapiBaseUrl, strapiToken } } = runtimeConfig;
+const { public: { strapiBaseUrl, strapiToken, strapiGalleriePutLike } } = runtimeConfig;
 
 const transformGallerieObject = (gallerieData) => {
   return gallerieData.map((data) => {
@@ -73,6 +95,8 @@ const transformGallerieObject = (gallerieData) => {
     return {
       ...otherAttributes,
       galleriePhotoUrl: strapiBaseUrl + photo.data.attributes.url,
+      liked: false, // By default all images are not liked
+      isAnimating: false,
     };
   });
 };
@@ -95,10 +119,42 @@ const getGalleries = async () => {
   }
 };
 
-const isHeartFilled = ref(false);
+const addLike = async (gallerieId, nombreLike) => {
+  const url = `${strapiBaseUrl}/api/galleries/${gallerieId}`;
 
-const toggleHeart = () => {
-  isHeartFilled.value = !isHeartFilled.value;
+  const { data, pending, error } = await useFetch(url, {
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${strapiGalleriePutLike}`,
+    },
+    body: {
+      data: {
+        nombreLike : nombreLike,
+      }
+    }
+  });
+
+  if (!error.value && !pending.value && data.value) {
+    console.log(data.value.data.attributes);
+  } else {
+    console.error(error.value);
+  }
+};
+
+const isHeartFilled = ref(false);
+const isAnimating = ref(false);
+
+// TODO: Envoyer le post au back pour save le like
+const toggleHeart = (index) => {
+  galleries.value[index].liked = !galleries.value[index].liked;
+  galleries.value[index].isAnimating = true;
+
+  galleries.value[index].nombreLike = galleries.value[index].liked ? Number(galleries.value[index].nombreLike) + 1 : galleries.value[index].nombreLike - 1;
+
+  // Update the like in the database
+  const gallerieId = index + 1;
+  addLike(gallerieId, galleries.value[index].nombreLike);
 };
 
 onMounted(() => {

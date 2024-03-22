@@ -28,94 +28,31 @@
               </div>
             </div>
 
-            <!-- <div class=""> -->
-            <!-- Diviser en deux texte et photo, centrer la photo au milieu -->
-            <!-- Contact Hugo NICAISE -->
-            <div class="rounded-3xl bg-primary shadow-sm py-8">
-              <div class="relative">
-                <div class="absolute top-0 left-0 bg-orange-50 w-1 h-8"></div>
-                <div class="flex flex-row justify-between">
-                  <div class="px-8">
-                    <h2 class="text-white text-xl font-bold font-heading mb-6">
-                      Hugo NICAISE, président
-                    </h2>
-                    <!-- Ajouter sur deux lignes le mail et le numéro, quand on clique dessus on est redirigé vers le mailing ou appel -->
-                    <span class="flex flex-row items-end gap-5 text-xl">
-                      <IconsPhone />
-                      <p>+33 6 11 11 11 11</p>
-                    </span>
-                    <span class="flex flex-row items-end gap-5 text-xl">
-                      <IconsEmail />
-                      <p>joe@acme.com</p>
-                    </span>
-                  </div>
-                  <!-- Avatar -->
-                  <div>
-                    <img
-                      class="w-24 h-24 rounded-full"
-                      src="/Avatar-hugo.png"
-                      alt="Avatar"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Contact Milan HRMO  -->
-            <div class="rounded-3xl bg-primary shadow-sm py-8">
-              <div class="relative">
-                <div class="absolute top-0 left-0 bg-orange-50 w-1 h-8"></div>
-                <div class="flex flex-row justify-between">
-                  <div class="px-8">
-                    <h2 class="text-white text-xl font-bold font-heading mb-6">
-                      Hugo NICAISE, président
-                    </h2>
-                    <!-- Ajouter sur deux lignes le mail et le numéro, quand on clique dessus on est redirigé vers le mailing ou appel -->
-                    <span class="flex flex-row items-end gap-5 text-xl">
-                      <IconsPhone />
-                      <p>+33 6 11 11 11 11</p>
-                    </span>
-                    <span class="flex flex-row items-end gap-5 text-xl">
-                      <IconsEmail />
-                      <p>joe@acme.com</p>
-                    </span>
-                  </div>
-                  <!-- Avatar -->
-                  <div>
-                    <img
-                      class="w-24 h-24 rounded-full"
-                      src="/Avatar-hugo.png"
-                      alt="Avatar"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <!-- Contact Yves Gerard -->
-            <div class="rounded-3xl bg-primary shadow-sm py-8">
+            <div v-for="(contact, index) in contacts"
+              class="rounded-3xl bg-primary shadow-sm py-8" >
               <div class="relative">
                 <div class="absolute top-0 left-0 bg-orange-50 w-1 h-8"></div>
-                <div class="flex flex-row justify-between">
+                <div class="flex flex-row justify-between items-center">
                   <div class="px-8">
-                    <h2 class="text-white text-xl font-bold font-heading mb-6">
-                      Hugo NICAISE, président
+                    <h2 class="text-white text-xl font-medium font-heading mb-6">
+                      {{ contact.prenom }} {{ contact.nom }}, {{ contact.role }}
                     </h2>
                     <!-- Ajouter sur deux lignes le mail et le numéro, quand on clique dessus on est redirigé vers le mailing ou appel -->
-                    <span class="flex flex-row items-end gap-5 text-xl">
+                    <span class="flex flex-row items-end gap-5 text-xl cursor-pointer">
                       <IconsPhone />
-                      <p>+33 6 11 11 11 11</p>
+                      <a :href="`tel:${contact.telephone}`" class="hover:underline">{{ contact.telephone }}</a>
                     </span>
-                    <span class="flex flex-row items-end gap-5 text-xl">
+                    <span class="flex flex-row items-end gap-5 text-xl cursor-pointer">
                       <IconsEmail />
-                      <p>joe@acme.com</p>
+                      <a :href="`mailto:${contact.email}`" class="hover:underline">{{ contact.email }}</a>
                     </span>
                   </div>
                   <!-- Avatar -->
-                  <div>
+                  <div class="pr-8">
                     <img
-                      class="w-24 h-24 rounded-full"
-                      src="/Avatar-hugo.png"
+                      class="w-24 h-24 rounded-full object-cover"
+                      :src="contact.contactPhotoUrl"
                       alt="Avatar"
                     />
                   </div>
@@ -126,6 +63,7 @@
           </div>
         </div>
 
+        <!-- Côté droit -->
         <div class="w-full lg:w-1/2 p-4">
           <form class="h-full" action="" @submit.prevent>
             <div
@@ -184,7 +122,7 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // import nodemailer from "nodemailer";
 const mail = useMail();
 
@@ -200,5 +138,62 @@ const sendEmail = () => {
     text: messageBody,
   });
 };
-onMounted(async () => {});
+
+interface contact {
+  contactPhotolUrl: string;
+  prenom: string;
+  nom: string;
+  role: string;
+  description: string;
+  telephone: string;
+  email: string;
+}
+
+const contacts = ref<contact[]>([]);
+
+const runtimeConfig = useRuntimeConfig();
+const { public: { strapiBaseUrl, strapiToken } } = runtimeConfig;
+
+const transformContactObject = (contactData) => {
+  return contactData.map((data) => {
+    const { photo, prenom, nom, telephone, ...otherAttributes } = data.attributes;
+    const telephoneString = telephone.toString();
+    const telephoneTransformed = `+33 ${telephoneString.charAt(0)} ${telephoneString.slice(1).match(/.{1,2}/g).join(' ')}`;
+    return {
+      ...otherAttributes,
+      prenom: capitalizePrenom(prenom),
+      nom: nom.toUpperCase(),
+      telephone: telephoneTransformed,
+      contactPhotoUrl: strapiBaseUrl + photo.data.attributes.url,
+    };
+  });
+};
+
+const getContacts = async () => {
+  const url = `${strapiBaseUrl}/api/contacts?populate=*`;
+
+  const { data, pending, error } = await useFetch(url, {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${strapiToken}`,
+    },
+  });
+
+  if (!error.value && !pending.value && data.value) {
+    contacts.value = transformContactObject(data.value.data);
+  } else {
+    console.error(error.value);
+  }
+
+  console.log("contacts", contacts.value);
+};
+
+const capitalizePrenom = (prenom: string) => {
+  return prenom.charAt(0).toUpperCase() + prenom.slice(1);
+};
+
+onMounted(async () => {
+  await getContacts();
+});
 </script>
