@@ -5,8 +5,8 @@
       <BreadcrumbComponent />
     </div>
     <div class="content-container my-auto pl-20">
-      <h1 class="font-bold text-7xl text-white">{{ hero.title }}</h1>
-      <p class="text-white text-lg pb-5">{{ hero.description }}</p>
+      <h1 class="font-bold text-5xl text-white">{{ hero.title }}</h1>
+      <p class="text-white text-xl pb-5">{{ hero.description }}</p>
       <button v-if="hero.bouttonVisible" class="bg-white text-primary hover:text-white hover:bg-primary py-3 px-5 rounded-full">Faites un don</button>
     </div>
   </div>
@@ -17,8 +17,8 @@
       <BreadcrumbComponent />
     </div>
     <div class="content-container my-auto pl-20">
-      <h1 class="font-bold text-7xl text-white"> Default title </h1>
-      <p class="text-white text-lg pb-5"> Default description </p>
+      <h1 class="font-bold text-5xl text-white"> Default title </h1>
+      <p class="text-white text-xl pb-5"> Default description </p>
       <button class="bg-white text-primary hover:text-white hover:bg-primary py-3 px-5 rounded-full">Faites un don</button>
     </div>
   </div>

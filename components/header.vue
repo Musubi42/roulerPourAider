@@ -61,7 +61,7 @@
           <ul class="hidden lg:flex lg:w-auto lg:space-x-12 h-16 items-stretch"
             :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }">
             <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
-            <HeadersLinkDesktop to="/faire-un-don">Faire un don</HeadersLinkDesktop>
+            <HeadersLinkDesktop to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr">Faire un don</HeadersLinkDesktop>
             <HeadersSubNavTest
               :subMenus="subMenuItemsWhoAreWe"
               to="/qui-sommes-nous/association" >
@@ -234,10 +234,11 @@ export default {
       subMenuItemsWhoAreWe: [
         { name: "L'association", path: '/qui-sommes-nous/association' },
         { name: "L'Hôpital Necker", path: '/qui-sommes-nous/hopital-necker' },
-        { name: 'Gallerie photo', path: '/qui-sommes-nous/gallerie-photo' },
+      
       ],
     };
   },
+  //   { name: 'Gallerie photo', path: '/qui-sommes-nous/gallerie-photo' },
   methods: {
     handleMouseEnter() {
       this.isHovered = true;

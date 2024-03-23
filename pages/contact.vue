@@ -1,14 +1,13 @@
 <template>
   <section class="overflow-hidden bg-slate-300">
+  <!-- TODO : Mobile mettre le formulaire en premier -->
     <div class="container px-4 mx-auto pt-16 pb-20">
       <div class="flex flex-wrap -mx-4">
         <!-- Côté gauche -->
+        <!-- TODO Ajuster les padding -->
         <div class="w-full lg:w-1/2 p-4">
           <div class="max-w-xl mx-auto gap-5 flex flex-col text-white">
             <div class="bg-secondary p-4 rounded-3xl">
-              <p class="text-orange-50 mb-10">
-                Submit your info and we&rsquo;ll get back to you as soon as possible.
-              </p>
               <h2 class="text-white text-xl font-bold font-heading pb-5">
                 Association Rouler pour aider
               </h2>
@@ -70,11 +69,8 @@
               class="h-full border border-gray-100 bg-white rounded-3xl p-6 max-w-xl mx-auto"
             >
               <h2 class="text-3xl text-center font-bold font-heading mb-4">
-                Get in touch
+                Contactez-nous
               </h2>
-              <p class="text-center text-gray-600 mb-16">
-                Fill out the form to connect with a member of our team.
-              </p>
               <div class="flex flex-wrap -mx-4">
                 <div class="w-full lg:w-1/2 p-4">
                   <label class="text-sm font-medium mb-2 block" for="firstName"
@@ -110,6 +106,7 @@
               >
                 Envoyer
               </button>
+              <!-- TODO : A adapter -->
               <p class="text-gray-500 text-sm">
                 <span>We process your information in accordance with our </span>
                 <span class="text-secondary text-sm font-semibold">Privacy Policy</span>
