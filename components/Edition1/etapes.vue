@@ -1,5 +1,5 @@
 <template>
-    <section class="py-3">
+  <section class="py-3">
     <div class="container px-4 mx-auto">
       <div class="pt-6 pb-8 bg-secondary/70 rounded-xl">
         <div class="px-6">
@@ -25,14 +25,14 @@
                   </th>
                   <th class="p-0">
                     <div class="py-3 px-6 bg-secondary">
-                      <span class="text-gray-300 font-semibold">Départ &amp; Arrivée</span>
+                      <span class="text-gray-300 font-semibold"
+                        >Départ &amp; Arrivée</span
+                      >
                     </div>
                   </th>
                   <th class="p-0">
                     <div class="py-3 px-6 bg-secondary">
-                      <span class="text-gray-300 font-semibold"
-                        >Distance</span
-                      >
+                      <span class="text-gray-300 font-semibold">Distance</span>
                     </div>
                   </th>
                   <th class="p-0">
@@ -73,7 +73,9 @@
                   </td>
                   <td class="p-0">
                     <div class="flex items-center h-16 px-6">
-                      <span class="text-sm font-medium text-gray-100">Lille > Amiens</span>
+                      <span class="text-sm font-medium text-gray-100"
+                        >Lille > Amiens</span
+                      >
                     </div>
                   </td>
                   <td class="p-0">
@@ -144,57 +146,3 @@
   </section>
 </template>
 
-<script setup lang="ts">
-interface Etape {
-  etapePhotolUrl: string;
-  prenom: string;
-  nom: string;
-  poste: string;
-  description: string;
-  reseaux: {
-    facebook: string;
-    twitter: string;
-    linkedin: string;
-    instagram: string;
-  };
-}
-
-const etapes = ref<Etape[]>([]);
-const descriptionAsso = ref<string>("");
-
-const runtimeConfig = useRuntimeConfig();
-const { public: { strapiBaseUrl, strapiToken } } = runtimeConfig;
-
-const transformEtapeObject = (etapeData) => {
-  return etapeData.map((data) => {
-    const { photo, ...otherAttributes } = data.attributes;
-    return {
-      ...otherAttributes,
-      etapePhotoUrl: strapiBaseUrl + photo.data.attributes.url,
-    };
-  });
-};
-
-const getEtapes = async () => {
-  const url = `${strapiBaseUrl}/api/etapes?populate=*`;
-
-  const { data, pending, error } = await useFetch(url, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${strapiToken}`,
-    },
-  });
-
-  if (!error.value && !pending.value && data.value) {
-    etapes.value = transformEtapeObject(data.value.data);
-  } else {
-    console.error(error.value);
-  }
-};
-};
-
-onMounted(() => {
-  getEtapes();
-});
-</script>

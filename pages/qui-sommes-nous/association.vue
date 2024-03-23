@@ -26,6 +26,9 @@
       </svg>
     </div>
     <div class="max-w-3xl mx-auto mb-12 md:mb-20 text-center -mt-14">
+
+    <!-- TODO : Add countUp & chiffre cles -->
+    <!-- flex flex-row -->
       <!-- <span class="text-blue-400 uppercase font-semibold tracking-widest">New feature</span> -->
       <h2 class="mt-4 mb-6 text-4xl font-bold text-white font-heading">{{ descriptionAsso.title }}</h2>
       <p class="text-lg text-gray-50">{{ descriptionAsso.description }}</p>
