@@ -1,6 +1,12 @@
 <template>
-  <span>{{ currentValue.toLocaleString("fr-FR") }}</span>
+  <span v-html="formatNumber(currentValue)"></span>
 </template>
+
+<style scoped>
+.number-part {
+  margin-right: 10px; /* Adjust as needed */
+}
+</style>
 
 <script setup>
 import { ref, onMounted } from "vue";
@@ -47,6 +53,11 @@ const startAnimation = () => {
   };
 
   window.requestAnimationFrame(step);
+};
+
+const formatNumber = (value) => {
+  const parts = value.toString().split(/(?=(?:...)*$)/);
+  return parts.map(part => `<span class="mr-1">${part}</span>`).join('  ');
 };
 
 const currentValue = ref(props.start);

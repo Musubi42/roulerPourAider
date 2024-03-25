@@ -1,5 +1,6 @@
 <template>
   <div class="border border-gray-200 bg-secondary/20 rounded-3xl flex flex-wrap mb-32 mx-32">
+    <!-- TODO : trouver les logos -->
     <div
       ref="addToRefs"
       v-for="(item, index) in keyNumbers"
@@ -22,7 +23,7 @@
 const keyNumbers = [
   { number: 2, text: "Étudiants", logo: "public/logos/dons.png" },
   { number: 40, text: "Bénévoles", logo: "" },
-  { number: 42, text: "...", logo: "" },
+  { number: 2, text: "Projets réalisés", logo: "" },
 ];
 
 const counters = ref([]);

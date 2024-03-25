@@ -3,7 +3,19 @@
   <div class="container px-4 mx-auto">
     <h1 class="lg:px-18 text-5xl lg:text-7xl font-bold font-heading mb-14 mt-24 w-full text-center">2020 notre 1 ère édition</h1>
     <div class="lg:px-18 mb-8 lg:mb-0">
-      <img class="rounded-3xl w-full h-[400px] mx-auto object-cover" src="public/2020-arrivee-nice.jpg" alt="">
+    <!-- TODO mettre carousel avec toutes les photos de la première édition -->
+      <!-- <img class="rounded-3xl w-full h-[400px] mx-auto object-cover" src="public/2020-arrivee-nice.jpg" alt=""> -->
+      <Swiper
+        :modules="[SwiperAutoplay]"
+        :slides-per-view="1"
+        :loop="true"
+        :autoplay="{ delay: 4000 }"
+        :space-between="0"
+        class="w-full h-[400px] mx-auto " >
+        <SwiperSlide v-for="(image, index) in images" :key="index" class="">
+          <img :src="image.src" :alt="image.alt" class="h-full w-auto mx-auto rounded-3xl" />
+        </SwiperSlide>
+      </Swiper>
     </div>
 
     <!-- Chiffres clés -->
@@ -106,6 +118,49 @@
 definePageMeta({
   layout: "1ere-edition",
 });
+
+const images = ref([
+  {
+    src: '/1ere-edition/2020-arrivee-nice.jpg',
+    alt: 'Arrivée à Nice',
+  },
+  {
+    src: '/1ere-edition/depart-lille.jpg',
+    alt: 'Départ de Lille',
+  },
+  {
+    src: '/1ere-edition/event-caritatif-1.jpg',
+    alt: 'Event caritatif 1',
+  },
+  {
+    src: '/1ere-edition/event-caritatif-2.jpg',
+    alt: 'Event caritatif 2',
+  },
+  {
+    src: '/1ere-edition/event-caritatif-3.jpg',
+    alt: 'event caritatif 3',
+  },
+  {
+    src: '/1ere-edition/event-caritatif-4.jpg',
+    alt: 'Event caritatif 4',
+  },
+  {
+    src: '/1ere-edition/mairie-velo.jpg',
+    alt: 'Marie à vélo',
+  },
+  {
+    src: '/1ere-edition/mairie-velo-2.jpg',
+    alt: 'Marie à vélo 2',
+  },
+  {
+    src: '/1ere-edition/nice-arrosage.jpg',
+    alt: 'Nice arrosage',
+  },
+  {
+    src: '/1ere-edition/nice-celebration.jpg',
+    alt: 'Nice celebration',
+  },
+]);
 
 interface Person {
   personPhotolUrl: string;

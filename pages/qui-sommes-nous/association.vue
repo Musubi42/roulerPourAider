@@ -1,10 +1,7 @@
 <template>
   <section class="relative py-24 overflow-hidden">
-    <!-- En attendant d'avoir les éléments de déco, filigrane -->
-    <div class="absolute inset-0">
-      <NuxtImg src="/public/dashedLine-zigzag.png" alt="" />
-      <img src="public/dashedLine-zigzag.png" alt="" />
-    </div>
+
+    
     <div class="max-w-3xl mx-auto mb-12 md:mb-20 text-center -mt-14">
 
     <!-- TODO : Add countUp & chiffre cles -->
@@ -12,6 +9,16 @@
       <!-- <span class="text-blue-400 uppercase font-semibold tracking-widest">New feature</span> -->
       <h2 class="mt-4 mb-6 text-4xl font-bold text-white font-heading">{{ descriptionAsso.title }}</h2>
       <p class="text-lg text-gray-50">{{ descriptionAsso.description }}</p>
+    </div>
+
+
+    <!-- Chiffre -->
+    <AssoChiffresCles />
+
+<!-- TODO : Le filigrane demare en dessous des chiffres -->
+    <div class="absolute inset-0">
+      <NuxtImg src="/public/dashedLine-zigzag.png" alt="" />
+      <img src="public/dashedLine-zigzag.png" alt="" />
     </div>
 
     <div v-for="(person, index) in persons" :key="index"
@@ -77,8 +84,6 @@
         class="h-72 w-auto border shadow-lg">
     </div>
 
-    <!-- Chiffre -->
-    <AssoChiffresCles />
 
   </section>
 </template>
