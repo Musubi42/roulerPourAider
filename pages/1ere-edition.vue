@@ -96,8 +96,8 @@
     <Edition1Etapes />
 
     <!-- Carousel -->
-    <h2 class="text-4xl font-bold font-heading text-center mb-4">Défi sportif</h2>
-
+    <h2 class="text-4xl font-bold font-heading text-center mb-4">Photos</h2>
+    <Edition1Carousel />
   </div>
 </section>
 </template>

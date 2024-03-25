@@ -1,8 +1,9 @@
 <template>
-    <li class="hover-effect ">
+    <li class="hover-effect" @click="clicked"
+        :class="{ 'clicked-class': isClicked }">
         <nuxt-link class="flex items-center h-full text-sm hover:text-primary transition-colors duration-300 font-medium" :to="to">
             <!-- You can use slots to make the component's content dynamic -->
-            <slot></slot>
+                <slot></slot>
         </nuxt-link>
     </li>
 </template>
@@ -23,18 +24,23 @@
     left: 0; /* Add this to align the pseudo-element with the left edge of the .hover-effect element */
 }
 
-.hover-effect:hover::after {
+.hover-effect:hover::after, .clicked-class::after {
     width: 100%;
 }
 </style>
 
-<script>
-export default {
-    props: {
+<script setup lang="ts" >
+    const props = defineProps({
         to: {
             type: String,
             required: true
         }
-    }
-}
+    });
+
+    const isClicked = ref(false);
+
+    const clicked = () => {
+        console.log("clicked");
+        isClicked.value = !isClicked.value;
+    };
 </script>
