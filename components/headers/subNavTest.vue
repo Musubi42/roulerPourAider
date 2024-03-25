@@ -1,6 +1,9 @@
 <template>
-    <div @mouseenter="hover" @mouseleave="leave">
-      <li class="hover-effect h-full" >
+    <div @mouseenter="hover" @mouseleave="leave"
+       >
+      <li  @click="clicked"
+        class="hover-effect h-full"
+        :class="{ 'clicked-class': isClicked }" >
         <nuxt-link class="flex items-center h-full text-sm hover:text-primary transition-colors duration-300 font-medium" :to="to">
           <!-- You can use slots to make the component's content dynamic -->
           <slot></slot>
@@ -8,23 +11,6 @@
       </li>
 
       <div v-if="isHovered" class="absolute left-0 top-16 w-full h-16 bg-white border-t-[1px] border-b-[1px] border-gray-400/50">
-        <!-- <ul class="flex gap-6 items-center h-full justify-center">
-          <li class="" >
-            <HeadersLinkDesktop to="/nos-retombees-presse/nos-articles-de-presse"
-              >Nos articles de presse</HeadersLinkDesktop
-            >
-          </li>
-          <li class="" >
-            <HeadersLinkDesktop to="/nos-retombees-presse/nos-reportages-tv"
-              >Nos reportages TV</HeadersLinkDesktop
-            >
-          </li>
-          <li class="" >
-            <HeadersLinkDesktop to="/nos-retombees-presse/nos-passages-radio"
-              >Nos passages radio</HeadersLinkDesktop
-            >
-          </li>
-        </ul> -->
         <ul class="flex gap-6 items-center h-full justify-center">
           <li v-for="item in subMenus" :key="item.path" class="" >
             <HeadersLinkDesktop :to="item.path"
@@ -53,7 +39,7 @@
     left: 0; /* Add this to align the pseudo-element with the left edge of the .hover-effect element */
 }
 
-.hover-effect:hover::after {
+.hover-effect:hover::after, .clicked-class::after {
     width: 100%;
 }
 </style>
@@ -71,18 +57,31 @@ const props = defineProps({
 });
 
 const isHovered = ref(false);
-const emits = defineEmits(['mouseEnter', 'mouseLeave']);
+const isClicked = ref(false); 
+const emits = defineEmits(['mouseEnter', 'mouseLeave', 'clicked-link']);
 
 const hover = () => {
-  emits('mouseEnter');
-  isHovered.value = true;
+  if (!isClicked.value) {
+    emits('mouseEnter');
+    isHovered.value = true;
+  }
 };
 
 const leave = () => {
-  emits('mouseLeave');
-  isHovered.value = false;
+  if (!isClicked.value) {
+    console.log("ici");
+    emits('mouseLeave');
+    isHovered.value = false;
+  }
 };
 
+const clicked = () => {
+  if (isHovered.value) {
+    console.log("emit");
+    emits('clicked-link');
+    isClicked.value = !isClicked.value;
+  }
+};
 </script>
 
 

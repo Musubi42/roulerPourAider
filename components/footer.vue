@@ -13,7 +13,7 @@
           <div class="w-2/3 md:max-w-[33vw] mt-12">
             <button type="" class="mb-5">
               <NuxtLink
-                to="/faire-un-don"
+                to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr"
                 class="text-white bg-primary py-3 px-5 rounded-xl" >
                 Faites un don
               </NuxtLink>
@@ -28,16 +28,16 @@
         <div class="mt-8">
           <h2 class="mb-2">Nous suivre</h2>
           <div class="flex flex-row text-xl">
-            <NuxtLink to="https://www.facebook.com/roulerpouraider" class="mr-4">
+            <NuxtLink to="https://www.linkedin.com/company/rouler-pour-aider" class="mr-4">
               <IconsLinkedin class="" />
             </NuxtLink>
             <NuxtLink to="https://www.facebook.com/roulerpouraider" class="mr-4">
               <IconsFacebook class="" />
             </NuxtLink>
-            <NuxtLink to="https://www.facebook.com/roulerpouraider" class="mr-4">
+            <NuxtLink to="https://www.tiktok.com/@roulerpouraider?_t=8kyEoHbGNN3&_r=1" class="mr-4">
               <IconsTiktok class="" />
             </NuxtLink>
-            <NuxtLink to="https://www.facebook.com/roulerpouraider" class="mr-4">
+            <NuxtLink to="https://www.instagram.com/roulerpouraider/" class="mr-4">
               <IconsInstagram class="" />
             </NuxtLink>
           </div>
@@ -45,7 +45,14 @@
       </div>
     </div>
 
-    <div class="border-t border-gray-300 mt-10 py-6">
+    <div class="border-t border-gray-300 mt-10 py-4">
+      <div class="flex justify-center items-center flex-col md:flex-row my-auto gap-4">
+        <img class="h-10 w-auto" src="/Grande-cause-nationale-Bouge-chaque-jour.png" alt="">
+        <p>Association labellisée Grande Cause Nationale par le ministère des Sports et des Jeux Olympiques et Paralympiques</p>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-300 py-6">
       <div class="flex justify-center flex-col md:flex-row my-auto gap-4">
         <div class="flex items-center cursor-default justify-center">
           Rouler pour aider © {{ actualYear() }}

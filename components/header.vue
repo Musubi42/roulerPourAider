@@ -23,8 +23,7 @@
           <!-- Menu burger pour mobile -->
           <div class="lg:hidden ml-auto">
             <button
-              class="navbar-burger flex w-12 h-12 items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-md transition duration-200"
-            >
+              class="navbar-burger flex w-12 h-12 items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-md transition duration-200">
               <svg
                 width="24"
                 height="24"
@@ -64,14 +63,15 @@
             <HeadersLinkDesktop to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr">Faire un don</HeadersLinkDesktop>
             <HeadersSubNavTest
               :subMenus="subMenuItemsWhoAreWe"
-              to="/qui-sommes-nous/association" >
+              @clicked-link="handleClicked"
+              class="cursor-pointer" >
               Qui sommes nous
             </HeadersSubNavTest>
             <HeadersLinkDesktop to="/1ere-edition">1ère édition</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/nos-partenaires">Nos partenaires</HeadersLinkDesktop>
             <HeadersSubNavTest
-              :subMenus="subMenuItemsPress"
-              to="/nos-retombees-presse/nos-articles-de-presse" >
+              class="cursor-pointer"
+              :subMenus="subMenuItemsPress" >
               Nos relations publiques
             </HeadersSubNavTest>
             <HeadersLinkDesktop to="/contact">Contact</HeadersLinkDesktop>
@@ -224,6 +224,7 @@ export default {
   },
   data() {
     return {
+      isClicked: false,
       isHovered: false,
       isAccueilPage: this.$route.fullPath === "/",
       subMenuItemsPress: [
@@ -244,7 +245,13 @@ export default {
       this.isHovered = true;
     },
     handleMouseLeave() {
-      this.isHovered = false;
+      if (!this.isClicked) {
+        this.isHovered = false;
+      }
+    },
+    handleClicked() {
+      this.isClicked = !this.isClicked;
+      console.log("clicked");
     },
   },
 };

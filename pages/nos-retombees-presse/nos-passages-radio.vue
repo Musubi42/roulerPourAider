@@ -5,11 +5,11 @@
         <img
           :src="podcast.podcastMediaThumbnailUrl"
           alt="Logo du podcast"
-          class="h-44 aspect-video object-cover mr-4 rounded-lg"
+          class="h-20 md:h-44 aspect-square md:aspect-video object-cover mr-4 rounded-lg"
         />
         <div class="flex flex-col">
           <h2 class="text-lg font-semibold">{{ podcast.title }}</h2>
-          <p class="text-sm font-normal">{{ podcast.resume }}</p>
+          <p class="hidden md:block text-sm font-normal">{{ podcast.resume }}</p>
           <div class="flex flex-row mt-2 gap-x-2">
             <div>
               <button class="bg-black rounded-full w-8 h-8" @click="setCurrentPodcast(podcast)">
@@ -30,7 +30,7 @@
               </button>
             </div>
             <div class="flex items-center">
-              <span>{{ podcast.date_de_creation }}</span>
+              <span>{{ formatDate(podcast.datePublication) }}</span>
               <span class="">&nbsp;•&nbsp;</span>
               <span>{{ formatTime(podcast.duree) }} min</span>
             </div>
@@ -59,6 +59,7 @@ interface Podcast {
   podcastMediaThumbnailUrl: string;
   podcastMediaAudioUrl: string;
   duree: number;
+  datePublication: string;
   isPlaying: boolean;
   isLoading: boolean;
 }
@@ -123,7 +124,23 @@ const getPodcastMetadata = async () => {
   } else {
     console.error(error);
   }
+
+  console.log("podcasts", podcasts.value);
 };
+
+const formatDate = (date: string): string => {
+  const monthNames = [
+    "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+    "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+  ];
+
+  const dateObj = new Date(date);
+  const day = dateObj.getDate();
+  const monthIndex = dateObj.getMonth();
+  const year = dateObj.getFullYear();
+
+  return `${day} ${monthNames[monthIndex]} ${year}`;
+}; 
 
 onMounted(() => {
   getPodcastMetadata();
