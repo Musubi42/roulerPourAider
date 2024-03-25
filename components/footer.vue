@@ -3,9 +3,9 @@
     class="relative bottom-0 w-screen text-sm font-normal text-secondary"
     :style="{ 'margin-bottom': isRadioPage ? '80px' : '' }"
   >
-    <div class="mx-auto">
+    <div class="mx-32">
       <div class="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-10">
-        <div class="flex flex-row items-center w-full gap-4" >
+        <div class="flex flex-row items-center w-full gap-4 " >
           <NuxtLink to="/" class="block w-1/3">
             <img src="/images/logoBig_roulerPourAider.png" alt="logo" class="w-32 h-32" />
           </NuxtLink>
@@ -28,16 +28,16 @@
         <div class="mt-8">
           <h2 class="mb-2">Nous suivre</h2>
           <div class="flex flex-row text-xl">
-            <NuxtLink to="https://www.linkedin.com/company/rouler-pour-aider" class="mr-4">
+            <NuxtLink to="https://www.linkedin.com/company/rouler-pour-aider" class="mr-4" target="_blank">
               <IconsLinkedin class="" />
             </NuxtLink>
-            <NuxtLink to="https://www.facebook.com/roulerpouraider" class="mr-4">
+            <NuxtLink to="https://www.facebook.com/roulerpouraider" class="mr-4" target="_blank">
               <IconsFacebook class="" />
             </NuxtLink>
-            <NuxtLink to="https://www.tiktok.com/@roulerpouraider?_t=8kyEoHbGNN3&_r=1" class="mr-4">
+            <NuxtLink to="https://www.tiktok.com/@roulerpouraider?_t=8kyEoHbGNN3&_r=1" class="mr-4" target="_blank">
               <IconsTiktok class="" />
             </NuxtLink>
-            <NuxtLink to="https://www.instagram.com/roulerpouraider/" class="mr-4">
+            <NuxtLink to="https://www.instagram.com/roulerpouraider/" class="mr-4" target="_blank">
               <IconsInstagram class="" />
             </NuxtLink>
           </div>

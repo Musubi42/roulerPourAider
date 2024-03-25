@@ -28,16 +28,17 @@
     <section class="flex flex-col md:flex-row w-full h-96 gap-6 mb-8" >
       <!-- PP -->
       <div class="h-full w-full md:w-1/2" >
-        <NuxtImg src="/hopital-necker.jpeg" alt="Photo de l'hôpital Necker"
+        <NuxtImg src="/oui/image00025.jpeg" alt="Photo de l'hôpital Necker"
         class="h-full w-full object-cover rounded-lg" />
       </div>
       <!-- Texte -->
       <div class="flex flex-col h-full w-full md:w-1/2 content-between justify-between gap-6 text-xl" >
         <div class="px-8 flex items-center h-full bg-[#F7F7FA] rounded-lg" >
-          <p>Peu importe d’où l’on vient en France, quand un enfant est touché par la maladie et en particulier par une maladie rare, Necker est un hôpital de référence.</p>
+          <p>L’hôpital Necker-Enfants malades est l’hôpital pédiatrique de référence en France.
+          Son expertise dans la prise en charge des pathologies de l’enfant complétée par plusieurs spécialités adultes en fait un établissement de renommée internationale.</p>
         </div>
         <div class="px-8 flex items-center h-full bg-[#F7F7FA] rounded-lg" >
-          <p>Nous avons choisi cet hôpital car leurs besoins sont grands et ils se doivent de constamment faire évoluer leurs équipements et leurs prises en charge.</p>
+          <p>L’innovation est au cœur de la stratégie de l’hôpital Necker. Pour mener à bien ses projets et développer l’ensemble de ses missions de soin, de recherche et d’enseignement, l’implication des donateurs est déterminante.</p>
         </div>
       </div>
     </section>

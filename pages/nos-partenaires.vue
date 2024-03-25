@@ -1,9 +1,9 @@
 <template>
-  <div class="mx-8">
+  <div class="mx-8 mt-20">
     <section
       v-for="(partenaire, index) in partenaires"
       :key="index"
-      class="flex flex-col w-full container mx-auto justify-between" >
+      class="flex flex-col w-full container mx-auto justify-between mb-6" >
       
       <div class="flex flex-row"
         :class="{ 'md:flex-row-reverse': index % 2 === 1, 'md:flex-row': index % 2 === 0 }" >
@@ -20,6 +20,7 @@
               v-if="partenaire.siteWebUrl"
               class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
               :to="`${partenaire?.siteWebUrl}`"
+              target="_blank"
             >
               <IconsWeb />
             </NuxtLink>
@@ -27,6 +28,7 @@
               v-if="partenaire?.reseaux?.facebook"
               class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
               :to="`${partenaire?.facebook}`"
+              target="_blank"
             >
               <IconsFacebook />
             </NuxtLink>
@@ -34,6 +36,7 @@
               v-if="partenaire?.reseaux?.twitter"
               class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
               :to="`${partenaire?.twitter}`"
+              target="_blank"
             >
               <IconsTwitter />
             </NuxtLink>
@@ -41,6 +44,7 @@
               v-if="partenaire?.reseaux?.linkedin"
               class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
               :to="`${partenaire?.linkedin}`"
+              target="_blank"
             >
               <IconsLinkedin />
             </NuxtLink>
@@ -48,21 +52,22 @@
               v-if="partenaire?.reseaux?.instagram"
               class="inline-flex items-center justify-center w-12 h-12 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
               :to="`${partenaire?.instagram}`"
+              target="_blank"
             >
               <IconsInstagram />
             </NuxtLink>
           </div>
         </div>
         <!-- Image -->
-        <div class=""
+        <div class="w-1/3"
            >
-          <NuxtImg :src="`${partenaire.partenairePhotoUrl}`" class="h-72" alt="" />
+          <NuxtImg :src="`${partenaire.partenairePhotoUrl}`" class="h-72 object-contain" alt="" />
         </div>
       </div>
 
       <img src="/dashedLine-straight.png" alt="" 
         class="my-10"
-        :class="{ 'display': index === partenaires.length - 1 ? 'none' : 'block' }" />
+        :style="{ 'display': index === partenaires.length - 1 ? 'none' : 'block' }" />
     </section>
   </div>
 </template>

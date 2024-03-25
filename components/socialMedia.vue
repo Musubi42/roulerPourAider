@@ -4,16 +4,16 @@
       :class="{ 'is-active': showIcons }" >
       <IconsSocialNetworks class="icon-networks h-6 w-6 absolute right-[14px] text-secondary" />
       <transition-group name="social-icon-animation" tag="div" class="social-icons">
-        <NuxtLink to="https://www.linkedin.com/company/rouler-pour-aider" v-if="showIcons" class="icon cursor-default" key="linkedin">
+        <NuxtLink to="https://www.linkedin.com/company/rouler-pour-aider" v-if="showIcons" class="icon cursor-default" key="linkedin" target="_blank">
           <IconsLinkedin />
         </NuxtLink>
-        <NuxtLink to="https://www.facebook.com/roulerpouraider" v-if="showIcons" class="icon cursor-default" key="facebook">
+        <NuxtLink to="https://www.facebook.com/roulerpouraider" v-if="showIcons" class="icon cursor-default" key="facebook" target="_blank">
           <IconsFacebook />
         </NuxtLink>
-        <NuxtLink to="https://www.tiktok.com/@roulerpouraider?_t=8kyEoHbGNN3&_r=1" v-if="showIcons" class="icon cursor-default" key="tiktok">
+        <NuxtLink to="https://www.tiktok.com/@roulerpouraider?_t=8kyEoHbGNN3&_r=1" v-if="showIcons" class="icon cursor-default" key="tiktok" target="_blank">
           <IconsTiktok />
         </NuxtLink>
-        <NuxtLink to="https://www.instagram.com/roulerpouraider/" v-if="showIcons" class="icon cursor-default" key="instagram">
+        <NuxtLink to="https://www.instagram.com/roulerpouraider/" v-if="showIcons" class="icon cursor-default" key="instagram" target="_blank">
           <IconsInstagram />
         </NuxtLink>
       </transition-group>

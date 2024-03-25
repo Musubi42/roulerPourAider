@@ -25,7 +25,26 @@ export default defineNuxtConfig({
         },
       },
   },
-  modules: ["nuxt-svgo", "@nuxt/image", "@nuxtjs/i18n", "nuxt-mail", "nuxt-swiper"],
+  toast: {
+      position: 'top-center',
+      duration: 5000,
+      keepOnHover: true,
+  },
+  plugins: [
+    '/plugins/clarity-plugin.js',
+    '/plugins/vue3-toastify.js',
+  ],
+  modules: ["nuxt-svgo", "@nuxt/image", "@nuxtjs/i18n", "nuxt-mail", "nuxt-swiper", '@unlighthouse/nuxt'],
+  site: {
+    url: 'https://lmlccommunication.fr',
+    trailingSlash: true,
+  },
+  unlighthouse: {
+    scanner: {
+      // simulate a desktop device
+      device: 'desktop',
+    },
+  },
   i18n: {
     vueI18n: "./i18n.config.js", // if you are using custom path, default
   },

@@ -101,7 +101,7 @@
                 placeholder="Écrivez votre message ici..."
               ></textarea>
               <button
-                class="py-4 px-6 rounded-full w-full h-14 inline-flex items-center justify-center text-center mb-8 bg-primary/90 border border-primary font-bold font-heading text-white hover:bg-primary focus:ring focus:ring-primary transition duration-200"
+                class="py-4 px-6 rounded-full w-full h-14 inline-flex items-center justify-center text-center mb-8 bg-primary/90 border border-primary font-semibold font-heading text-white hover:bg-primary focus:ring focus:ring-primary transition duration-200"
                 @click.prevent="sendEmail"
               >
                 Envoyer
@@ -127,13 +127,28 @@ const firstName = ref("");
 const email = ref("");
 const message = ref("");
 
-const sendEmail = () => {
+const sendEmail = async () => {
   const messageBody = `---\nPrénom: ${firstName.value}\nEmail: ${email.value}\n---\n\n${message.value}`;
-  mail.send({
-    from: "",
-    subject: "Contact form submission",
-    text: messageBody,
-  });
+  try {
+    await mail.send({
+      from: "",
+      subject: "Contact form submission",
+      text: messageBody,
+    });
+    useNuxtApp().$toast.success('Email bien envoyé', {
+      theme: 'colored',
+      autoClose: 5000,
+      type: 'info',
+      position: 'bottom-right',
+    });
+  } catch (error) {
+    useNuxtApp().$toast.error("Une erreur s'est produite lors de l'envoi de l'e-mail. Veuillez réessayer.", {
+      theme: 'colored',
+      autoClose: 5000,
+      type: 'info',
+      position: 'bottom-right',
+    });
+  }
 };
 
 interface contact {
