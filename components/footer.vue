@@ -10,7 +10,7 @@
             <img src="/images/logoBig_roulerPourAider.png" alt="logo" class="w-32 h-32" />
           </NuxtLink>
           <!-- CTA -->
-          <div class="w-2/3 md:max-w-[33vw] mt-12">
+          <div class="w-2/3 md:max-w-[40vw] mt-12">
             <button type="" class="mb-5">
               <NuxtLink
                 to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr"
@@ -19,8 +19,7 @@
               </NuxtLink>
             </button>
             <p class="">
-              Un don est un enfant en meilleur santé lorem lorem lorem lorem lorem lorem
-              lorem lorem lorem lorem lorem lorem lorem lorem
+              L’association Rouler pour aider récolte des dons pour améliorer le bien-être des enfants et de leur famille à l’Hôpital Necker – Enfants malades AP-HP. Cette récolte de dons est couplée d’un projet sportif d’ampleur.  N’hésitez pas à soutenir cette action en faisant un don.
             </p>
           </div>
         </div>

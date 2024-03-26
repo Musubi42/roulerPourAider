@@ -6,7 +6,6 @@
         <!-- TODO : Mettre un meilleur titre -->
           <!-- <h4 class="text-lg text-gray-100 font-semibold mb-6">Étapes</h4> -->
           <div class="w-full mt-6 pb-6 overflow-x-auto">
-            <img src="/carte.jpeg" alt="" class="h-auto w-3/4 mx-auto mb-10" >
             <table class="w-full min-w-max">
               <thead>
                 <tr class="text-left text-sm font-medium text-white">
@@ -15,33 +14,33 @@
                       <span class="font-semibold">Étape</span>
                     </div>
                   </th>
-                  <th class="p-0">
+                  <!-- <th class="p-0">
                     <div class="py-3 px-6 bg-primary">
                       <span class="font-semibold">Type</span>
                     </div>
-                  </th>
-                  <th class="p-0">
+                  </th> -->
+                  <!-- <th class="p-0">
                     <div class="py-3 px-6 bg-primary">
                       <span class="font-semibold">Date</span>
                     </div>
-                  </th>
+                  </th> -->
                   <th class="p-0">
-                    <div class="py-3 px-6 bg-primary">
+                    <div class="py-3 px-6 bg-primary rounded-tr-xl">
                       <span class="font-semibold"
                         >Départ &amp; Arrivée</span
                       >
                     </div>
                   </th>
-                  <th class="p-0">
+                  <!-- <th class="p-0">
                     <div class="py-3 px-6 bg-primary">
                       <span class="font-semibold">Distance</span>
                     </div>
-                  </th>
-                  <th class="p-0">
+                  </th> -->
+                  <!-- <th class="p-0">
                     <div class="py-3 px-6 rounded-tr-xl bg-primary">
                       <span class="font-semibold">Dénivelé</span>
                     </div>
-                  </th>
+                  </th> -->
                 </tr>
               </thead>
               <tbody>
@@ -62,41 +61,42 @@
                       </div>
                     </div>
                   </td>
-                  <td class="p-0">
+                  <!-- <td class="p-0">
                     <div class="flex items-center h-16 px-6"
                       :style="{ 'background-color': index % 2 === 0 ? 'rgb(42 95 164 / 0.2)' : 'rgb(42 95 164)', 'color': index % 2 === 0 ? 'black' : 'white' }" >
                       {{ etape.type }}
                     </div>
-                  </td>
-                  <td class="p-0">
+                  </td> -->
+                  <!-- <td class="p-0">
                     <div class="flex items-center h-16 px-6"
                       :style="{ 'background-color': index % 2 === 0 ? 'rgb(42 95 164 / 0.2)' : 'rgb(42 95 164)', 'color': index % 2 === 0 ? 'black' : 'white' }" >
                       <span class="text-sm font-medium"
                         >{{ etape.date}}</span
                       >
                     </div>
-                  </td>
+                  </td> -->
                   <td class="p-0">
                     <div class="flex items-center h-16 px-6"
+                      :class="{ 'rounded-br-xl': index === etapes.length - 1 }"
                       :style="{ 'background-color': index % 2 === 0 ? 'rgb(42 95 164 / 0.2)' : 'rgb(42 95 164)', 'color': index % 2 === 0 ? 'black' : 'white' }" >
                       <span class="text-sm font-medium"
                         >{{ etape.departArrivee }}</span
                       >
                     </div>
                   </td>
-                  <td class="p-0">
+                  <!-- <td class="p-0">
                     <div class="flex items-center h-16 px-6"
                       :style="{ 'background-color': index % 2 === 0 ? 'rgb(42 95 164 / 0.2)' : 'rgb(42 95 164)', 'color': index % 2 === 0 ? 'black' : 'white' }" >
                       <span class="text-sm font-medium">{{etape.distance }}</span>
                     </div>
-                  </td>
-                  <td class="p-0">
+                  </td> -->
+                  <!-- <td class="p-0">
                     <div class="flex items-center h-16 px-6"
                       :class="{ 'rounded-br-xl': index === etapes.length - 1 }"
                       :style="{ 'background-color': index % 2 === 0 ? 'rgb(42 95 164 / 0.2)' : 'rgb(42 95 164)', 'color': index % 2 === 0 ? 'black' : 'white' }" >
                       <span class="text-sm font-medium">{{ etape.denivele }}</span>
                     </div>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
@@ -112,76 +112,73 @@ const carousel = ref(null);
 const etapes = ref([
   {
     etape: '1',
-    type: 'Plat',
-    date: '26 juillet 2020',
-    departArrivee: 'Lille > Amiens',
-    distance: '112 km',
-    denivele: '755+',
+    departArrivee: 'Paris > Blois',
   },
   {
     etape: '2',
-    type: 'Plat',
-    date: '27 juillet 2020',
-    departArrivee: 'Amiens > Reims',
-    distance: '199 km',
-    denivele: '1861+',
+    departArrivee: 'Blois > Poitier',
   },
   {
     etape: '3',
-    type: 'Plat',
-    date: '28 juillet 2020',
-    departArrivee: 'Reims > Troyes',
-    distance: '138 km',
-    denivele: '1154+',
+    departArrivee: 'Poitier > Royan',
   },
   {
     etape: '4',
-    type: 'Accidentée',
-    date: '29 juillet 2020',
-    departArrivee: 'Troyes > Semur-en-Auxois',
-    distance: '130 km',
-    denivele: '1474+',
+    departArrivee: 'Royan > Mont-de-Marsan',
   },
   {
     etape: '5',
-    type: 'Plat',
-    date: '30 juillet 2020',
-    departArrivee: 'Semur-en-Auxois > Dijon',
-    distance: '77 km',
-    denivele: '1170+',
+    departArrivee: 'Mont-de-Marsan > Lourdes',
   },
   {
     etape: '6',
-    type: 'Plat',
-    date: '31 juillet 2020',
-    departArrivee: 'Dijon > Lyon',
-    distance: '223 km',
-    denivele: '1170+',
+    departArrivee: 'Lourdes > Loudenvielle',
   },
   {
     etape: '7',
-    type: 'Accidentée',
-    date: '2 août 2020',
-    departArrivee: 'Lyon > Grenobles',
-    distance: '135 km',
-    denivele: '1579+',
+    departArrivee: 'Loudenvielle > Plateau de Beille',
   },
   {
     etape: '8',
-    type: 'Montagne',
-    date: '28 juillet 2020',
-    departArrivee: 'Grenobles > Barcelonnette',
-    distance: '164 km',
-    denivele: '3772+',
+    departArrivee: 'Plateau de Beille > Béziers',
   },
   {
     etape: '9',
-    type: 'Montagne',
-    date: '4 août 2020',
-    departArrivee: 'Barcelonnette > Nice',
-    distance: '149 km',
-    denivele: '2377+',
+    departArrivee: 'Béziers > Avignon',
   },
+  {
+    etape: '10',
+    departArrivee: 'Avignon > Sisteron',
+  },
+  {
+    etape: '11',
+    departArrivee: 'Sisteron > Barcelonnette',
+  },
+  {
+    etape: '12',
+    departArrivee: 'Barcelonnette > St-Jean-de-Maurienne',
+  },
+  {
+    etape: '13',
+    departArrivee: 'St-Jean-de-Maurienne > Annecy',
+  },
+  {
+    etape: '14',
+    departArrivee: 'Annecy > Lons-le-Saunier',
+  },
+  {
+    etape: '15',
+    departArrivee: 'Lons-le-Saunier > Chaumont',
+  },
+  {
+    etape: '16',
+    departArrivee: 'Chaumont > Reims',
+  },
+  {
+    etape: '17',
+    departArrivee: 'Reims > Verneuil-en-Halatte',
+  },
+  
 ]);
 
 </script>

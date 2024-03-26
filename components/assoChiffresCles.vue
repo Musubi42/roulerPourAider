@@ -5,9 +5,9 @@
       ref="addToRefs"
       v-for="(item, index) in keyNumbers"
       :key="index"
-      class="w-full md:w-1/2 lg:w-1/4 py-8 content-center flex flex-col mx-auto" >
+      class="w-full md:w-1/2 lg:w-1/4 py-8 content-center items-center flex flex-col mx-auto" >
       <!-- <div class=""> -->
-        <img src="public/logos/dons.png" alt=""
+        <img :src="item.logo" alt=""
           class="h-12 w-12">
         <CountUp
           class="font-bold text-primary text-3xl"
@@ -21,9 +21,9 @@
 
 <script setup lang="ts">
 const keyNumbers = [
-  { number: 2, text: "Étudiants", logo: "public/logos/dons.png" },
-  { number: 40, text: "Bénévoles", logo: "" },
-  { number: 2, text: "Projets réalisés", logo: "" },
+  { number: 2, text: "Étudiants", logo: "/logos/dons.png" },
+  { number: 40, text: "Bénévoles", logo: "/logos/volunteer.png" },
+  { number: 8, text: "Partenaires", logo: "/logos/partner.png" },
 ];
 
 const counters = ref([]);
