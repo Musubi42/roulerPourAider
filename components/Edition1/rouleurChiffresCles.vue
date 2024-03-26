@@ -28,12 +28,12 @@
 
 <script setup lang="ts">
 const keyNumbers = [
-  { number: 506029, text: "Km parcourus", logo: "/logos/kmParcourus.png" },
-  { number: 506029, text: "Dons récoltés", logo: "/logos/dons.png" },
-  { number: 506029, text: "Dénivelé positif", logo: "/logos/D+.png" },
-  { number: 506029, text: "Étapes", logo: "/logos/etape.png" },
-  { number: 506029, text: "Passages média", logo: "/logos/reportagesTv.png" },
-  { number: 506029, text: "Nombre event réalisés", logo: "/logos/events.png" },
+  { number: 1327, text: "km parcourus", logo: "/logos/kmParcourus.png" },
+  { number: 33324, text: "euros de dons récoltés", logo: "/logos/dons.png" },
+  { number: 15526, text: "mètres de dénivelé positif", logo: "/logos/D+.png" },
+  { number: 9, text: "étapes", logo: "/logos/etape.png" },
+  { number: 23, text: "passages médias", logo: "/logos/reportagesTv.png" },
+  { number: 4, text: "événements réalisés", logo: "/logos/events.png" },
 ];
 
 const counters = ref([]);
@@ -47,7 +47,6 @@ onMounted(() => {
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry, index) => {
-        console.log("entry", entry.isIntersecting);
         isVisible[index] = entry.isIntersecting;
       });
     },

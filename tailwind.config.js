@@ -20,7 +20,11 @@ export default {
       },
       colors: {
         primary: "#72BC7A",
-        secondary: "#2A5FA4"
+        secondary: "#2A5FA4",
+        "lilas-pop": "#974dff",
+        "rose-neon": "#ff0066",
+        "bleu-ciel": "#99deff",
+        "jaune-citron": "#ffff00",
       },
       fontFamily: {
         montserrat: ["Montserrat", "Arial", "sans-serif"],
@@ -28,8 +32,11 @@ export default {
       animation: {
         "spin-slow": "spin 8s linear infinite",
       },
+      overflow: {
+        unset: "unset",
+      },
     },
   },
-  safelist: ["lilas-pop", "rose-neon", "bleu-ciel", "jaune-citron", "w-20", "flex-row-reverse", "bg-green-500", "bg-secondary"],
+  safelist: ["lilas-pop", "rose-neon", "bleu-ciel", "jaune-citron", "w-20", "font-semibold", "overflow-y-scroll", "w-20", "flex-row-reverse", "bg-green-500", "bg-secondary", "rounded-b-xl"],
   plugins: [],
 };
