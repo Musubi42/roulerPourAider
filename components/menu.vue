@@ -2,11 +2,11 @@
 <template>
   <div class="cursor-none z-50">
     <div
-      class="h-full bg-rose-neon w-10 md:w-80 right-0 fixed z-[20] transform translate-x-full"
+      class="h-full bg-secondary w-10 md:w-80 right-0 fixed z-[20] transform translate-x-full"
       :class="{ animate: !isMenuOpen }"
       id="separation" ></div>
     <div
-      class="bg-close h-screen bg-rose-neon flex flex-row items-center fixed z-[20] right-0 w-full md:w-1/2 transform translate-x-full"
+      class="bg-close h-screen bg-secondary flex flex-row items-center fixed z-[20] right-0 w-full md:w-1/2 transform translate-x-full"
       aria-label="menu"
       id="bg" >
       <div
@@ -37,11 +37,15 @@
             </div>
             <div class="z-10 relative">
               <div
-                to="/qui-sommes-nous"
                 class="block"
                 @click="showSubLink"
-                >Qui sommes-nous ?</div
-              >
+                aria-label="whoWeAre"
+                >Qui sommes-nous ?</div>
+                <div v-show="isShowSubLinkWhoWeAre" class="flex flex-col gap-2 text-xl font-medium pl-4 mt-4">
+                  <NuxtLink to="/qui-sommes-nous/association" class="block" @click="goToPage">L'association</NuxtLink>
+                  <NuxtLink to="/qui-sommes-nous/hopital-necker" class="block" @click="goToPage">L’Hôpital Necker – Enfants malades AP-HP</NuxtLink>
+                  <!-- <NuxtLink to="/gallerie" class="block" @click="goToPage">Gallerie</NuxtLink> -->
+                </div>
             </div>
             <div class="z-10 relative">
               <NuxtLink
@@ -63,7 +67,13 @@
               <div
                 class="block"
                 @click="showSubLink"
+                aria-label="ourPublicRelations"
                 >Nos relations publiques</div>
+                <div  v-show="isShowSubLinkOurPublicRelations" class="flex flex-col gap-2 text-xl font-medium pl-4 mt-4">
+                  <NuxtLink to="/nos-retombees-presse/nos-articles-de-presse" class="block" @click="goToPage">Nos articles de presse</NuxtLink>
+                  <NuxtLink to="/nos-retombees-presse/nos-reportages-tv" class="block" @click="goToPage">Nos reportages TV</NuxtLink>
+                  <NuxtLink to="/nos-retombees-presse/nos-passages-radio" class="block" @click="goToPage">Nos passages radio</NuxtLink>
+                </div>
             </div>
             <div class="z-10 relative">
               <NuxtLink
@@ -176,6 +186,8 @@ export default {
       animateSeparation: false,
       animateTitle: false,
       animateBg: false,
+      isShowSubLinkOurPublicRelations: ref(false),
+      isShowSubLinkWhoWeAre: ref(false),
       // isMenuOpen: false,
     };
   },
@@ -239,8 +251,14 @@ export default {
       this.closeMenu();
       this.$emit("update:isMenuOpen", !this.isMenuOpen);
     },
-    showSubLink() {
-      console.log("showSubLink");
+    showSubLink(event) {
+      const label = event.srcElement.ariaLabel;
+
+      if (label === "whoWeAre") {
+        this.isShowSubLinkWhoWeAre = !this.isShowSubLinkWhoWeAre;
+      } else if (label === "ourPublicRelations") {
+        this.isShowSubLinkOurPublicRelations = !this.isShowSubLinkOurPublicRelations;
+      }
     },
     toggleMenuBurger() {
       const menuBurger = document.getElementById("menu-burger");

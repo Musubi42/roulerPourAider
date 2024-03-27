@@ -1,11 +1,11 @@
 <template>
-  <div class="border border-gray-200 bg-secondary/20 rounded-3xl flex flex-wrap mb-32 mx-32">
+  <div class="w-auto border border-gray-200 bg-secondary/20 rounded-3xl flex flex-wrap mb-32 mx-4 md:mx-32">
     <!-- TODO : trouver les logos -->
     <div
       ref="addToRefs"
       v-for="(item, index) in keyNumbers"
       :key="index"
-      class="w-full md:w-1/2 lg:w-1/4 py-8 content-center items-center flex flex-col mx-auto" >
+      class="w-auto md:w-1/2 lg:w-1/4 py-8 content-center items-center flex flex-col mx-auto" >
       <!-- <div class=""> -->
         <img :src="item.logo" alt=""
           class="h-12 w-12">

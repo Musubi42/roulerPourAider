@@ -23,10 +23,10 @@
     <AssoChiffresCles />
 
 <!-- TODO : Le filigrane demare en dessous des chiffres -->
-    <div class="absolute inset-0">
+    <!-- <div class="absolute inset-0">
       <NuxtImg src="/public/dashedLine-zigzag.png" alt="" />
       <img src="public/dashedLine-zigzag.png" alt="" />
-    </div>
+    </div> -->
 
     <div v-for="(person, index) in persons" :key="index"
       class="container px-4 mx-auto" >
@@ -82,14 +82,15 @@
     </div>
 
     <!-- Dossier à télécharger -->
-    <div class="flex flex-row justify-center items-center gap-8">
-      <div class="flex flex-col items-center">
+    <a class="flex flex-col md:flex-row justify-center items-center gap-8 mx-6"
+      href="/Rouler_pour_aider_dossier.pdf" download="Rouler_pour_aider_dossier" >
+      <div class="flex flex-col items-center cursor-pointer">
         <IconsDownload class="text-8xl text-primary" />
         <p class="text-secondary text-xl">Téléchargez notre dossier</p>
       </div>
       <img src="public/preview-dossier.jpg" alt=""
-        class="h-72 w-auto border shadow-lg">
-    </div>
+        class="h-72 md:h-96 w-auto border shadow-lg cursor-pointer" >
+    </a>
 
 
   </section>

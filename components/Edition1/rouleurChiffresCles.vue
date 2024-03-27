@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="border border-gray-200 bg-white rounded-3xl flex flex-wrap mb-32"> -->
     <div class="container mx-auto px-4">
-      <div class="flex flex-wrap mb-24 -mx-4">
+      <div ref="numbers" class="flex flex-wrap mb-24 -mx-4">
         <div
           ref="addToRefs"
           v-for="(item, index) in keyNumbers"
@@ -14,7 +14,7 @@
             <img :src="item.logo" alt="Health" class="h-12 w-12" />
             <CountUp
               class="font-bold text-primary text-3xl"
-              :end="isVisible[index] ? item.number : 0"
+              :end="isVisible ? item.number : 0"
             />
             <span class="text-center text-gray-600 font-medium max-w-xs"
               >{{ item.text }}</span
@@ -36,31 +36,63 @@ const keyNumbers = [
   { number: 4, text: "événements réalisés", logo: "/logos/events.png" },
 ];
 
-const counters = ref([]);
-const isVisible = reactive(keyNumbers.map(() => false));
+const numbers = ref(null);
+const isVisible = ref(false);
 
 let observer;
-
-const addToRefs = ref([]);
 
 onMounted(() => {
   observer = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry, index) => {
-        isVisible[index] = entry.isIntersecting;
+      entries.forEach((entry) => {
+        console.log(entry.isIntersecting);
+        isVisible.value = entry.isIntersecting;
       });
     },
     {
-      threshold: 0.5,
+      threshold: [0, 0.25, 0.5, 0.75, 1],
     }
   );
 
-  addToRefs.value.forEach((ref) => {
-    observer.observe(ref);
-  });
+  if (numbers.value) {
+    observer.observe(numbers.value);
+  }
 });
 
 onUnmounted(() => {
-  counters.value.forEach((addToRefs) => observer.unobserve(counter));
+  if (numbers.value) {
+    observer.unobserve(numbers.value);
+  }
 });
+
+// Pour chaque petite case individuellement
+
+// const counters = ref([]);
+// const isVisible = reactive(keyNumbers.map(() => false));
+
+// let observer;
+
+// const addToRefs = ref([]);
+
+// onMounted(() => {
+//   observer = new IntersectionObserver(
+//     (entries) => {
+//       entries.forEach((entry, index) => {
+//         isVisible[index] = entry.isIntersecting;
+//         console.log("hey");
+//       });
+//     },
+//     {
+//       threshold: 0.1,
+//     }
+//   );
+
+//   addToRefs.value.forEach((ref) => {
+//     observer.observe(ref);
+//   });
+// });
+
+// onUnmounted(() => {
+//   counters.value.forEach((addToRefs) => observer.unobserve(counter));
+// });
 </script>

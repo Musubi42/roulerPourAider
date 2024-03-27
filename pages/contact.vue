@@ -108,8 +108,8 @@
               </button>
               <!-- TODO : A adapter -->
               <p class="text-gray-500 text-sm">
-                <span>We process your information in accordance with our </span>
-                <span class="text-secondary text-sm font-semibold">Privacy Policy</span>
+                <span>Nous traitons vos données personnelles selon nos </span>
+                <span class="text-secondary text-sm font-semibold">mentions légales</span>
               </p>
             </div>
           </form>

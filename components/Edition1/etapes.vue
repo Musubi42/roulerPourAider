@@ -5,8 +5,8 @@
         <div class="px-6">
         <!-- TODO : Mettre un meilleur titre -->
           <!-- <h4 class="text-lg text-gray-100 font-semibold mb-6">Étapes</h4> -->
+          <img src="/carte.jpeg" alt="" class="h-[400px] w-auto mx-auto mb-10" >
           <div class="w-full mt-6 pb-6 overflow-x-auto">
-            <img src="/carte.jpeg" alt="" class="h-auto w-3/4 mx-auto mb-10" >
             <table class="w-full min-w-max">
               <thead>
                 <tr class="text-left text-sm font-medium text-white">

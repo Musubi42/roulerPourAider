@@ -2,16 +2,15 @@
   <div>
     <Swiper
       :modules="[SwiperAutoplay, SwiperNavigation, SwiperPagination]"
-      :slides-per-view="3"
+      :slides-per-view="1"
       :loop="true"
       :autoplay="{ delay: 4000 }"
       :pagination="{ enabled: true, clickable: true, dynamicBullets: true, type: 'bullets', dynamicMainBullets: 2 }"
       :centeredSlides="true"
-      :slide-class="test"
-      :space-between="0"
+      class="w-full h-[400px] mx-auto "
     >
       <SwiperSlide v-for="(image, index) in images" :key="index" class="p-10">
-        <img :src="image.src" :alt="image.alt" class="h-full w-full" />
+        <img :src="image.src" :alt="image.alt" class="h-full w-auto mx-auto rounded-3xl" />
       </SwiperSlide>
     </Swiper>
   </div>
@@ -42,39 +41,16 @@
 
 <script setup lang="ts">
 const carousel = ref(null);
-const images = ref([
-  {
-    src: 'https://via.placeholder.com/200',
-    alt: 'Placeholder image 1',
-  },
-  {
-    src: 'https://via.placeholder.com/200',
-    alt: 'Placeholder image 2',
-  },
-  {
-    src: 'https://via.placeholder.com/200',
-    alt: 'Placeholder image 3',
-  },
-  {
-    src: 'https://via.placeholder.com/200',
-    alt: 'Placeholder image 4',
-  },
-  {
-    src: 'https://via.placeholder.com/200',
-    alt: 'Placeholder image 5',
-  },
-  {
-    src: 'https://via.placeholder.com/200',
-    alt: 'Placeholder image 6',
-  },
-  {
-    src: 'https://via.placeholder.com/200',
-    alt: 'Placeholder image 7',
-  },
-  {
-    src: 'https://via.placeholder.com/200',
-    alt: 'Placeholder image 8',
-  },
-]);
+
+const imageFilenames = ['2020-arrivee-nice.jpg', 'depart-lille.jpg', 'event-caritatif-1.jpg', 'event-caritatif-2.jpg', 'event-caritatif-3.jpg', 'event-caritatif-4.jpg', 'mairie-velo-2.jpg', 'mairie-velo.jpg', 'nice-arrosage.jpg', 'nice-celebration.jpg']; // Replace with your known filenames
+
+const images = computed(() => {
+  return imageFilenames.map((filename) => {
+    return {
+      src: `/1ere-edition/${filename}`,
+      alt: filename.split('.')[0] // Removes the file extension
+    };
+  });
+});
 
 </script>

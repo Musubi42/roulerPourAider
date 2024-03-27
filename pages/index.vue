@@ -23,11 +23,11 @@
       <AccueilDons />
     </section>
 
-    <section class="mt-24">
+    <!-- <section class="mt-24">
       <h2 class="font-semibold text-3xl text-secondary">Calendrier des manifestations</h2>
 
       <AccueilCalendrier />
-    </section>
+    </section> -->
 
     <section class="mt-24">
       <h2 class="font-semibold text-3xl text-secondary">Nos partenaires</h2>
