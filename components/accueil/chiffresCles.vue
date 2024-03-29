@@ -1,20 +1,20 @@
 <template>
-  <div class="flex flex-col border-secondary w-8/12 mx-auto mt-6">
-    <div ref="numbers" class="flex flex-row w-full h-[200px]">
+  <div class="flex flex-col border-secondary w-full md:w-8/12 mx-auto mt-6">
+    <div ref="numbers" class="flex flex-col md:flex-row w-full h-auto md:h-[200px]">
       <div
-        class="flex flex-col items-center justify-center w-1/2 border-r-2 border-b-2 border-secondary pr-6 pb-4 pl-1"
+        class="flex flex-col items-center justify-center w-full md:w-1/2 md:border-r-2 border-b-2 border-secondary md:pr-6 md:pb-4 md:pl-1 py-4"
       >
         <CountUp class="font-bold text-primary text-6xl" :end="isVisible ? 3000 : 0" />
         <p class="font-medium text-primary text-3xl">Kilomètres parcourus</p>
       </div>
       <div
-        class="flex flex-col items-center justify-start w-1/4 border-b-2 border-r-2 border-secondary p-6"
+        class="flex flex-col items-center justify-start w-full md:w-1/4 border-b-2 md:border-r-2 border-secondary md:p-6 py-4"
       >
         <CountUp class="font-semibold text-primary text-3xl" :end="isVisible ? 17 : 0" />
         <p class="font-normal text-black text-xl">Étapes</p>
       </div>
       <div
-        class="flex flex-col items-center justify-end w-1/4 border-b-2 border-secondary pr-1 pl-6 py-6"
+        class="flex flex-col items-center justify-end w-full md:w-1/4 border-b-2 border-secondary md:pr-1 md:pl-6 md:py-6 py-4"
       >
         <!-- Icons montagne -->
         <img src="/logos/D+.png" alt="D+" class="h-16 w-16" />
@@ -27,15 +27,15 @@
       </div>
     </div>
     <!-- Bas -->
-    <div class="flex flex-row w-full h-[150px]">
+    <div class="flex flex-col md:flex-row w-full h-full md:h-[150px]">
       <div
-        class="flex flex-col items-center justify-center w-1/4 border-b-2 border-r-2 border-secondary p-4"
+        class="flex flex-col items-center justify-center w-full md:w-1/4 border-b-2 md:border-r-2 border-secondary md:p-4 py-4"
       >
         <p class="text-center text-xl font-semibold text-primary">Tour de France</p>
         <p class="text-center text-medium">7 au 25 juillet</p>
       </div>
       <div
-        class="flex flex-row items-center justify-center w-3/4 border-b-2 border-secondary p-6"
+        class="flex flex-col md:flex-row items-center justify-center w-full md:w-3/4 border-b-2 border-secondary md:p-6 py-4"
       >
         <img src="/logos/dons.png" alt="Dons" class="h-16 w-16" />
         <div class="flex flex-col items-center pl-4">

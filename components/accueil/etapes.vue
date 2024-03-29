@@ -1,8 +1,8 @@
 <template>
   <section class="py-3">
-    <div class="container px-4 mx-auto">
-      <div class="pt-6 pb-8 rounded-xl">
-        <div class="px-6">
+    <div class="container md:px-4 mx-auto">
+      <div class="pt-6 rounded-xl">
+        <div class="md:px-6">
         <!-- TODO : Mettre un meilleur titre -->
           <!-- <h4 class="text-lg text-gray-100 font-semibold mb-6">Étapes</h4> -->
           <div class="w-full mt-6 pb-6 overflow-x-auto">
@@ -10,7 +10,7 @@
               <thead>
                 <tr class="text-left text-sm font-medium text-white">
                   <th class="p-0 w-4">
-                    <div class="py-3 px-6 rounded-tl-xl bg-primary">
+                    <div class="py-3 px-2 md:px-6 rounded-tl-xl bg-primary">
                       <span class="font-semibold">Étape</span>
                     </div>
                   </th>
@@ -25,7 +25,7 @@
                     </div>
                   </th> -->
                   <th class="p-0">
-                    <div class="py-3 px-6 bg-primary rounded-tr-xl">
+                    <div class="py-3 px-2 md:px-6 bg-primary rounded-tr-xl">
                       <span class="font-semibold"
                         >Départ &amp; Arrivée</span
                       >
@@ -48,10 +48,10 @@
                   v-for="(etape, index) in etapes"
                   :key="index" >
                   <td class="p-0">
-                    <div class="flex items-center h-16 px-6"
+                    <div class="flex items-center h-16 px-2 md:px-6"
                       :class="{ 'rounded-bl-xl': index === etapes.length - 1 }"
                       :style="{ 'background-color': index % 2 === 0 ? 'rgb(42 95 164 / 0.2)' : 'rgb(42 95 164)', 'color': index % 2 === 0 ? 'black' : 'white' }" >
-                      <div class="flex items-center justify-center">
+                      <div class="flex items-center justify-center w-full">
                         <!-- <div
                           class="flex items-center justify-center w-10 h-10 mr-3 bg-gray-400 bg-opacity-20 rounded-md"
                         >
