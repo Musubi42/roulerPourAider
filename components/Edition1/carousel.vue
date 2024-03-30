@@ -7,7 +7,7 @@
       :autoplay="{ delay: 4000 }"
       :pagination="{ enabled: true, clickable: true, dynamicBullets: true, type: 'bullets', dynamicMainBullets: 2 }"
       :centeredSlides="true"
-      class="w-full h-[400px] mx-auto "
+      class="w-full h-[500px] mx-auto "
     >
       <SwiperSlide v-for="(image, index) in images" :key="index" class="p-10">
         <img :src="image.src" :alt="image.alt" class="h-full w-auto mx-auto rounded-3xl" />
@@ -42,7 +42,7 @@
 <script setup lang="ts">
 const carousel = ref(null);
 
-const imageFilenames = ['2020-arrivee-nice.jpg', 'depart-lille.jpg', 'event-caritatif-1.jpg', 'event-caritatif-2.jpg', 'event-caritatif-3.jpg', 'event-caritatif-4.jpg', 'mairie-velo-2.jpg', 'mairie-velo.jpg', 'nice-arrosage.jpg', 'nice-celebration.jpg']; // Replace with your known filenames
+const imageFilenames = ['2020-arrivee-nice.webp', 'depart-lille.webp', 'event-caritatif-1.webp', 'event-caritatif-2.webp', 'event-caritatif-3.webp', 'event-caritatif-4.webp', 'mairie-velo-2.webp', 'mairie-velo.webp', 'nice-arrosage.webp', 'nice-celebration.webp']; // Replace with your known filenames
 
 const images = computed(() => {
   return imageFilenames.map((filename) => {

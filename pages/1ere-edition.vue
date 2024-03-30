@@ -1,10 +1,9 @@
 <template>
 <section class="py-6">
   <div class="container px-4 mx-auto">
-    <h1 class="lg:px-18 text-5xl lg:text-7xl font-bold font-heading mb-14 mt-24 w-full text-center">Notre première édition</h1>
+    <!-- <h1 class="lg:px-18 text-5xl lg:text-7xl font-bold font-heading mb-14 mt-24 w-full text-center">Notre première édition</h1>
     <div class="lg:px-18 mb-8 lg:mb-0">
-    <!-- TODO mettre carousel avec toutes les photos de la première édition -->
-      <!-- <img class="rounded-3xl w-full h-[400px] mx-auto object-cover" src="public/2020-arrivee-nice.jpg" alt=""> -->
+
       <Swiper
         :modules="[SwiperAutoplay]"
         :slides-per-view="1"
@@ -16,7 +15,7 @@
           <img :src="image.src" :alt="image.alt" class="h-full w-auto mx-auto rounded-3xl" />
         </SwiperSlide>
       </Swiper>
-    </div>
+    </div> -->
 
     <!-- Chiffres clés -->
     <div class="flex flex-wrap my-10">

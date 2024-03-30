@@ -7,7 +7,7 @@
     >
       <div
         class="flex flex-col" >
-        <div class="relative flex flex-row w-full content-between" 
+        <div class="relative flex w-full content-between" 
           :class="{
             'flex-row-reverse': index % 2 === 1,
             'flex-row': index % 2 === 0,
