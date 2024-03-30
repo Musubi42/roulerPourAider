@@ -28,3 +28,7 @@ logs
 
 # tmp
 /public/oui/
+
+/public/1ere-edition/*.png
+/public/1ere-edition/*.jpg
+/public/1ere-edition/*.jpeg

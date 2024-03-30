@@ -35,6 +35,12 @@ export default defineNuxtConfig({
     '/plugins/vue3-toastify.js',
   ],
   modules: ["nuxt-svgo", "@nuxt/image", "@nuxtjs/i18n", "nuxt-mail", "nuxt-swiper", '@unlighthouse/nuxt'],
+  image: {
+    // Use 'static' for Nuxt 3 as the local provider
+    // This tells Nuxt to use the static images from the `public` directory
+    provider: 'static', // 'static' is used for local in Nuxt 3
+    // Other image module configuration...
+  },
   site: {
     url: 'https://lmlccommunication.fr',
     trailingSlash: true,
