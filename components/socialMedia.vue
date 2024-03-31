@@ -1,5 +1,7 @@
 <template>
-  <div class="hidden md:block fixed bottom-5 right-5 z-50" @mouseenter="showIcons = true" @mouseleave="showIcons = false">
+  <div class="hidden md:block fixed bottom-2 right-5 z-50" 
+    :class="{ 'bottom-24': isRadioPlayerVisible }"
+    @mouseenter="showIcons = true" @mouseleave="showIcons = false">
     <div class="social-button w-12 h-12 bg-white rounded-[9999px] flex flex-col items-center justify-center relative cursor-pointer overflow-hidden transition-transform shadow-md shadow-slate-700" 
       :class="{ 'is-active': showIcons }" >
       <IconsSocialNetworks class="icon-networks h-6 w-6 absolute right-[14px] text-secondary" />
@@ -21,14 +23,18 @@
   </div>
 </template>
 
-<script setup>
-// import IconSocialNetworks from '~/components/icons/IconSocialNetworks.vue';
-// import IconLinkedin from '~/components/icons/IconLinkedin.vue';
-// import IconFacebook from '~/components/icons/IconFacebook.vue';
-// import IconTiktok from '~/components/icons/IconTiktok.vue';
-import { ref } from 'vue';
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+const route = useRoute()
 
 const showIcons = ref(false);
+const isRadioPlayerVisible = ref(false);
+
+watch(route, () => {
+  if (process.client) {
+    isRadioPlayerVisible.value = route.path === "/nos-retombees-presse/nos-passages-radio"
+  }
+})
 </script>
 
 <style scoped>
