@@ -1,6 +1,4 @@
 <template>
-<!-- :class="{ 'bg-white': isHovered || !isAccueilPage }" -->
-<!-- TODO: Quand scroll rajouter le shadow comme sur Vinci -->
   <header class="fixed block w-full z-50" 
     :style="{ 'box-shadow': ( dynamicStyle && !isMobile ) ? 'var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)' : 'de', '--tw-shadow-colored': ( dynamicStyle && !isMobile ) ? '0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color)' : '', '--tw-shadow': ( dynamicStyle && !isMobile ) ? '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)' : '' }"
     :class="{ 'bg-white': (isHovered && !isMobile) }"
@@ -10,8 +8,8 @@
     <!-- Partie Desktop -->
     <nav class="relative h-16 bg-transparent z-50" 
       :style="{ 'background-color': ( dynamicStyle && !isMobile ) ? 'white' : '' }" >
-      <div class="container px-4 mx-auto">
-        <div class="flex items-center justify-between">
+      <div class="px-4">
+        <div class="flex items-center justify-between relative">
           <!-- Logo -->
           <NuxtLink class="flex text-lg font-bold" to="/">
             <img
@@ -34,6 +32,26 @@
           </div>
 
           <!-- Les différentes sections -->
+          <!-- <ul class="hidden lg:flex lg:w-auto lg:space-x-12 h-16 items-stretch"
+            :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }">
+            <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
+            <HeadersLinkDesktop to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr" target="_blank">Faire un don</HeadersLinkDesktop>
+            <HeadersSubNavTest
+              :subMenus="subMenuItemsWhoAreWe"
+              @clicked-link="handleClicked"
+              class="cursor-pointer" >
+              Qui sommes-nous ?
+            </HeadersSubNavTest>
+            <HeadersLinkDesktop to="/1ere-edition">1<sup>ère</sup>&#160;&#160;édition</HeadersLinkDesktop>
+            <HeadersLinkDesktop to="/nos-partenaires">Nos partenaires</HeadersLinkDesktop>
+            <HeadersSubNavTest
+              class="cursor-pointer"
+              :subMenus="subMenuItemsPress" >
+              Nos relations publiques
+            </HeadersSubNavTest>
+            <HeadersLinkDesktop to="/contact">Contact</HeadersLinkDesktop>
+          </ul> -->
+
           <ul class="hidden lg:flex lg:w-auto lg:space-x-12 h-16 items-stretch"
             :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }">
             <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
@@ -54,10 +72,11 @@
             <HeadersLinkDesktop to="/contact">Contact</HeadersLinkDesktop>
           </ul>
 
+          <!-- TODO : Remplacer le switchLang contre le donation.current_amount -->
           <!-- Le changement de langue -->
-          <!-- <div class="flex">
+          <div class="flex">
             <switchLanguage />
-          </div> -->
+          </div>
         </div>
       </div>
     </nav>

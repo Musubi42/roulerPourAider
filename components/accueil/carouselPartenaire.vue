@@ -14,7 +14,7 @@
   </Swiper> -->
   <Swiper 
     :modules="[SwiperAutoplay, SwiperNavigation]"
-    :slides-per-view="3"
+    :slides-per-view="isMobile ? 1 : 3"
     :loop="true"
     :navigation="true"
     :pagination="{ clickable: true }"
@@ -89,7 +89,10 @@ const images = ref([
   },
 ]);
 
+const isMobile = ref(false);
+
 onMounted(() => {
   // Initialize carousel or set up resize observers if needed
+  isMobile.value = window.innerWidth < 768;
 });
 </script>

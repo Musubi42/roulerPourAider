@@ -1,4 +1,4 @@
-// TODO: Faire une redirection vers la page d'accueil
+// w Faire une redirection vers la page d'accueil
 <template>
   <div>
     Calendrier

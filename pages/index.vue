@@ -17,17 +17,32 @@
       </div>
     </section>
 
-    <section class="mt-24">
-      <h2 class="font-semibold text-2xl md:text-3xl text-secondary">Nous récoltons des dons pour améliorer le bien-être des patients et de leur famille</h2>
+    <!-- .video-container { 
+       height: 100vh; /* Set the container height to full viewport height */
+      overflow-y: scroll; /* Enable vertical scrolling */
+      scroll-snap-type: y mandatory; /* Enable snapping behavior */
+      position: relative;
+    }
 
-      <AccueilDons />
-    </section>
+    .video-item {
+      height: 100vh; /* Each video item takes full viewport height */
+      scroll-snap-align: start; /* Snap each video item to the start of the container */
+    } -->
 
-    <section class="mt-24">
-      <h2 class="font-semibold text-3xl text-secondary">Calendrier des manifestations</h2>
+    <!-- TODO : Essayer de faire un snap pour rendre le tout sympa -->
+    <!-- <div class="h-screen snap-y snap-mandatory relative overflow-y-scroll" > -->
+      <section class="mt-24 h-screen snap-start">
+        <h2 class="font-semibold text-2xl md:text-3xl text-secondary">Nous récoltons des dons pour améliorer le bien-être des patients et de leur famille</h2>
 
-      <AccueilCalendrier />
-    </section>
+        <AccueilDons />
+      </section>
+
+      <section class="mt-24 h-screen snap-start ">
+        <h2 class="font-semibold text-3xl text-secondary">Calendrier des manifestations</h2>
+
+        <AccueilCalendrier />
+      </section>
+    <!-- </div> -->
 
     <section class="mt-24">
       <h2 class="font-semibold text-3xl text-secondary">Nos partenaires</h2>
@@ -36,6 +51,15 @@
     </section>
   </div>
 </template>
+
+<style scoped>
+.scroll-snap-type {
+  scroll-snap-type: y mandatory;
+  overflow-y: auto; /* Ensure the container can scroll */
+  height: 100%; 
+}
+
+</style>
 
 <script setup lang="ts">
 // useSeoMeta({

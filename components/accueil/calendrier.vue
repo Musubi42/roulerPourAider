@@ -1,6 +1,6 @@
 <template>
   <section class="mt-10" >
-    <div class="flex flex-row gap-4 mx-6 overflow-x-auto" >
+    <div class="flex flex-row gap-4 -mx-6 px-4 md:px-6 py-6 bg-secondary/20 overflow-x-auto" >
       <div class="flex flex-1 justify-center text-primary font-medium py-3 px-5 rounded-xl cursor-pointer border border-primary"
         v-for="(mounth, index) in eventMounth"
         :key="index"
@@ -19,7 +19,7 @@
                 {{ event.title }}
               </div>
               <div class="text-gray-500" >
-                {{ event.date }} - {{ event.location }}
+                {{ event.description }} 
               </div>
               <a :href="googleCalendarUrl" class="text-primary underline" >
                 Ajouter à mon calendrier
@@ -38,26 +38,38 @@ const eventMounth = ["Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septem
 const events = {
   Mars: [
     {
-      title: "Événement 1",
-      date: "2024-03-01",
-      location: "123 Rue Exemple, Ville",
+      title: "Mercredi 27 Mars",
+      description: "Lancement du projet et communication au grand public",
     },
     {
-      title: "Événement 2",
-      date: "2024-03-15",
-      location: "123 Rue Exemple, Ville",
+      title: "Dimanche 31 Mars",
+      description: "Participation à l’événement Pâques Hachette à Beauvais"
     },
   ],
   Avril: [
     {
-      title: "Événement 3",
-      date: "2024-04-01",
-      location: "123 Rue Exemple, Ville",
+      title: "Samedi 6 Avril",
+      description: "Tombola au village Olympique de Beauvais",
     },
     {
-      title: "Événement 4",
-      date: "2024-04-15",
-      location: "123 Rue Exemple, Ville",
+      title: "Du 12 au 21 Avril",
+      description: "participation à la Course croisière EDHEC en tant qu’association partenaire de la journée handisport",
+    },
+    {
+      title: "Samedi 13 Avril",
+      description: "Participation à l’opération « Savoir rouler » à Senlis",
+    },
+    {
+      title: "Dimanche 14 Avril",
+      description: "Participation au triathlon de Senlis",
+    },
+    {
+      title: "Samedi 27 Avril",
+      description: "organisation d’une tombola à Cora de Saint- Maximin",
+    },
+    {
+      title: "Dimanche 28 Avril",
+      description: "participation à la brocante de Verneuil-en- Halatte",
     },
   ],
 

@@ -5,8 +5,9 @@
         <div class="flex flex-wrap">
           <div class="w-full lg:w-2/3">
             <div
-              class="bg-[url('/hopital-necker-visite/image00060.jpeg')] bg-contain h-full rounded-2xl pt-6 px-3 md:px-8 overflow-hidden"
-            >
+              ref="donationsContainer"
+              :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/hopital-necker-visite/image00060.jpeg')` }"
+              class="bg-contain h-full rounded-2xl pt-6 px-3 md:px-8 overflow-hidden" >
               <h3 class="text-center font-semibold text-lg text-white drop-shadow-2xl">
                 Contribuez à notre cause pour améliorer le bien-être des patients et de
                 leurs familles - chaque don compte pour faire une réelle différence !
@@ -18,26 +19,26 @@
                     class="flex flex-1 flex-col p-2 md:p-6 rounded-xl border border-white bg-white/50 justify-center backdrop-blur-sm"
                   >
                     <h4 class="text-center text-base font-light">Objectif</h4>
-                    <p class="text-base md:text-3xl font-semibold text-center text-secondary">30 000€</p>
+                    <p class="text-base md:text-3xl font-semibold text-center text-secondary">60 000€</p>
                   </div>
                   <div
                     class="flex flex-1 flex-col p-2 md:p-6 rounded-xl border border-white bg-white/50 justify-center backdrop-blur-sm"
                   >
-                    <h4 class="text-center text-sm font-light">Jour restant</h4>
-                    <p class="text-base md:text-3xl font-semibold text-secondary text-center">120</p>
+                    <h4 class="text-center text-sm font-light">Jours restant</h4>
+                    <p class="text-base md:text-3xl font-semibold text-secondary text-center">{{ dayLeft() }}</p>
                   </div>
                   <div
                     class="flex flex-1 flex-col p-2 md:p-6 rounded-xl border border-white bg-white/50 justify-center backdrop-blur-sm"
                   >
                     <h4 class="text-center text-base font-light">Donateurs</h4>
-                    <p class="text-base md:text-3xl font-semibold text-secondary text-center">42</p>
+                    <p class="text-base md:text-3xl font-semibold text-secondary text-center">{{ donations?.contributors_count }}</p>
                   </div>
                 </div>
 
                 <div class="containerr mt-12 mb-8">
-                  <div class="progress2 progress-moved cursor-auto">
-                    <div class="progress-bar2 relative" title="Dons">
-                      <span class="tooltip"><CountUp :end="60000" /></span>
+                  <div ref="progressBarContainer" class="progress2 cursor-auto">
+                    <div ref="progressBar" class="progress-bar2 relative" title="Dons">
+                      <span class="tooltip"><CountUp :end="donations?.current_amount" /> €</span>
                     </div>
                   </div>
                 </div>
@@ -67,12 +68,12 @@
                 :key="index"
                 class="relative rounded-xl flex items-center p-3 gap-3 bg-white border border-black"
               >
-                <span class="absolute -top-6 left-3">1050€</span>
+                <span class="absolute -top-6 left-3"><span v-html="formatNumber(donationGoal.current_amount)"></span> €</span>
                 <!-- Filling effect background -->
 
                 <div
                   class="absolute top-0 left-0 bottom-0 bg-green-500 text-base z-0 transition-[width] duration-500 ease-in-out rounded-xl"
-                  :style="{ width: 90 + '%' }"
+                  :style="{ width: donationGoal.percentage + '%' }"
                 ></div>
 
                 <!-- Content -->
@@ -88,7 +89,7 @@
 
                 <!-- Percentage text -->
                 <span class="z-10 absolute bottom-0 right-0 px-2">
-                  <p class="text-black">{{ 30 }}% de 10 000€</p>
+                  <p class="text-black">{{ donationGoal.percentage }}% de 10 000€</p>
                 </span>
               </div>
             </div>
@@ -150,8 +151,15 @@
   border-color: white transparent transparent transparent;
 }
 
+.progress2:not(.progress-moved) .progress-bar2 {
+  width: 0; /* Ensure the width starts at 0 when not visible */
+}
+
+.progress2.progress-moved .progress-bar2 {
+  /* Your existing animation styles */
+}
+
 .progress-moved .progress-bar2 {
-  width: 85%;
   background-color: rgba(114, 188, 122);
   animation: progressAnimation 6s;
 }
@@ -162,7 +170,7 @@
     background-color: rgba(114, 188, 122, 0.3);
   }
   100% {
-    width: 85%;
+    width: 90%;
     background-color: rgba(114, 188, 122, 0.5);
   }
 }
@@ -170,13 +178,128 @@
 
 <script setup lang="ts">
 const donationGoals = [
-  { logo: "logos/animation.png", text: "2 semaines d'animation", objective: "10 000" },
-  { logo: "logos/lit-hopitaux.png", text: "10 lits", objective: "10 000" },
-  { logo: "logos/decoration-salle.png", text: "2 services décorés", objective: "10 000" },
+  { logo: "logos/animation.png", text: "2 semaines d'animation", objective: 10000, current_amount: 1050, percentage: 30 },
+  { logo: "logos/lit-hopitaux.png", text: "10 lits", objective: 10000, current_amount: 0, percentage: 0 },
+  { logo: "logos/decoration-salle.png", text: "2 services décorés", objective: 10000, current_amount: 0, percentage: 0 },
   {
     logo: "logos/salle-parents.png",
     text: "1 création d'un salon des parents",
-    objective: "30 000",
+    objective: 60000, current_amount: 0, percentage: 0
   },
 ];
+
+interface DonationGoal {
+  current_amount: number;
+  target_amount: number;
+  days_left: number;
+  contributors_count: number;
+}
+
+const donations = ref<DonationGoal | null>(null);
+
+const donationTargetAmountPercentage = computed(() => {
+  if (donations.value) {
+    return (donations.value.current_amount / donations.value.target_amount) * 100;
+  }
+  return 0;
+});
+
+const dayLeft = () => {
+  const today = new Date();
+  const end = new Date("2024-09-30");
+  const diff = end.getTime() - today.getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  return days;
+};
+
+const getDonations = async () => {
+   const url = `https://donation-api.roulerpouraider.fr/donations`;
+
+  const { data, pending, error, refresh } = await useAsyncData(
+    'mountains',
+    () => $fetch('https://donation-api.roulerpouraider.fr/donations')
+  );
+
+  if (!error.value && !pending.value && data.value) {
+    donations.value = transformDonations(data.value);
+    updateDonationGoals();
+    console.log("donationsGolas", donationGoals);
+  } else {
+    console.error(error);
+  }
+};
+
+const transformDonations = (donations) => {
+    return {
+      current_amount: Math.round(donations.current_amount / 100),
+      target_amount: donations.target_amount,
+      days_left: donations.days_left,
+      contributors_count: donations.contributors_count,
+    };
+};
+
+const updateDonationGoals = () => {
+  let remainingAmount = donations.value ? donations.value.current_amount : 0;
+
+  for (let i = 0; i < donationGoals.length; i++) {
+    if (remainingAmount >= donationGoals[i].objective) {
+      donationGoals[i].current_amount = donationGoals[i].objective;
+      donationGoals[i].percentage = 100;
+      remainingAmount -= donationGoals[i].objective;
+    } else {
+      console.log("remainingAmount", remainingAmount);
+      console.log("donationGoals[i].objective", donationGoals[i].objective);
+      donationGoals[i].current_amount = remainingAmount;
+      donationGoals[i].percentage = (remainingAmount / donationGoals[i].objective) * 100;
+      remainingAmount = 0;
+    }
+  }
+};
+
+const formatNumber = (value) => {
+  console.log("value", value);
+  const parts = value.toString().split(/(?=(?:...)*$)/);
+  return parts.map(part => `<span class="mr-1">${part}</span>`).join('  ');
+};
+
+const donationsContainer = ref(null);
+const progressBar = ref(null);
+const progressBarContainer = ref(null);
+let observer;
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          console.log("observer");
+          progressBar.value.classList.add('progress-moved');
+          progressBar.value.style.width = `${donationTargetAmountPercentage.value}%`;
+          progressBar.value.style.backgroundColor = 'rgba(114, 188, 122)';
+          // progressBarContainer.value.style.width = `${donationTargetAmountPercentage.value}%`;
+          // entry.target.classList.add('progress-moved');
+          observer.unobserve(entry.target); // Stop observing once animation is triggered
+        }
+      });
+    },
+    {
+      threshold: 0.5, // Configure as needed, 0.5 means 50% of the item should be visible
+    }
+  );
+
+  if (donationsContainer.value) {
+    observer.observe(donationsContainer.value);
+  }
+});
+
+onUnmounted(() => {
+  if (observer && donationsContainer.value) {
+    observer.unobserve(donationsContainer.value);
+  }
+});
+
+onBeforeMount(async () => {
+  await getDonations();
+});
+
 </script>

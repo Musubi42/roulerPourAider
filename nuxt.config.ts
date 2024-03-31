@@ -41,6 +41,7 @@ export default defineNuxtConfig({
     provider: 'static', // 'static' is used for local in Nuxt 3
     // Other image module configuration...
   },
+  target: "static",
   site: {
     url: 'https://lmlccommunication.fr',
     trailingSlash: true,
