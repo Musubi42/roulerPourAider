@@ -35,13 +35,14 @@
                   </div>
                 </div>
 
-                <div class="containerr mt-12 mb-8">
+                <div class="containerr mt-12 mb-8" v-if="donations?.current_amount" >
                   <div ref="progressBarContainer" class="progress2 cursor-auto">
                     <div ref="progressBar" class="progress-bar2 relative" title="Dons">
                       <span class="tooltip"><CountUp :end="isVisible ? donations.current_amount : 0" /> €</span>
                     </div>
                   </div>
                 </div>
+
                 <div class="flex flex-row gap-6 justify-center">
                   <button type="" class="mb-5">
                     <NuxtLink
@@ -225,13 +226,11 @@ const getDonations = async () => {
 
   // Fetch data if not stored
   const url = "https://donation-api.roulerpouraider.fr/donations";
-  const { data, pending, error } = await useAsyncData('fetchDonations', () => {
-    return $fetch(url, {
+  const { data, pending, error } = await useFetch(url, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
       },
-    });
   });
 
   if (!error.value && !pending.value && data.value) {

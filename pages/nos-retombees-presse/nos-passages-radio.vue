@@ -119,12 +119,12 @@ const getPodcastMetadata = async () => {
 
   // Fetch data if not stored
   const url = `${strapiBaseUrl}/api/podcasts?populate=thumbnail&populate=podcast`;
-  const { data, pending, error } = await useAsyncData(url, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${strapiToken}`,
-    },
+  const { data, pending, error } = await useFetch(url, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${strapiToken}`,
+      },
   });
 
   console.log("error", error.value);
