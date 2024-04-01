@@ -31,13 +31,13 @@
 
     <!-- TODO : Essayer de faire un snap pour rendre le tout sympa -->
     <!-- <div class="h-screen snap-y snap-mandatory relative overflow-y-scroll" > -->
-      <section class="mt-24 h-screen snap-start">
+      <section class="mt-24 snap-start">
         <h2 class="font-semibold text-2xl md:text-3xl text-secondary">Nous récoltons des dons pour améliorer le bien-être des patients et de leur famille</h2>
 
         <AccueilDons />
       </section>
 
-      <section class="mt-24 h-screen snap-start ">
+      <section class="mt-24 snap-start ">
         <h2 class="font-semibold text-3xl text-secondary">Calendrier des manifestations</h2>
 
         <AccueilCalendrier />

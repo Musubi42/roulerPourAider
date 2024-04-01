@@ -38,11 +38,10 @@
                 <div class="containerr mt-12 mb-8">
                   <div ref="progressBarContainer" class="progress2 cursor-auto">
                     <div ref="progressBar" class="progress-bar2 relative" title="Dons">
-                      <span class="tooltip"><CountUp :end="donations?.current_amount" /> €</span>
+                      <span class="tooltip"><CountUp :end="isVisible ? donations.current_amount : 0" /> €</span>
                     </div>
                   </div>
                 </div>
-
                 <div class="flex flex-row gap-6 justify-center">
                   <button type="" class="mb-5">
                     <NuxtLink
@@ -213,17 +212,37 @@ const dayLeft = () => {
 };
 
 const getDonations = async () => {
-   const url = `https://donation-api.roulerpouraider.fr/donations`;
+  // Check if data is already stored in localStorage
+  const storedDonations = localStorage.getItem('donations');
+  if (storedDonations) {
+    donations.value = JSON.parse(storedDonations);
+    if (donations.value.length > 0) {
+      currentDonations.value = donations.value[0];
+    }
+    updateDonationGoals();
+    return; // End the function here as we have loaded the data
+  }
 
-  const { data, pending, error, refresh } = await useAsyncData(
-    'mountains',
-    () => $fetch('https://donation-api.roulerpouraider.fr/donations')
-  );
+  // Fetch data if not stored
+  const url = "https://donation-api.roulerpouraider.fr/donations";
+  const { data, pending, error } = await useAsyncData('fetchDonations', () => {
+    return $fetch(url, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  });
 
   if (!error.value && !pending.value && data.value) {
     donations.value = transformDonations(data.value);
     updateDonationGoals();
-    console.log("donationsGolas", donationGoals);
+    if (donations.value.length > 0) {
+      currentDonations.value = donations.value[0];
+    }
+
+    // Store the data in localStorage
+    localStorage.setItem('donations', JSON.stringify(donations.value));
   } else {
     console.error(error);
   }
@@ -247,8 +266,6 @@ const updateDonationGoals = () => {
       donationGoals[i].percentage = 100;
       remainingAmount -= donationGoals[i].objective;
     } else {
-      console.log("remainingAmount", remainingAmount);
-      console.log("donationGoals[i].objective", donationGoals[i].objective);
       donationGoals[i].current_amount = remainingAmount;
       donationGoals[i].percentage = (remainingAmount / donationGoals[i].objective) * 100;
       remainingAmount = 0;
@@ -257,7 +274,6 @@ const updateDonationGoals = () => {
 };
 
 const formatNumber = (value) => {
-  console.log("value", value);
   const parts = value.toString().split(/(?=(?:...)*$)/);
   return parts.map(part => `<span class="mr-1">${part}</span>`).join('  ');
 };
@@ -267,12 +283,14 @@ const progressBar = ref(null);
 const progressBarContainer = ref(null);
 let observer;
 
+const isVisible = ref(false);
+
 onMounted(() => {
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          console.log("observer");
+          isVisible.value = entry.isIntersecting;
           progressBar.value.classList.add('progress-moved');
           progressBar.value.style.width = `${donationTargetAmountPercentage.value}%`;
           progressBar.value.style.backgroundColor = 'rgba(114, 188, 122)';
@@ -292,14 +310,14 @@ onMounted(() => {
   }
 });
 
-onUnmounted(() => {
-  if (observer && donationsContainer.value) {
-    observer.unobserve(donationsContainer.value);
-  }
-});
+// onUnmounted(() => {
+//   if (observer && donationsContainer.value) {
+//     observer.unobserve(donationsContainer.value);
+//   }
+// });
+
 
 onBeforeMount(async () => {
   await getDonations();
 });
-
 </script>

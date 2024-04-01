@@ -23,7 +23,7 @@
           class="font-bold text-primary text-3xl"
           :end="isVisible[index] ? item.number : 0"
         /> -->
-        <p class="font-normal text-black text-xl text-center">Kilomètre parcourus</p>
+        <p class="font-normal text-black text-xl text-center">Montagne Everest escaladés</p>
       </div>
     </div>
     <!-- Bas -->
