@@ -13,7 +13,7 @@
   </div>
   <!-- TODO: mieux gérer le chargement -->
   <div v-else class="hero-container flex w-full h-[80vh] bg-cover bg-no-repeat bg-center" 
-    :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url('/default-hero-image.png')` }">
+    :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url('/default-hero-image.jpg')` }">
     <div class="breadcrumb-container">
       <BreadcrumbComponent />
     </div>
