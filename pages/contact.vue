@@ -181,31 +181,29 @@ const transformContactObject = (contactData) => {
   });
 };
 
-const getContacts = async () => {
+const getContacts = () => {
   const url = `${strapiBaseUrl}/api/contacts?populate=*`;
 
-  const { data, pending, error } = await useFetch(url, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${strapiToken}`,
-    },
-  });
+  const { data, pending, error } = useAsyncData("contacts", () => {
+      return $fetch(url, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${strapiToken}`,
+        },
+      });
+    });
 
   if (!error.value && !pending.value && data.value) {
     contacts.value = transformContactObject(data.value.data);
   } else {
     console.error(error.value);
   }
-
-  console.log("contacts", contacts.value);
 };
 
 const capitalizePrenom = (prenom: string) => {
   return prenom.charAt(0).toUpperCase() + prenom.slice(1);
 };
 
-onMounted(async () => {
-  await getContacts();
-});
+getContacts();
 </script>

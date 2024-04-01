@@ -213,19 +213,8 @@ const dayLeft = () => {
 };
 
 const getDonations = () => {
-  // Check if data is already stored in localStorage
-  // const storedDonations = localStorage.getItem('donations');
-  // if (storedDonations) {
-  //   donations.value = JSON.parse(storedDonations);
-  //   if (donations.value.length > 0) {
-  //     currentDonations.value = donations.value[0];
-  //   }
-  //   updateDonationGoals();
-  //   return; // End the function here as we have loaded the data
-  // }
-
-  // Fetch data if not stored
   const url = "https://donation-api.roulerpouraider.fr/donations";
+
   const { data, pending, error } = useAsyncData('dons', () => {
   return $fetch(url, {
     method: 'get',
@@ -239,12 +228,6 @@ const getDonations = () => {
   if (!error.value && !pending.value && data.value) {
     donations.value = transformDonations(data.value);
     updateDonationGoals();
-    // if (donations.value.length > 0) {
-    //   currentDonations.value = donations.value[0];
-    // }
-
-    // Store the data in localStorage
-    // localStorage.setItem('donations', JSON.stringify(donations.value));
   } else {
     console.error(error);
   }
@@ -274,8 +257,6 @@ const updateDonationGoals = () => {
     }
   }
 };
-
-getDonations();
 
 const formatNumber = (value) => {
   const parts = value.toString().split(/(?=(?:...)*$)/);
@@ -314,11 +295,7 @@ onMounted(() => {
   }
 });
 
-// onUnmounted(() => {
-//   if (observer && donationsContainer.value) {
-//     observer.unobserve(donationsContainer.value);
-//   }
-// });
+getDonations();
 
 
 onBeforeMount(async () => {

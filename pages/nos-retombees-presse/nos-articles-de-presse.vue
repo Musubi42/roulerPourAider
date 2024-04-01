@@ -94,16 +94,18 @@ const transformArticleObject = (articleTvData) => {
   });
 };
 
-const getArticles = async () => {
+const getArticles = () => {
   const url = `${strapiBaseUrl}/api/articles?populate=*`;
 
-  const { data, pending, error } = await useFetch(url, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${strapiToken}`,
-    },
-  });
+  const { data, pending, error } = useAsyncData("articles", () => {
+      return $fetch(url, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${strapiToken}`,
+        },
+      });
+    });
 
   if (!error.value && !pending.value && data.value) {
     articles.value = transformArticleObject(data.value.data);
@@ -112,7 +114,5 @@ const getArticles = async () => {
   }
 };
 
-onMounted(() => {
-  getArticles();
-});
+getArticles();
 </script>

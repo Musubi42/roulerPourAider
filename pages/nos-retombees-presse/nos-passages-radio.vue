@@ -105,39 +105,24 @@ const transformPodcastObject = (podcastData) => {
   });
 };
 
-const getPodcastMetadata = async () => {
-  // Check if data is already stored in localStorage
-  const storedPodcasts = localStorage.getItem('podcasts');
-  if (storedPodcasts) {
-    podcasts.value = JSON.parse(storedPodcasts);
-    if (podcasts.value.length > 0) {
-      currentPodcast.value = podcasts.value[0];
-    }
-    console.log("Retrieved podcasts from localStorage", podcasts.value);
-    return; // End the function here as we have loaded the data
-  }
-
-  // Fetch data if not stored
+const getPodcastMetadata = () => {
   const url = `${strapiBaseUrl}/api/podcasts?populate=thumbnail&populate=podcast`;
-  const { data, pending, error } = await useFetch(url, {
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${strapiToken}`,
-      },
-  });
 
-  console.log("error", error.value);
+  const { data, pending, error } = useAsyncData("podcastMetadata", () => {
+      return $fetch(url, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${strapiToken}`,
+        },
+      });
+    });
 
   if (!error.value && !pending.value && data.value) {
     podcasts.value = transformPodcastObject(data.value.data);
     if (podcasts.value.length > 0) {
       currentPodcast.value = podcasts.value[0];
     }
-
-    // Store the data in localStorage
-    localStorage.setItem('podcasts', JSON.stringify(podcasts.value));
-    console.log("podcasts stored in localStorage", podcasts.value);
   } else {
     console.error(error);
   }
@@ -158,7 +143,5 @@ const formatDate = (date: string): string => {
   return `${day} ${monthNames[monthIndex]} ${year}`;
 }; 
 
-onMounted(() => {
-  getPodcastMetadata();
-});
+getPodcastMetadata();
 </script>

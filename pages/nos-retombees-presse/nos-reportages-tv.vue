@@ -93,16 +93,18 @@ const transformReportageTvObject = (reportageTvData) => {
   });
 };
 
-const getReportages = async () => {
+const getReportages = () => {
   const url = `${strapiBaseUrl}/api/reportage-tvs?populate=*`;
 
-  const { data, pending, error } = await useFetch(url, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${strapiToken}`,
-    },
-  });
+  const { data, pending, error } = useAsyncData("reportages", () => {
+      return $fetch(url, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${strapiToken}`,
+        },
+      });
+    });
 
   if (!error.value && !pending.value && data.value) {
     reportages.value = transformReportageTvObject(data.value.data);
@@ -111,7 +113,5 @@ const getReportages = async () => {
   }
 };
 
-onMounted(() => {
-  getReportages();
-});
+getReportages();
 </script>
