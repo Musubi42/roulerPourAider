@@ -35,7 +35,8 @@
           <div class="flex flex-col md:flex-row items-center border rounded-lg shadow-lg" 
             :class="{ 'md:flex-row-reverse': index % 2 === 1, 'md:flex-row': index % 2 === 0 }" 
              >
-            <NuxtImg
+            <!-- TODO : Trouver le moyen d'host les images venant du backoffice directement sur Vercel, Git webhooks ? -->
+            <img
               class="w-full md:w-80 h-[350px] object-cover md:clip-path-right-top"
               :class="{ 'md:rounded-l-lg': index % 2 === 0, 'rounded-t-lg': index % 2 === 0, 'rounded-r-lg': index % 2 === 1 }" 
               :src="person?.personPhotoUrl"
@@ -132,16 +133,18 @@ const transformPersonObject = (personData) => {
   });
 };
 
-const getPersons = async () => {
+const getPersons = () => {
   const url = `${strapiBaseUrl}/api/who-are-wes?populate=*`;
 
-  const { data, pending, error } = await useFetch(url, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${strapiToken}`,
-    },
-  });
+  const { data, pending, error } = useAsyncData("persons", () => {
+      return $fetch(url, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${strapiToken}`,
+        },
+      });
+    });
 
   if (!error.value && !pending.value && data.value) {
     persons.value = transformPersonObject(data.value.data);
@@ -168,15 +171,11 @@ const getDescriptionAsso = async () => {
   }
 };
 
-console.log("descriptionAsso", descriptionAsso.value);
-
 const capitalizePrenom = (prenom: string) => {
   return prenom.charAt(0).toUpperCase() + prenom.slice(1);
 };
 
-onMounted(() => {
-  getPersons();
-  getDescriptionAsso();
-});
+getPersons();
+getDescriptionAsso();
 </script>
 
