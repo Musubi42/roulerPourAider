@@ -35,10 +35,10 @@
                   </div>
                 </div>
 
-                <div class="containerr mt-12 mb-8" v-if="donations?.current_amount" >
+                <div class="containerr mt-12 mb-8" v-show="donations?.current_amount" >
                   <div ref="progressBarContainer" class="progress2 cursor-auto">
                     <div ref="progressBar" class="progress-bar2 relative" title="Dons">
-                      <span class="tooltip"><CountUp :end="isVisible ? donations.current_amount : 0" /> €</span>
+                      <span class="tooltip"><CountUp :end="isVisible ? donations?.current_amount : 0" /> €</span>
                     </div>
                   </div>
                 </div>
