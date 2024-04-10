@@ -6,39 +6,57 @@
           <div class="w-full lg:w-2/3">
             <div
               ref="donationsContainer"
-              :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/hopital-necker-visite/image00060.jpeg')` }"
-              class="bg-contain h-full rounded-2xl pt-6 px-3 md:px-8 overflow-hidden" >
+              :style="{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/hopital-necker-visite/image00060.jpeg')`,
+              }"
+              class="bg-contain h-full rounded-2xl pt-6 px-3 md:px-8 overflow-hidden"
+            >
               <h3 class="text-center font-semibold text-lg text-white drop-shadow-2xl">
                 Contribuez à notre cause pour améliorer le bien-être des patients et de
-                leurs familles - chaque don compte pour faire une réelle différence !
+                leur famille. Chaque don compte pour faire une réelle différence !
               </h3>
 
-              <div class="flex flex-col  w-full bottom-2" >
+              <div class="flex flex-col w-full bottom-2">
                 <div class="flex flex-row gap-4 md:gap-6">
                   <div
                     class="flex flex-1 flex-col p-2 md:p-6 rounded-xl border border-white bg-white/50 justify-center backdrop-blur-sm"
                   >
                     <h4 class="text-center text-base font-light">Objectif</h4>
-                    <p class="text-base md:text-3xl font-semibold text-center text-secondary">60 000€</p>
+                    <p
+                      class="text-base md:text-3xl font-semibold text-center text-secondary"
+                    >
+                      60 000€
+                    </p>
                   </div>
                   <div
                     class="flex flex-1 flex-col p-2 md:p-6 rounded-xl border border-white bg-white/50 justify-center backdrop-blur-sm"
                   >
-                    <h4 class="text-center text-sm font-light">Jours restant</h4>
-                    <p class="text-base md:text-3xl font-semibold text-secondary text-center">{{ dayLeft() }}</p>
+                    <h4 class="text-center text-sm font-light">Jours restants</h4>
+                    <p
+                      class="text-base md:text-3xl font-semibold text-secondary text-center"
+                    >
+                      {{ dayLeft() }}
+                    </p>
                   </div>
                   <div
                     class="flex flex-1 flex-col p-2 md:p-6 rounded-xl border border-white bg-white/50 justify-center backdrop-blur-sm"
                   >
                     <h4 class="text-center text-base font-light">Donateurs</h4>
-                    <p class="text-base md:text-3xl font-semibold text-secondary text-center">{{ donations?.contributors_count }}</p>
+                    <p
+                      class="text-base md:text-3xl font-semibold text-secondary text-center"
+                    >
+                      {{ websiteStore.contributors_count }}
+                    </p>
                   </div>
                 </div>
 
-                <div class="containerr mt-12 mb-8" v-show="donations?.current_amount" >
+                <div class="containerr mt-12 mb-8" v-show="donations?.current_amount">
                   <div ref="progressBarContainer" class="progress2 cursor-auto">
                     <div ref="progressBar" class="progress-bar2 relative" title="Dons">
-                      <span class="tooltip"><CountUp :end="isVisible ? donations?.current_amount : 0" /> €</span>
+                      <span class="tooltip"
+                        ><CountUp :end="isVisible ? websiteStore.current_amount : 0" />
+                        €</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -68,7 +86,10 @@
                 :key="index"
                 class="relative rounded-xl flex items-center p-3 gap-3 bg-white border border-black"
               >
-                <span class="absolute -top-6 left-3"><span v-html="formatNumber(donationGoal.current_amount)"></span> €</span>
+                <span class="absolute -top-6 left-3"
+                  ><span v-html="formatNumber(donationGoal.current_amount)"></span>
+                  €</span
+                >
                 <!-- Filling effect background -->
 
                 <div
@@ -83,7 +104,7 @@
                   <img :src="donationGoal.logo" alt="Logo de donation" />
                 </div>
 
-                <p class="z-10 mb-1 text-black ">
+                <p class="z-10 mb-1 text-black">
                   {{ donationGoal.text }}
                 </p>
 
@@ -178,13 +199,33 @@
 
 <script setup lang="ts">
 const donationGoals = [
-  { logo: "logos/animation.png", text: "2 semaines d'animation", objective: 10000, current_amount: 1050, percentage: 30 },
-  { logo: "logos/lit-hopitaux.png", text: "10 lits", objective: 10000, current_amount: 0, percentage: 0 },
-  { logo: "logos/decoration-salle.png", text: "2 services décorés", objective: 10000, current_amount: 0, percentage: 0 },
+  {
+    logo: "logos/animation.png",
+    text: "2 semaines d'animation",
+    objective: 10000,
+    current_amount: 0,
+    percentage: 0,
+  },
+  {
+    logo: "logos/lit-hopitaux.png",
+    text: "10 lits",
+    objective: 10000,
+    current_amount: 0,
+    percentage: 0,
+  },
+  {
+    logo: "logos/decoration-salle.png",
+    text: "2 services décorés",
+    objective: 10000,
+    current_amount: 0,
+    percentage: 0,
+  },
   {
     logo: "logos/salle-parents.png",
     text: "1 création d'un salon des parents",
-    objective: 60000, current_amount: 0, percentage: 0
+    objective: 60000,
+    current_amount: 0,
+    percentage: 0,
   },
 ];
 
@@ -212,17 +253,16 @@ const dayLeft = () => {
   return days;
 };
 
-const getDonations = () => {
-  const url = "https://donation-api.roulerpouraider.fr/donations";
-
-  const { data, pending, error } = useAsyncData('dons', () => {
-  return $fetch(url, {
-    method: 'get',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+const getDonations = async () => {
+  const { data, pending, error } = useAsyncData("todos", () => {
+    return $fetch('/api/refreshDonation', {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      server: false, // This ensures the data is only fetched on the client-side
+    });
   });
-});
 
 
   if (!error.value && !pending.value && data.value) {
@@ -233,17 +273,19 @@ const getDonations = () => {
   }
 };
 
+
+
 const transformDonations = (donations) => {
-    return {
-      current_amount: Math.round(donations.current_amount / 100),
-      target_amount: donations.target_amount,
-      days_left: donations.days_left,
-      contributors_count: donations.contributors_count,
-    };
+  return {
+    current_amount: Math.round(donations.current_amount),
+    target_amount: donations.target_amount,
+    days_left: donations.days_left,
+    contributors_count: donations.contributors_count,
+  };
 };
 
-const updateDonationGoals = () => {
-  let remainingAmount = donations.value ? donations.value.current_amount : 0;
+const updateDonationGoals = (donationsValue) => {
+  let remainingAmount = donationsValue ? donationsValue.current_amount : 0;
 
   for (let i = 0; i < donationGoals.length; i++) {
     if (remainingAmount >= donationGoals[i].objective) {
@@ -252,7 +294,7 @@ const updateDonationGoals = () => {
       remainingAmount -= donationGoals[i].objective;
     } else {
       donationGoals[i].current_amount = remainingAmount;
-      donationGoals[i].percentage = (remainingAmount / donationGoals[i].objective) * 100;
+      donationGoals[i].percentage = Math.round((remainingAmount / donationGoals[i].objective) * 100);
       remainingAmount = 0;
     }
   }
@@ -260,7 +302,7 @@ const updateDonationGoals = () => {
 
 const formatNumber = (value) => {
   const parts = value.toString().split(/(?=(?:...)*$)/);
-  return parts.map(part => `<span class="mr-1">${part}</span>`).join('  ');
+  return parts.map((part) => `<span class="mr-1">${part}</span>`).join("  ");
 };
 
 const donationsContainer = ref(null);
@@ -270,15 +312,35 @@ let observer;
 
 const isVisible = ref(false);
 
-onMounted(() => {
+const websiteStore = useWebsiteStore();
+
+onMounted(async () => {
+  await websiteStore.fetch();
+
+  watch(() => websiteStore.data, (newVal, oldVal) => {
+    // donations.value = transformDonations(newVal);
+    let currentValue = null;
+
+    if (newVal != oldVal) {
+      console.log("newVal", newVal);
+      console.log("oldVal", oldVal);
+      currentValue = newVal
+      updateDonationGoals(newVal);
+    }
+
+  }, { deep: true });
+
+  donations.value = transformDonations(websiteStore.data);
+  updateDonationGoals(donations.value);
+
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           isVisible.value = entry.isIntersecting;
-          progressBar.value.classList.add('progress-moved');
+          progressBar.value.classList.add("progress-moved");
           progressBar.value.style.width = `${donationTargetAmountPercentage.value}%`;
-          progressBar.value.style.backgroundColor = 'rgba(114, 188, 122)';
+          progressBar.value.style.backgroundColor = "rgba(114, 188, 122)";
           // progressBarContainer.value.style.width = `${donationTargetAmountPercentage.value}%`;
           // entry.target.classList.add('progress-moved');
           observer.unobserve(entry.target); // Stop observing once animation is triggered
@@ -294,9 +356,6 @@ onMounted(() => {
     observer.observe(donationsContainer.value);
   }
 });
-
-getDonations();
-
 
 onBeforeMount(async () => {
   // await getDonations();
