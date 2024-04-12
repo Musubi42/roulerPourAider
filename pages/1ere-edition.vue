@@ -25,8 +25,8 @@
     <div class="flex flex-wrap mb-28 md:mb-32">
       <div class="w-full lg:w-1/2 px-8">
         <h2 class="text-3xl lg:text-5xl font-bold font-heading mb-20 max-w-xs lg:max-w-lg">Qu’a permis la collecte de dons ?</h2>
-        <!-- <NuxtImg class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/tablette.jpeg" alt="" /> -->
-        <!-- <NuxtImg class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/fresque.jpeg" alt="" /> -->
+        <NuxtImg class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/tablette.jpeg" alt="" />
+        <NuxtImg class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/fresque.jpeg" alt="" />
       </div>
       <div class="w-full lg:w-1/2 px-8">
         <p class="text-gray-600 text-lg mb-6">Les dons que nous avons récoltés ont permis de financer des projets d’amélioration de vie du bien-être de l’enfant à l’hôpital comme :</p>
@@ -61,7 +61,7 @@
           </div>
 
         </div>
-        <!-- <NuxtImg class="rounded-3xl w-full lg:w-auto" src="/hopital-necker-visite/fauteuil-lit.jpeg" alt="" /> -->
+        <NuxtImg class="rounded-3xl w-full lg:w-auto" src="/hopital-necker-visite/fauteuil-lit.jpeg" alt="" />
       </div>
     </div>
 
