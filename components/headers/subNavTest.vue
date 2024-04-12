@@ -10,10 +10,10 @@
         </nuxt-link>
       </li>
 
-      <div v-if="isHovered" class="absolute left-0 top-16 w-full h-16 bg-white border-t-[1px] border-b-[1px] border-gray-400/50">
+      <div v-if="isHovered" class="absolute left-0 top-16 w-[calc(100%+32px)] -ml-4 mr-4 h-16 bg-white border-t-[1px] border-b-[1px] border-gray-400/50">
         <ul class="flex gap-6 items-center h-full justify-center">
           <li v-for="item in subMenus" :key="item.path" class="" >
-            <HeadersLinkDesktop :to="item.path"
+            <HeadersLinkDesktop :to="item.path" @click="clickedOnLink"
               >{{ item.name }}</HeadersLinkDesktop
             >
           </li>
@@ -81,6 +81,10 @@ const clicked = () => {
     emits('clicked-link');
     isClicked.value = !isClicked.value;
   }
+};
+
+const clickedOnLink = () => {
+  isClicked.value = false;
 };
 </script>
 

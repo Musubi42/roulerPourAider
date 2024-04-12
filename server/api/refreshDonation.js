@@ -5,7 +5,6 @@ let lastFetchTime = 0;
 const donationUrl = "https://donation-api.roulerpouraider.fr/donations";
 
 export default defineEventHandler(async (event) => {
-  console.log("called");
   const fifteenMinutes = 15 * 60000 * 1000;
   const currentTime = Date.now();
 

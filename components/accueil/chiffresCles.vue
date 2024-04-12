@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col border-secondary w-full md:w-8/12 mx-auto mt-6">
+  <div class="flex flex-col border-secondary w-full md:w-8/12 mx-auto mt-6 p-6 bg-primary/20 rounded-2xl">
     <div ref="numbers" class="flex flex-col md:flex-row w-full h-auto md:h-[200px]">
       <div
         class="flex flex-col items-center justify-center w-full md:w-1/2 md:border-r-2 border-b-2 border-secondary md:pr-6 md:pb-4 md:pl-1 py-4"
       >
         <CountUp class="font-bold text-primary text-6xl" :end="isVisible ? 3000 : 0" />
-        <p class="font-medium text-primary text-3xl">Kilomètres parcourus</p>
+        <p class="font-medium text-primary text-3xl">Kilomètres à parcourir</p>
       </div>
       <div
         class="flex flex-col items-center justify-start w-full md:w-1/4 border-b-2 md:border-r-2 border-secondary md:p-6 py-4"
@@ -53,12 +53,12 @@
 <script setup lang="ts">
 const keyNumbers = [
   { number: 3000, text: "Kilomètre parcourus" },
-  { number: 17, text: "Étapes" },
+  { number: 18, text: "Étapes" },
   { number: 3, text: "Everest escaladés", logo: "logos/D+.png" },
   { text: "Tour de France du 7 au 25 Juillet" },
   {
     text:
-      "Du 27 avril à fin juillet, grande campagne de collecte de dons au profit de l’hôpital Necker",
+      "Du 27 mars à fin juillet, grande campagne de collecte de dons au profit de l’Hôpital Necker - Enfants malades AP-HP",
     logo: "logos/dons.png",
   },
 ];

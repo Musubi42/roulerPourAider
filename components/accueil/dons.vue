@@ -90,6 +90,7 @@
                   ><span v-html="formatNumber(donationGoal.current_amount)"></span>
                   €</span
                 >
+                {{ donationGoal.current_amount }}
                 <!-- Filling effect background -->
 
                 <div
@@ -198,7 +199,7 @@
 </style>
 
 <script setup lang="ts">
-const donationGoals = [
+const donationGoals = reactive([
   {
     logo: "logos/animation.png",
     text: "2 semaines d'animation",
@@ -227,7 +228,7 @@ const donationGoals = [
     current_amount: 0,
     percentage: 0,
   },
-];
+]);
 
 interface DonationGoal {
   current_amount: number;
@@ -317,6 +318,11 @@ const websiteStore = useWebsiteStore();
 onMounted(async () => {
   await websiteStore.fetch();
 
+  const { current_amount, contributors_count } = storeToRefs(websiteStore);
+
+  console.log("current_amount", current_amount);
+  console.log("contributors_count", contributors_count);
+
   watch(() => websiteStore.data, (newVal, oldVal) => {
     // donations.value = transformDonations(newVal);
     let currentValue = null;
@@ -325,7 +331,9 @@ onMounted(async () => {
       console.log("newVal", newVal);
       console.log("oldVal", oldVal);
       currentValue = newVal
+      console.log("donationsGoalBEfore", donationGoals);
       updateDonationGoals(newVal);
+      console.log("donationsGoalAfter", donationGoals);
     }
 
   }, { deep: true });
