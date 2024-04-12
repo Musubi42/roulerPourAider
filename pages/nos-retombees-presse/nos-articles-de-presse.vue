@@ -114,5 +114,7 @@ const getArticles = () => {
   }
 };
 
-getArticles();
+onMounted(() => {
+  getArticles();
+});
 </script>
