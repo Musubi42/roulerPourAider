@@ -143,5 +143,7 @@ const formatDate = (date: string): string => {
   return `${day} ${monthNames[monthIndex]} ${year}`;
 }; 
 
-getPodcastMetadata();
+onMounted(() => {
+  getPodcastMetadata();
+});
 </script>

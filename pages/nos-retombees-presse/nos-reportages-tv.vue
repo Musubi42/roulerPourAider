@@ -113,5 +113,7 @@ const getReportages = () => {
   }
 };
 
-getReportages();
+onMounted(() => {
+  getReportages();
+});
 </script>
