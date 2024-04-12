@@ -1,7 +1,7 @@
 export const useWebsiteStore = defineStore('websiteStore', {
   state: () => ({
     data: null,
-    incrementInterval: null,
+    timeoutId: null, // Changed from incrementInterval to timeoutId for clarity
   }),
   getters: {
     current_amount: (state) => state.data ? state.data.current_amount : 0,
@@ -9,7 +9,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
   },
   actions: {
     async fetch() {
-      clearInterval(this.incrementInterval); // Clear existing interval if there is one
+      clearTimeout(this.timeoutId); // Clear existing timeout if there is one
 
       try {
         const data = await $fetch('/api/refreshDonation', {
@@ -48,17 +48,18 @@ export const useWebsiteStore = defineStore('websiteStore', {
             timeRemaining -= randomTime;
           }
 
+          console.log("timeBetweenIncrements", timeBetweenIncrements);
+
           const amountIncrementPerMinute = Math.round((data.current_amount - initialCurrentAmount) / contributorsGap);
 
           let incrementStep = 0;
-          // TODO : utiliser setTimeout, car setInterval prend son interval au début puis ne change plus
-          this.incrementInterval = setInterval(() => {
+          
+          const performIncrement = () => {
             incrementStep++;
             console.log("Incrementing data", incrementStep);
-            console.log("timeBetweenIncrements", timeBetweenIncrements.length)
+            console.log("timeBetweenIncrements", timeBetweenIncrements.length);
 
             if (incrementStep >= timeBetweenIncrements.length) {
-              clearInterval(this.incrementInterval);
               return;
             }
 
@@ -67,8 +68,13 @@ export const useWebsiteStore = defineStore('websiteStore', {
               current_amount: this.data.current_amount + amountIncrementPerMinute,
               contributors_count: this.data.contributors_count + 1,
             };
-          }, timeBetweenIncrements[incrementStep]); 
-          // TODO : Randomized increment interval
+
+            // Recursively schedule the next increment
+            this.timeoutId = setTimeout(performIncrement, timeBetweenIncrements[incrementStep]);
+          };
+
+          // Start the first increment
+          this.timeoutId = setTimeout(performIncrement, timeBetweenIncrements[incrementStep]);
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);

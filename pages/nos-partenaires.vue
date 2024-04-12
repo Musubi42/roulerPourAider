@@ -73,7 +73,7 @@
           </div>
           <!-- Image -->
           <div
-            class="w-1/3 md:w-5/12"
+            class="w-5/12 md:w-5/12"
             :class="{
               'mr-10': index % 2 === 1,
               'md:mr-20': index % 2 === 1,

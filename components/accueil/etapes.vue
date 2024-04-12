@@ -178,6 +178,10 @@ const etapes = ref([
     etape: '17',
     departArrivee: 'Reims > Verneuil-en-Halatte',
   },
+  {
+    etape: '18',
+    departArrivee: 'Verneuil-en-Halatte > Paris',
+  },
   
 ]);
 

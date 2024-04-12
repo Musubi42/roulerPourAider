@@ -22,9 +22,9 @@
     :slide-class="test"
     :space-between="0"
      >
-    <SwiperSlide v-for="(image, index) in images" :key="index"
+    <SwiperSlide v-for="(image, index) in partenairesImage" :key="index"
       class="p-10">
-      <img :src="image.src" :alt="image.alt" class="h-full w-full">
+      <img :src="image.partenairePhotoUrl" :alt="image.partenairePhotoAlt" class="h-full w-full">
     </SwiperSlide>
   </Swiper>
 </template>
@@ -88,6 +88,47 @@ const images = ref([
     alt: 'Placeholder image 8',
   },
 ]);
+
+const runtimeConfig = useRuntimeConfig();
+const {
+  public: { strapiBaseUrl, strapiToken },
+} = runtimeConfig;
+
+const partenairesImage = ref([]);
+
+const transformPartenaireObject = (partenaireData) => {
+  return partenaireData.map((data) => {
+    const { image } = data.attributes;
+    console.log("image", image);
+    return {
+      partenairePhotoUrl: strapiBaseUrl + image.data.attributes.url,
+      partenairePhotoAlt: image.data.attributes.name,
+    };
+  });
+};
+
+const getPartenaires = async () => {
+  const url = `${strapiBaseUrl}/api/partenaires?populate=*`;
+
+  const { data, pending, error } = useAsyncData("partenairesImage", () => {
+    return $fetch(url, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${strapiToken}`,
+      },
+    });
+  });
+
+  if (!error.value && !pending.value && data.value) {
+    partenairesImage.value = transformPartenaireObject(data.value.data);
+  } else {
+    console.error(error.value);
+  }
+};
+
+getPartenaires();
+console.log(partenairesImage.value);
 
 const isMobile = ref(false);
 

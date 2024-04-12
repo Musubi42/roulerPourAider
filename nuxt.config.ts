@@ -34,7 +34,16 @@ export default defineNuxtConfig({
     '/plugins/clarity-plugin.js',
     '/plugins/vue3-toastify.js',
   ],
-  modules: ["nuxt-svgo", "@nuxt/image", "@nuxtjs/i18n", "nuxt-mail", "nuxt-swiper", '@unlighthouse/nuxt'],
+  modules: [
+    "nuxt-svgo",
+    "@nuxt/image",
+    "@nuxtjs/i18n",
+    "nuxt-mail",
+    "nuxt-swiper",
+    // '@unlighthouse/nuxt',
+    "@pinia/nuxt",
+    "@pinia/nuxt"
+  ],
   image: {
     // Use 'static' for Nuxt 3 as the local provider
     // This tells Nuxt to use the static images from the `public` directory

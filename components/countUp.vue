@@ -22,36 +22,50 @@ const props = defineProps({
   },
   duration: {
     type: Number,
-    default: 2500,
+    default: 3000,
   },
 });
 
 let hasAnimationPlayed = false;
+let start = 0;
 
 watch(() => props.end,
   (newVal, oldVal) => {
     if (newVal != 0 && !hasAnimationPlayed) {
       startAnimation();
-      hasAnimationPlayed = true;
+
+      setTimeout(() => {
+        start = newVal;
+      }, props.duration);
     }
   }
 );
 
+
 const startAnimation = () => {
   let startTimestamp = null;
+  currentValue.value = start;
 
   const easeOutCubic = (t) => 1 - (1 - t) ** 3;
 
   const step = (timestamp) => {
     if (!startTimestamp) startTimestamp = timestamp;
-    const rawProgress = Math.min((timestamp - startTimestamp) / props.duration, 1);
-    const progress = easeOutCubic(rawProgress);
-    currentValue.value = Math.floor(progress * (props.end - props.start) + props.start);
+    // const rawProgress = Math.min((timestamp - startTimestamp) / props.duration, 1);
+    // const progress = easeOutCubic(rawProgress);
+
+    const elapsedTime = timestamp - startTimestamp;
+    // Calculate the progress as a ratio of elapsed time to the total duration
+    const rawProgress = Math.min(elapsedTime / props.duration, 1);
+
+    // console.log("rawProgress", rawProgress);
+
+    // console.log("start value", start);
+    currentValue.value = Math.floor(rawProgress * (props.end - start) + start);
+    // console.log("currentValue", currentValue.value);
     if (rawProgress < 1) {
       window.requestAnimationFrame(step);
     }
   };
-
   window.requestAnimationFrame(step);
 };
 
@@ -61,4 +75,13 @@ const formatNumber = (value) => {
 };
 
 const currentValue = ref(props.start);
+
+onMounted(() => {
+  if (props.start !== props.end) {
+    startAnimation();
+  } else {
+    currentValue.value = props.end;
+  }
+});
+
 </script>

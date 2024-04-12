@@ -31,27 +31,6 @@
             />
           </div>
 
-          <!-- Les différentes sections -->
-          <!-- <ul class="hidden lg:flex lg:w-auto lg:space-x-12 h-16 items-stretch"
-            :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }">
-            <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
-            <HeadersLinkDesktop to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr" target="_blank">Faire un don</HeadersLinkDesktop>
-            <HeadersSubNavTest
-              :subMenus="subMenuItemsWhoAreWe"
-              @clicked-link="handleClicked"
-              class="cursor-pointer" >
-              Qui sommes-nous ?
-            </HeadersSubNavTest>
-            <HeadersLinkDesktop to="/1ere-edition">1<sup>ère</sup>&#160;&#160;édition</HeadersLinkDesktop>
-            <HeadersLinkDesktop to="/nos-partenaires">Nos partenaires</HeadersLinkDesktop>
-            <HeadersSubNavTest
-              class="cursor-pointer"
-              :subMenus="subMenuItemsPress" >
-              Nos relations publiques
-            </HeadersSubNavTest>
-            <HeadersLinkDesktop to="/contact">Contact</HeadersLinkDesktop>
-          </ul> -->
-
           <ul class="hidden lg:flex lg:w-auto lg:space-x-12 h-16 items-stretch"
             :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }">
             <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
@@ -59,6 +38,7 @@
             <HeadersSubNavTest
               :subMenus="subMenuItemsWhoAreWe"
               @clicked-link="handleClicked"
+              @clickedOnLink="handleLinkClicked"
               class="cursor-pointer" >
               Qui sommes-nous ?
             </HeadersSubNavTest>
@@ -72,19 +52,15 @@
             <HeadersLinkDesktop to="/contact">Contact</HeadersLinkDesktop>
           </ul>
 
-          <!-- TODO : Remplacer le switchLang contre le donation.current_amount -->
-          <!-- Le changement de langue -->
           <div class="flex">
-            <switchLanguage />
+            <HeadersDonationAmount />
           </div>
         </div>
       </div>
     </nav>
 
     <!-- Partie mobile -->
-    <!-- <div class="hidden navbar-menu fixed top-0 left-0 bottom-0 w-5/6 max-w-md z-50"> -->
       <Menu :isMenuOpen="toggleMenu" @update:isMenuOpen="handleMenuUpdate" class="z-[20] absolute -mt-16" />
-    <!-- </div> -->
   </header>
 </template>
 
@@ -360,7 +336,10 @@ export default {
       this.isClicked = !this.isClicked;
       console.log("clicked");
     },
-
+    handleLinkClicked() {
+      this.isClicked = false;
+      this.isHovered = false;
+    },
     toggleMenuBurger() {
       this.isMenuOpen = !this.isMenuOpen;
       this.toggleMenu = !this.toggleMenu;
