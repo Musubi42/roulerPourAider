@@ -1,1 +1,3 @@
-export default defineEventHandler(() => 'Hello World!de');
+export function GET(request: Request) {
+  return new Response(`Hello from ${process.env.VERCEL_REGION}`);
+}
