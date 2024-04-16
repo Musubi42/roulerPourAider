@@ -10,7 +10,7 @@
       <div
         class="flex flex-col items-center justify-start w-full md:w-1/4 border-b-2 md:border-r-2 border-secondary md:p-6 py-4"
       >
-        <CountUp class="font-semibold text-primary text-3xl" :end="isVisible ? 17 : 0" />
+        <CountUp class="font-semibold text-primary text-3xl" :end="isVisible ? 18 : 0" />
         <p class="font-normal text-black text-xl">Étapes</p>
       </div>
       <div
