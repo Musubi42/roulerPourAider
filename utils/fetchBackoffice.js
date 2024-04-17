@@ -3,55 +3,49 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 
+// Function to download images and save them locally
 async function downloadImage(url, imagePath) {
-  const response = await axios({
-    url,
-    responseType: 'stream',
-  });
-
-  // Ensure directory exists
-  const directory = path.dirname(imagePath);
-  console.log("directory", directory);
-  if (!fs.existsSync(directory)) {
-    fs.mkdirSync(directory, { recursive: true }); // Create the directory if it does not exist
-  }
-
-  return new Promise((resolve, reject) => {
-    response.data.pipe(fs.createWriteStream(imagePath))
-      .on('finish', () => resolve())
-      .on('error', e => reject(e));
-  });
+    const response = await axios({
+        url,
+        responseType: 'stream',
+    });
+    return new Promise((resolve, reject) => {
+        response.data.pipe(fs.createWriteStream(imagePath))
+            .on('finish', () => resolve())
+            .on('error', e => reject(e));
+    });
 }
 
-export async function fetchFromStrapi(url, strapiToken) {
-  const strapiBaseUrl = `https://backoffice.roulerpouraider.fr`;
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${strapiToken}`,
-  };
+// Main function to fetch data from Strapi and handle images
+export async function fetchFromStrapi(strapiToken) {
+    const strapiBaseUrl = `https://backoffice.roulerpouraider.fr`;
+    const endpointUrl = `${strapiBaseUrl}/api/partenaires?populate=*`;
+    const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${strapiToken}`,
+    };
 
-  const response = await axios.get(url, { headers });
-  const data = response.data;
+    const response = await axios.get(endpointUrl, { headers });
+    const data = response.data;
 
-  console.log("fetchBackoffice", data.data);
+    console.log("Fetched data from backoffice:", data.data);
 
-  // Iterate over all data objects and check for image URLs
-  const promises = data.data.map(async item => {
-    console.log("item", item);
-    if (item.attributes.image) {
-      const imageUrl = strapiBaseUrl + item.attributes.image.data.attributes.url;
-      console.log(imageUrl);
-      const imageName = path.basename(imageUrl);
-      console.log(imageName);
-      const imagePath = path.resolve('/public/backoffice', imageName);
-      console.log("imagee", imagePath);
-      console.log("imagePath", imagePath);
-      await downloadImage(imageUrl, imagePath);
-      item.attributes.image.data.attributes.url = `/images/${imageName}`;
-    }
-    console.log("item", item);
-    return item;
-  });
+    // Iterate over all data objects and check for image URLs
+    const promises = data.data.map(async item => {
+        if (item.attributes.image && item.attributes.image.data) {
+            const imageAttributes = item.attributes.image.data.attributes;
+            const imageUrl = strapiBaseUrl + imageAttributes.url;
+            const imageName = path.basename(imageAttributes.url);
+            const imagePath = path.resolve('public/backoffice', imageName); // Ensure this path matches your static assets directory structure
 
-  return Promise.all(promises);
+            console.log("Downloading image:", imageUrl);
+            await downloadImage(imageUrl, imagePath);
+
+            // Update the item's image URL to point to the local version
+            item.attributes.image.data.attributes.url = `/backoffice/${imageName}`;
+        }
+        return item;
+    });
+
+    return Promise.all(promises);
 }
