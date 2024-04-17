@@ -8,6 +8,14 @@ async function downloadImage(url, imagePath) {
     url,
     responseType: 'stream',
   });
+
+  // Ensure directory exists
+  const directory = path.dirname(imagePath);
+  console.log("directory", directory);
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory, { recursive: true }); // Create the directory if it does not exist
+  }
+
   return new Promise((resolve, reject) => {
     response.data.pipe(fs.createWriteStream(imagePath))
       .on('finish', () => resolve())
@@ -35,7 +43,7 @@ export async function fetchFromStrapi(url, strapiToken) {
       console.log(imageUrl);
       const imageName = path.basename(imageUrl);
       console.log(imageName);
-      const imagePath = path.resolve(__dirname, '/public/backoffice', imageName);
+      const imagePath = path.resolve('/public/backoffice', imageName);
       console.log("imagee", imagePath);
       console.log("imagePath", imagePath);
       await downloadImage(imageUrl, imagePath);
