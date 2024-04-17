@@ -29,6 +29,7 @@ export async function fetchFromStrapi(url, strapiToken) {
 
   // Iterate over all data objects and check for image URLs
   const promises = data.data.map(async item => {
+    console.log("item", item);
     if (item.attributes.image) {
       const imageUrl = strapiBaseUrl + item.attributes.image.data.attributes.url;
       console.log(imageUrl);
