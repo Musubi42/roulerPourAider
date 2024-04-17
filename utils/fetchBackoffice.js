@@ -17,12 +17,12 @@ async function downloadImage(url, imagePath) {
 }
 
 // Main function to fetch data from Strapi and handle images
-export async function fetchFromStrapi(strapiToken) {
+async function fetchFromStrapi() {
     const strapiBaseUrl = `https://backoffice.roulerpouraider.fr`;
     const endpointUrl = `${strapiBaseUrl}/api/partenaires?populate=*`;
     const headers = {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${strapiToken}`,
+        Authorization: `Bearer eac6b6436d0eb19f3dd8b4468379bb3f18bbcbd986e343c6880e9343cd7a6da64558b704aeae8a6950c3bfa92f6407572f13c354296d83e13266f180a35ca81ef87de94cec4262d68876b72c43bcb2119eed8bf1f2c9d63454ca77a8fe1137b18ab6a4c0246dc087d2da99eddd09363dce0536fa84895db0a56e431bde687590`,
     };
 
     const response = await axios.get(endpointUrl, { headers });
@@ -49,3 +49,5 @@ export async function fetchFromStrapi(strapiToken) {
 
     return Promise.all(promises);
 }
+
+fetchFromStrapi();
