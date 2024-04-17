@@ -82,7 +82,7 @@
           >
             <!-- TODO : Trouver le moyen d'host les images venant du backoffice directement sur Vercel, Git webhooks ? -->
             <img
-              :src="`${partenaire.partenairePhotoUrl}`"
+              :src="`${partenaire.partenairePhotoPath}`"
               class="h-full md:h-72 object-contain"
               alt=""
             />
@@ -154,7 +154,7 @@ interface Partenaire {
     twitter: string;
     linkedin: string;
   };
-  partenairePhotoUrl: string;
+  partenairePhotoPath: string;
   siteWebUrl: string;
 }
 
@@ -168,9 +168,12 @@ const {
 const transformPartenaireObject = (partenaireData) => {
   return partenaireData.map((data) => {
     const { image, ...otherAttributes } = data.attributes;
+    let url = image.data.attributes.url;
+    let lastPart = url.split("/").pop();
+    console.log("last", lastPart);
     return {
       ...otherAttributes,
-      partenairePhotoUrl: strapiBaseUrl + image.data.attributes.url,
+      partenairePhotoPath: "/backoffice/" + lastPart,
     };
   });
 };
@@ -178,6 +181,14 @@ const transformPartenaireObject = (partenaireData) => {
 const getPartenaires = async () => {
   const url = `${strapiBaseUrl}/api/partenaires?populate=*`;
 
+  // Download image from Strapi, si sucess je continue, comparer entre le name de l'image DL et 
+  // l'url de l'image pour reconstruire correctement mon objet
+  // Après je continue la classique
+  if (process.env.GENERATE) {
+    console.log("generate partenaires");
+    await fetchFromStrapi(url, strapiToken);
+  }
+  console.log("partenaire", partenaires.value);
   const { data, pending, error } = useAsyncData("partenaires", () => {
     return $fetch(url, {
       method: "get",
@@ -190,6 +201,7 @@ const getPartenaires = async () => {
 
   if (!error.value && !pending.value && data.value) {
     partenaires.value = transformPartenaireObject(data.value.data);
+    console.log("partenaires", partenaires.value);
   } else {
     console.error(error.value);
   }
