@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/downloadImages.js && nuxt build",
+    "build": "node utils/fetchBackoffice.js && nuxt build",
     "dev": "nuxt dev --port 3001",
     "start": "nuxt start",
     "generate": "GENERATE=true nuxt generate",
