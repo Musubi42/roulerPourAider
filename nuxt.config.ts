@@ -51,6 +51,9 @@ export default defineNuxtConfig({
   //   // Other image module configuration...
   // },
   // target: "static",
+  static: {
+    prefix: false
+  },
   unlighthouse: {
     scanner: {
       // simulate a desktop device

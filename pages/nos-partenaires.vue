@@ -184,11 +184,11 @@ const getPartenaires = async () => {
   // Download image from Strapi, si sucess je continue, comparer entre le name de l'image DL et 
   // l'url de l'image pour reconstruire correctement mon objet
   // Après je continue la classique
-  if (process.env.GENERATE) {
-    console.log("generate partenaires");
-    await fetchFromStrapi(url, strapiToken);
-  }
-  console.log("partenaire", partenaires.value);
+  // if (process.env.GENERATE) {
+  //   console.log("generate partenaires");
+  //   await fetchFromStrapi(url, strapiToken);
+  // }
+  // console.log("partenaire", partenaires.value);
   const { data, pending, error } = useAsyncData("partenaires", () => {
     return $fetch(url, {
       method: "get",
