@@ -35,6 +35,7 @@ export async function fetchFromStrapi(url, strapiToken) {
       const imageName = path.basename(imageUrl);
       console.log(imageName);
       const imagePath = path.resolve(__dirname, '/public/backoffice', imageName);
+      console.log("imagee", imagePath);
       console.log("imagePath", imagePath);
       await downloadImage(imageUrl, imagePath);
       item.attributes.image.data.attributes.url = `/images/${imageName}`;
