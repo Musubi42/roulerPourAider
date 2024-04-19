@@ -168,15 +168,19 @@ const { public: { strapiBaseUrl, strapiToken } } = runtimeConfig;
 
 const transformContactObject = (contactData) => {
   return contactData.map((data) => {
-    const { photo, prenom, nom, telephone, ...otherAttributes } = data.attributes;
+    const { image, prenom, nom, telephone, ...otherAttributes } = data.attributes;
     const telephoneString = telephone.toString();
     const telephoneTransformed = `+33 ${telephoneString.charAt(0)} ${telephoneString.slice(1).match(/.{1,2}/g).join(' ')}`;
+
+    let url = image.data.attributes.url;
+    let lastPart = url.split("/").pop();
+
     return {
       ...otherAttributes,
       prenom: capitalizePrenom(prenom),
       nom: nom.toUpperCase(),
       telephone: telephoneTransformed,
-      contactPhotoUrl: strapiBaseUrl + photo.data.attributes.url,
+      contactPhotoUrl: "/backoffice/" + lastPart,
     };
   });
 };

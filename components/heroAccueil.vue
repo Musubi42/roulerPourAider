@@ -69,11 +69,14 @@ const fetchHeroData = async (pageSlug: string) => {
     },
   });
 
+  let urle = data.value.data[0].attributes.heroImage.data.attributes.url;
+  let lastPart = urle.split("/").pop();
+
   if (!error.value && !pending.value && data.value) {
     hero.value = data.value.data[0]?.attributes ? {
       title: data.value.data[0].attributes.title,
       description: data.value.data[0].attributes.description,
-      heroImage: strapiBaseUrl + data.value.data[0].attributes.heroImage.data.attributes.url,
+      heroImage: "/backoffice/" + lastPart,
     } : null;
   } else {
     console.error(error.value);

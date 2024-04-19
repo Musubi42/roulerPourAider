@@ -106,14 +106,12 @@ const getReportages = () => {
       });
     });
 
-  if (!error.value && !pending.value && data.value) {
+  if (data.value) {
     reportages.value = transformReportageTvObject(data.value.data);
   } else {
-    console.error(error);
+    console.error(error.value);
   }
 };
 
-onMounted(() => {
-  getReportages();
-});
+getReportages();
 </script>

@@ -57,11 +57,7 @@ const startAnimation = () => {
     // Calculate the progress as a ratio of elapsed time to the total duration
     const rawProgress = Math.min(elapsedTime / props.duration, 1);
 
-    // console.log("rawProgress", rawProgress);
-
-    // console.log("start value", start);
     currentValue.value = Math.floor(rawProgress * (props.end - start) + start);
-    // console.log("currentValue", currentValue.value);
     if (rawProgress < 1) {
       window.requestAnimationFrame(step);
     }

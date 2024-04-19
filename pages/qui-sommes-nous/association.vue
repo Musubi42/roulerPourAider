@@ -126,9 +126,13 @@ const { public: { strapiBaseUrl, strapiToken } } = runtimeConfig;
 const transformPersonObject = (personData) => {
   return personData.map((data) => {
     const { photo, ...otherAttributes } = data.attributes;
+
+    let url = photo.data.attributes.url;
+    let lastPart = url.split("/").pop();
+
     return {
       ...otherAttributes,
-      personPhotoUrl: strapiBaseUrl + photo.data.attributes.url,
+      personPhotoUrl: "/backoffice/" + lastPart,
     };
   });
 };

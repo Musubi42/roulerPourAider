@@ -334,7 +334,6 @@ export default {
     },
     handleClicked() {
       this.isClicked = !this.isClicked;
-      console.log("clicked");
     },
     handleLinkClicked() {
       this.isClicked = false;
@@ -386,14 +385,12 @@ export default {
       this.toggleMenuBurger();
 
       // // Update current language in use
-      // console.log("ici");
       // this.isMobileUpdateLanguage++;
     },
   },
 
   mounted() {
     this.isMobile = window.innerWidth <= 768;
-    console.log("isMobile", this.isMobile);
   },
 };
 </script>

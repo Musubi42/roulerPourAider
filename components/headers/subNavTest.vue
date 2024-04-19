@@ -69,7 +69,6 @@ const hover = () => {
 
 const leave = () => {
   if (!isClicked.value) {
-    console.log("ici");
     emits('mouseLeave');
     isHovered.value = false;
   }
@@ -77,7 +76,6 @@ const leave = () => {
 
 const clicked = () => {
   if (isHovered.value) {
-    console.log("emit");
     emits('clicked-link');
     isClicked.value = !isClicked.value;
   }

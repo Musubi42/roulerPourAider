@@ -108,7 +108,7 @@ const transformPodcastObject = (podcastData) => {
 const getPodcastMetadata = () => {
   const url = `${strapiBaseUrl}/api/podcasts?populate=thumbnail&populate=podcast`;
 
-  const { data, pending, error } = useAsyncData("podcastMetadata", () => {
+  const { data, pending, error } = useAsyncData("podcasts", () => {
       return $fetch(url, {
         method: "get",
         headers: {
@@ -143,7 +143,5 @@ const formatDate = (date: string): string => {
   return `${day} ${monthNames[monthIndex]} ${year}`;
 }; 
 
-onMounted(() => {
-  getPodcastMetadata();
-});
+getPodcastMetadata();
 </script>

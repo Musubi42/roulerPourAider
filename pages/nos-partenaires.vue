@@ -26,7 +26,6 @@
               class="hidden md:absolute mt-7 md:mt-0 bottom-0 left-0 md:flex items-center w-full"
               :class="{
                 'flex-row': index % 2 === 1,
-                'flex-row': index % 2 === 0,
               }"
             >
               <NuxtLink
@@ -170,7 +169,7 @@ const transformPartenaireObject = (partenaireData) => {
     const { image, ...otherAttributes } = data.attributes;
     let url = image.data.attributes.url;
     let lastPart = url.split("/").pop();
-    console.log("last", lastPart);
+
     return {
       ...otherAttributes,
       partenairePhotoPath: "/backoffice/" + lastPart,
@@ -180,31 +179,23 @@ const transformPartenaireObject = (partenaireData) => {
 
 const getPartenaires = async () => {
   const url = `${strapiBaseUrl}/api/partenaires?populate=*`;
-
-  // Download image from Strapi, si sucess je continue, comparer entre le name de l'image DL et 
-  // l'url de l'image pour reconstruire correctement mon objet
-  // Après je continue la classique
   // if (process.env.GENERATE) {
-  //   console.log("generate partenaires");
-  //   await fetchFromStrapi(url, strapiToken);
-  // }
-  // console.log("partenaire", partenaires.value);
-  const { data, pending, error } = useAsyncData("partenaires", () => {
-    return $fetch(url, {
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${strapiToken}`,
-      },
+    const { data, pending, error } = useAsyncData("partenaires", () => {
+      return $fetch(url, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${strapiToken}`,
+        },
+      });
     });
-  });
 
-  if (!error.value && !pending.value && data.value) {
-    partenaires.value = transformPartenaireObject(data.value.data);
-    console.log("partenaires", partenaires.value);
-  } else {
-    console.error(error.value);
-  }
+    if (!error.value && !pending.value && data.value) {
+      partenaires.value = transformPartenaireObject(data.value.data);
+    } else {
+      console.error(error.value);
+    }
+  // }
 };
 
 getPartenaires();
