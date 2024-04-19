@@ -193,11 +193,9 @@ export default {
   },
   watch: {
     isMenuOpen() {
-      console.log("oui");
       this.isMenuOpen ? this.openMenu() : this.closeMenu();
     },
     isCloseMenu() {
-      console.log(this.isCloseMenu, "isCloseMenu");
       // this.isCloseMenu ? this.closeMenu() : this.openMenu();
     },
     // isCloseMenu: {
@@ -279,9 +277,7 @@ export default {
       rect3.classList.add("part3-close");
     },
     openMenu() {
-      console.log("open");
       const separationWidth = (window.innerWidth / 2) * 0.2;
-      console.log("separationWidth", separationWidth);
       document.getElementById("separation").style.width = `${separationWidth}px`;
 
       // separation
@@ -300,7 +296,6 @@ export default {
       }, 0);
 
       // BG
-      console.log(document.getElementById("bg").classList);
       document.getElementById("bg").classList.remove("bg-close");
       document.getElementById("bg").classList.add("bg-open");
       document.getElementById("bg").style.transition =
@@ -309,7 +304,6 @@ export default {
       //  A la fin de l'animation faire disparaitre la séparation, pour que le changement de couleur soit fluide
     },
     closeMenu() {
-      console.log("close");
       document.getElementById("separation").style.display = "block";
 
       // separation

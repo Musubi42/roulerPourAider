@@ -37,7 +37,6 @@ onMounted(() => {
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry, index) => {
-        console.log("entry", entry.isIntersecting);
         isVisible[index] = entry.isIntersecting;
       });
     },

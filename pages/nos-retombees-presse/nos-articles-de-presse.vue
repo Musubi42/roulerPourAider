@@ -107,14 +107,12 @@ const getArticles = () => {
       });
     });
 
-  if (!error.value && !pending.value && data.value) {
+  if (data.value) {
     articles.value = transformArticleObject(data.value.data);
   } else {
-    console.error(error);
+    console.error(error.value);
   }
 };
 
-onMounted(() => {
-  getArticles();
-});
+getArticles();
 </script>

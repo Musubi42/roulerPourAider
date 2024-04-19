@@ -99,9 +99,12 @@ const partenairesImage = ref([]);
 const transformPartenaireObject = (partenaireData) => {
   return partenaireData.map((data) => {
     const { image } = data.attributes;
-    console.log("image", image);
+
+    let url = image.data.attributes.url;
+    let lastPart = url.split("/").pop();
+
     return {
-      partenairePhotoUrl: strapiBaseUrl + image.data.attributes.url,
+      partenairePhotoUrl: "/backoffice/" + lastPart,
       partenairePhotoAlt: image.data.attributes.name,
     };
   });
@@ -128,7 +131,6 @@ const getPartenaires = async () => {
 };
 
 getPartenaires();
-console.log(partenairesImage.value);
 
 const isMobile = ref(false);
 

@@ -40,7 +40,6 @@
     const isClicked = ref(false);
 
     const clicked = () => {
-        console.log("clicked");
         isClicked.value = !isClicked.value;
     };
 </script>

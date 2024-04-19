@@ -12,7 +12,7 @@ export const useWebsiteStore = defineStore('websiteStore', {
       clearTimeout(this.timeoutId); // Clear existing timeout if there is one
 
       try {
-        const data = await $fetch('/api/refreshDonation', {
+        const data = await $fetch('https://donation-api.roulerpouraider.fr/donations', {
           method: "get",
           headers: {
             "Content-Type": "application/json",
@@ -48,7 +48,6 @@ export const useWebsiteStore = defineStore('websiteStore', {
             timeRemaining -= randomTime;
           }
 
-          console.log("timeBetweenIncrements", timeBetweenIncrements);
 
           const amountIncrementPerMinute = Math.round((data.current_amount - initialCurrentAmount) / contributorsGap);
 
@@ -56,8 +55,6 @@ export const useWebsiteStore = defineStore('websiteStore', {
           
           const performIncrement = () => {
             incrementStep++;
-            console.log("Incrementing data", incrementStep);
-            console.log("timeBetweenIncrements", timeBetweenIncrements.length);
 
             if (incrementStep >= timeBetweenIncrements.length) {
               return;
