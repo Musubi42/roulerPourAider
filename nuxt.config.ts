@@ -54,6 +54,17 @@ export default defineNuxtConfig({
   static: {
     prefix: false
   },
+  ssr: false,
+  nitro: {
+    prerender: {
+      routes: [
+        'public/hopital-necker-visite/fresque.webp',
+        'public/hopital-necker-visite/fauteuil-lit.webp',
+        'public/hopital-necker-visite/tablette.webp',
+        // etc.
+      ]
+    }
+  },
   unlighthouse: {
     scanner: {
       // simulate a desktop device
