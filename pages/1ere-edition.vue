@@ -25,9 +25,9 @@
     <div class="flex flex-wrap mb-28 md:mb-32">
       <div class="w-full lg:w-1/2 px-8">
         <h2 class="text-3xl lg:text-5xl font-bold font-heading mb-20 max-w-xs lg:max-w-lg">Qu’a permis la collecte de dons ?</h2>
-                <NuxtImg provider="static" format="webp" quality="100" class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/tablette.webp" alt="" />
+                <NuxtImg format="webp" quality="100" class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/tablette.webp" alt="" />
                 <!-- <NuxtImg class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/tablette.jpeg" alt="" /> -->
-                <NuxtImg provider="static" format="webp" quality="100" class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/fresque.webp" alt="" />
+                <NuxtImg format="webp" quality="100" class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/fresque.webp" alt="" />
                 <!-- <NuxtImg class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/fresque.jpeg" alt="" /> -->
       </div>
       <div class="w-full lg:w-1/2 px-8">
@@ -63,7 +63,7 @@
           </div>
 
         </div>
-                <NuxtImg provider="static" format="webp" quality="100" class="rounded-3xl w-full lg:w-auto" src="/hopital-necker-visite/fauteuil-lit.webp" alt="" />
+                <NuxtImg format="webp" quality="100" class="rounded-3xl w-full lg:w-auto" src="/hopital-necker-visite/fauteuil-lit.webp" alt="" />
                 <!-- <NuxtImg class="rounded-3xl w-full lg:w-auto" src="/hopital-necker-visite/fauteuil-lit.jpeg" alt="" /> -->
       </div>
     </div>
