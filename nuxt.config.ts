@@ -65,6 +65,23 @@ export default defineNuxtConfig({
       ]
     }
   },
+  image: {
+    // provider options
+    provider: 'vercel', // you can use 'ipx', 'cloudinary', 'imgix', 'static', etc.
+    // preset options
+    presets: {
+      cover: {
+        modifiers: {
+          format: 'webp',
+          fit: 'cover',
+          width: 500,
+          height: 300,
+        },
+      },
+    },
+    // static images dir for 'static' provider
+    staticFilename: '[publicPath]/images/[name]-[hash][ext]',
+  },
   unlighthouse: {
     scanner: {
       // simulate a desktop device
