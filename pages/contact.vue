@@ -185,10 +185,10 @@ const transformContactObject = (contactData) => {
   });
 };
 
-const getContacts = () => {
+const getContacts = async () => {
   const url = `${strapiBaseUrl}/api/contacts?populate=*`;
 
-  const { data, pending, error } = useAsyncData("contacts", () => {
+  const { data, pending, error } = await useAsyncData("contacts", () => {
       return $fetch(url, {
         method: "get",
         headers: {

@@ -23,7 +23,7 @@
           class="font-bold text-primary text-3xl"
           :end="isVisible[index] ? item.number : 0"
         /> -->
-        <p class="font-normal text-black text-xl text-center">Montagne Everest escaladés</p>
+        <p class="font-normal text-black text-xl text-center">Everest escaladés</p>
       </div>
     </div>
     <!-- Bas -->
@@ -39,7 +39,7 @@
       >
         <img src="/logos/dons.png" alt="Dons" class="h-16 w-16" />
         <div class="flex flex-col items-center pl-4">
-          <p class="font-semibold text-primary text-3xl">Du 27 avril à fin juillet</p>
+          <p class="font-semibold text-primary text-3xl">Du 27 mars à fin juillet 2024</p>
           <p class="font-normal text-black text-medium text-center">
             grande campagne de collecte de dons au profit de l’hôpital Necker
           </p>

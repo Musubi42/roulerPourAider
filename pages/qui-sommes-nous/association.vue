@@ -137,10 +137,10 @@ const transformPersonObject = (personData) => {
   });
 };
 
-const getPersons = () => {
+const getPersons = async () => {
   const url = `${strapiBaseUrl}/api/who-are-wes?populate=*`;
 
-  const { data, pending, error } = useAsyncData("persons", () => {
+  const { data, pending, error } = await useAsyncData("persons", () => {
       return $fetch(url, {
         method: "get",
         headers: {

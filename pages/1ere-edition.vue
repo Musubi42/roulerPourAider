@@ -84,7 +84,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: "without-hero",
+  layout: "default",
 });
 
 const images = ref([

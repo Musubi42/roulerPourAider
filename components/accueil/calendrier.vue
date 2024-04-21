@@ -175,8 +175,9 @@ const transformEvenementsObject = (partenaireData) => {
 
 const getEvenements = async () => {
   const url = `${strapiBaseUrl}/api/evenements`;
+
   // if (process.env.GENERATE) {
-    const { data, pending, error } = useAsyncData("evenements", () => {
+    const { data, pending, error } = await useAsyncData("evenements", () => {
       return $fetch(url, {
         method: "get",
         headers: {

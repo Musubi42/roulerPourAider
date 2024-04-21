@@ -180,7 +180,7 @@ const transformPartenaireObject = (partenaireData) => {
 const getPartenaires = async () => {
   const url = `${strapiBaseUrl}/api/partenaires?populate=*`;
   // if (process.env.GENERATE) {
-    const { data, pending, error } = useAsyncData("partenaires", () => {
+    const { data, pending, error } = await useAsyncData("partenaires", () => {
       return $fetch(url, {
         method: "get",
         headers: {

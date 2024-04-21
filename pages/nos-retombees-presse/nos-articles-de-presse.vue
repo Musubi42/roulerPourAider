@@ -94,10 +94,10 @@ const transformArticleObject = (articleTvData) => {
   });
 };
 
-const getArticles = () => {
+const getArticles = async () => {
   const url = `${strapiBaseUrl}/api/articles?populate=*`;
 
-  const { data, pending, error } = useAsyncData("articles", () => {
+  const { data, pending, error } = await useAsyncData("articles", () => {
       return $fetch(url, {
         method: "get",
         headers: {
