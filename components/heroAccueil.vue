@@ -1,6 +1,6 @@
 <template>
-  <div v-if="hero" class="hero-container flex w-full h-[80vh] bg-cover bg-no-repeat bg-center" 
-    :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url(${ hero.heroImage })` }">
+  <div class="hero-container flex w-full h-[80vh] bg-cover bg-no-repeat bg-center" 
+    :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url(${ hero?.heroImage })` }">
     <div class="breadcrumb-container">
       <BreadcrumbComponent />
     </div>
@@ -11,12 +11,12 @@
       <p class="mt-6 text-lg text-white text-center max-w-3xl mx-auto">
       Rejoignez notre tour de France caritatif et aidez-nous à illuminer les vies des enfants de l'Hôpital Necker.
       </p>
-      <NuxtLink v-if="hero.bouttonVisible" to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr"
+      <NuxtLink v-if="hero?.bouttonVisible" to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr"
         class="bg-white text-primary hover:text-white hover:bg-primary py-3 px-5 rounded-full">Faites un don</NuxtLink>
     </div>
   </div>
   <!-- TODO: mieux gérer le chargement -->
-  <div v-else class="hero-container flex w-full h-[80vh] bg-cover bg-no-repeat bg-center" 
+  <!-- <div v-else class="hero-container flex w-full h-[80vh] bg-cover bg-no-repeat bg-center" 
     :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url('/default-hero-image.jpg')` }">
     <div class="breadcrumb-container">
       <BreadcrumbComponent />
@@ -26,7 +26,7 @@
       <p class="text-white text-xl pb-5"> Default description </p>
       <button class="bg-white text-primary hover:text-white hover:bg-primary py-3 px-5 rounded-full">Faites un don</button>
     </div>
-  </div>
+  </div> -->
 </template>
 
 

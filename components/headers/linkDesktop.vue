@@ -1,7 +1,7 @@
 <template>
     <li class="hover-effect" @click="clicked"
         :class="{ 'clicked-class': isClicked }">
-        <nuxt-link class="flex items-center h-full text-sm hover:text-primary transition-colors duration-300 font-medium" target="_blank" :to="to">
+        <nuxt-link class="flex items-center h-full text-sm hover:text-primary transition-colors duration-300 font-medium" :target="target" :to="to">
             <!-- You can use slots to make the component's content dynamic -->
                 <slot></slot>
         </nuxt-link>
@@ -34,8 +34,14 @@
         to: {
             type: String,
             required: true
+        },
+        target: {
+            type: String,
+            default: '_self'
         }
     });
+
+    console.log("props", props.target);
 
     const isClicked = ref(false);
 
