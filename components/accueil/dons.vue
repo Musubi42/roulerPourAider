@@ -90,9 +90,6 @@
                   ><span v-html="formatNumber(donationGoal.current_amount)"></span>
                   €</span
                 >
-                {{ donationGoal.current_amount }}
-                <!-- Filling effect background -->
-
                 <div
                   class="absolute top-0 left-0 bottom-0 bg-green-500 text-base z-0 transition-[width] duration-500 ease-in-out rounded-xl"
                   :style="{ width: donationGoal.percentage + '%' }"
@@ -274,8 +271,6 @@ const getDonations = async () => {
   }
 };
 
-
-
 const transformDonations = (donations) => {
   return {
     current_amount: Math.round(donations.current_amount),
@@ -331,7 +326,7 @@ onMounted(async () => {
   }, { deep: true });
 
   donations.value = transformDonations(websiteStore.data);
-  // updateDonationGoals(donations.value);
+  updateDonationGoals(donations.value);
 
   observer = new IntersectionObserver(
     (entries) => {

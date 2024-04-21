@@ -16,7 +16,7 @@
         @mousemove="titleOffset" >
         
         <div
-          class="text-3xl text-white font-semibold my-auto flex flex-col place-content-between gap-6"
+          class="text-2xl text-white font-semibold my-auto flex flex-col place-content-between gap-6"
         >
             <div class="z-10 relative">
               <NuxtLink

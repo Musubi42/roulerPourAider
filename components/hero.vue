@@ -4,9 +4,9 @@
     <div class="breadcrumb-container">
       <BreadcrumbComponent />
     </div>
-    <div class="content-container my-auto mt-[20%] pl-20">
-      <h1 class="font-bold text-5xl text-white">{{ hero.title }}</h1>
-      <p class="text-white text-xl font-semibold pb-5 pl-10 mt-2">{{ hero.description }}</p>
+    <div class="content-container my-auto mt-[20%] pl-20 w-full">
+      <h1 class="font-bold text-4xl sm:text-5xl lg:text-5xl tracking-tight text-white">{{ hero.title }}</h1>
+      <p class="text-white text-lg font-semibold pb-5 mt-2">{{ hero.description }}</p>
       <NuxtLink v-if="hero.bouttonVisible" to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr"
         class="bg-white text-primary hover:text-white hover:bg-primary py-3 px-5 rounded-full">Faites un don</NuxtLink>
     </div>

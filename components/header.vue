@@ -6,7 +6,7 @@
     @mouseleave="handleMouseLeave" >
 
     <!-- Partie Desktop -->
-    <nav class="relative h-16 bg-transparent z-50" 
+    <nav class="relative h-16 bg-transparent z-[1000]" 
       :style="{ 'background-color': ( dynamicStyle && !isMobile ) ? 'white' : '' }" >
       <div class="px-4">
         <div class="flex items-center justify-between relative">
@@ -42,7 +42,7 @@
               class="cursor-pointer" >
               Qui sommes-nous ?
             </HeadersSubNavTest>
-            <HeadersLinkDesktop to="/1ere-edition">1<sup>ère</sup>&#160;&#160;édition</HeadersLinkDesktop>
+            <HeadersLinkDesktop to="/1ere-edition">Première édition</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/nos-partenaires">Nos partenaires</HeadersLinkDesktop>
             <HeadersSubNavTest
               class="cursor-pointer"
@@ -52,7 +52,7 @@
             <HeadersLinkDesktop to="/contact">Contact</HeadersLinkDesktop>
           </ul>
 
-          <div class="flex">
+          <div class="hidden lg:flex">
             <HeadersDonationAmount />
           </div>
         </div>
@@ -60,7 +60,7 @@
     </nav>
 
     <!-- Partie mobile -->
-      <Menu :isMenuOpen="toggleMenu" @update:isMenuOpen="handleMenuUpdate" class="z-[20] absolute -mt-16" />
+      <Menu :isMenuOpen="toggleMenu" @update:isMenuOpen="handleMenuUpdate" class="z-[100] absolute -mt-16" />
   </header>
 </template>
 

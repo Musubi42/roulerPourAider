@@ -15,27 +15,25 @@
   <Swiper 
     :modules="[SwiperAutoplay, SwiperNavigation]"
     :slides-per-view="isMobile ? 1 : 3"
+    :autoplay="{ delay: 4000 }"
     :loop="true"
     :navigation="true"
     :pagination="{ clickable: true }"
     :centeredSlides="true"
-    :slide-class="test"
     :space-between="0"
      >
     <SwiperSlide v-for="(image, index) in partenairesImage" :key="index"
-      class="p-10">
+      class="p-10 my-auto">
       <img :src="image.partenairePhotoUrl" :alt="image.partenairePhotoAlt" class="h-full w-full">
     </SwiperSlide>
   </Swiper>
 </template>
 
 <style scoped>
-/* .swiper-slide {
-  background-color: yellow;
+.align-view > div {
   display: flex;
-} */
-.test {
-  background-color: red;
+  justify-content: center;
+  align-items: center;
 }
 
 .swiper-pagination-bullet {
