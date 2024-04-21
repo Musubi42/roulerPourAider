@@ -50,7 +50,7 @@
                   </div>
                 </div>
 
-                <div class="containerr mt-12 mb-8" v-show="donations?.current_amount">
+                <div class="containerr mt-12 mb-8" v-show="websiteStore?.data?.current_amount">
                   <div ref="progressBarContainer" class="progress2 cursor-auto">
                     <div ref="progressBar" class="progress-bar2 relative" title="Dons">
                       <span class="tooltip"
@@ -111,7 +111,7 @@
 
                 <!-- Percentage text -->
                 <span class="z-10 absolute bottom-0 right-0 px-2">
-                  <p class="text-black">{{ donationGoal.percentage }}% de 10 000€</p>
+                  <p class="text-black">{{ donationGoal.percentage }}% de {{ donationGoal.objective }}</p>
                 </span>
               </div>
             </div>
@@ -224,7 +224,7 @@ const donationGoals = reactive([
   {
     logo: "logos/salle-parents.png",
     text: "1 création d'un salon des parents",
-    objective: 60000,
+    objective: 30000,
     current_amount: 0,
     percentage: 0,
   },
@@ -255,7 +255,7 @@ const dayLeft = () => {
 };
 
 const getDonations = async () => {
-  const { data, pending, error } = useAsyncData("todos", () => {
+  const { data, pending, error } = await useAsyncData("todos", () => {
     return $fetch('/api/refreshDonation', {
       method: "get",
       headers: {
@@ -306,7 +306,7 @@ const formatNumber = (value) => {
   return parts.map((part) => `<span class="mr-1">${part}</span>`).join("  ");
 };
 
-const donationsContainer = ref(null);
+const donationsContainer = ref();
 const progressBar = ref(null);
 const progressBarContainer = ref(null);
 let observer;
@@ -320,9 +320,7 @@ onMounted(async () => {
 
   const { current_amount, contributors_count } = storeToRefs(websiteStore);
 
-
   watch(() => websiteStore.data, (newVal, oldVal) => {
-    // donations.value = transformDonations(newVal);
     let currentValue = null;
 
     if (newVal != oldVal) {
@@ -333,7 +331,7 @@ onMounted(async () => {
   }, { deep: true });
 
   donations.value = transformDonations(websiteStore.data);
-  updateDonationGoals(donations.value);
+  // updateDonationGoals(donations.value);
 
   observer = new IntersectionObserver(
     (entries) => {

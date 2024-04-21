@@ -105,10 +105,10 @@ const transformPodcastObject = (podcastData) => {
   });
 };
 
-const getPodcastMetadata = () => {
+const getPodcastMetadata = async () => {
   const url = `${strapiBaseUrl}/api/podcasts?populate=thumbnail&populate=podcast`;
 
-  const { data, pending, error } = useAsyncData("podcasts", () => {
+  const { data, pending, error } = await useAsyncData("podcasts", () => {
       return $fetch(url, {
         method: "get",
         headers: {

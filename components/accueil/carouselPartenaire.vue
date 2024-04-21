@@ -113,7 +113,7 @@ const transformPartenaireObject = (partenaireData) => {
 const getPartenaires = async () => {
   const url = `${strapiBaseUrl}/api/partenaires?populate=*`;
 
-  const { data, pending, error } = useAsyncData("partenairesImage", () => {
+  const { data, pending, error } = await useAsyncData("partenairesImage", () => {
     return $fetch(url, {
       method: "get",
       headers: {
