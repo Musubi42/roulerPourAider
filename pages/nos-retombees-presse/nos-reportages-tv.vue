@@ -21,8 +21,9 @@
 
         <div class="flex gap-4 flex-col p-4 h-1/2 bg-white rounded-b">
           <div v-if="reportage.tags" class="flex flex-row text-secondary">
-            <span v-for="(tag, index) in reportage.tags" :key="index">
-              {{ tag }}
+            <span v-for="(tag, index) in reportage.tags" :key="index" class="bg-secondary py-1 px-2 text-white rounded-lg"
+            >
+              #{{ tag }}
               <span v-if="index < reportage.tags.length - 1" class="mx-2">|</span>
             </span>
           </div>

@@ -5,7 +5,6 @@
         <div class="flex flex-wrap">
           <div class="w-full lg:w-2/3">
             <div
-              ref="donationsContainer"
               :style="{
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('/hopital-necker-visite/image00060.jpeg')`,
               }"
@@ -16,7 +15,7 @@
                 leur famille. Chaque don compte pour faire une réelle différence !
               </h3>
 
-              <div class="flex flex-col w-full bottom-2">
+              <div class="flex flex-col w-full bottom-2 mt-20 gap-4">
                 <div class="flex flex-row gap-4 md:gap-6">
                   <div
                     class="flex flex-1 flex-col p-2 md:p-6 rounded-xl border border-white bg-white/50 justify-center backdrop-blur-sm"
@@ -50,7 +49,8 @@
                   </div>
                 </div>
 
-                <div class="containerr mt-12 mb-8" v-show="websiteStore?.data?.current_amount">
+                <div class="containerr mt-12 mb-8"
+                  ref="donationsContainer" >
                   <div ref="progressBarContainer" class="progress2 cursor-auto">
                     <div ref="progressBar" class="progress-bar2 relative" title="Dons">
                       <span class="tooltip"
@@ -61,7 +61,7 @@
                   </div>
                 </div>
 
-                <div class="flex flex-row gap-6 justify-center">
+                <div class="flex flex-row gap-6 justify-center mb-4">
                   <button type="" class="mb-5">
                     <NuxtLink
                       to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr"
@@ -84,7 +84,7 @@
               <div
                 v-for="(donationGoal, index) in donationGoals"
                 :key="index"
-                class="relative rounded-xl flex items-center p-3 gap-3 bg-white border border-black"
+                class="relative rounded-xl flex items-center p-5 gap-3 bg-white border border-black"
               >
                 <span class="absolute -top-6 left-3"
                   ><span v-html="formatNumber(donationGoal.current_amount)"></span>
@@ -319,22 +319,22 @@ onMounted(async () => {
     let currentValue = null;
 
     if (newVal != oldVal) {
-      currentValue = newVal
+      donations.value = transformDonations(newVal);
       updateDonationGoals(newVal);
     }
 
-  }, { deep: true });
-
-  donations.value = transformDonations(websiteStore.data);
-  updateDonationGoals(donations.value);
+  }, { immediate: true, deep: true });
 
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
+        console.log("entry");
         if (entry.isIntersecting) {
           isVisible.value = entry.isIntersecting;
           progressBar.value.classList.add("progress-moved");
-          progressBar.value.style.width = `${donationTargetAmountPercentage.value}%`;
+          console.log("donationTargetAmountPercentage");
+          let percentage = (donations.value.current_amount / donations.value.target_amount) * 100;
+          progressBar.value.style.width = `${percentage}%`;
           progressBar.value.style.backgroundColor = "rgba(114, 188, 122)";
           // progressBarContainer.value.style.width = `${donationTargetAmountPercentage.value}%`;
           // entry.target.classList.add('progress-moved');
@@ -347,9 +347,9 @@ onMounted(async () => {
     }
   );
 
-  if (donationsContainer.value) {
+  // if (donationsContainer.value) {
     observer.observe(donationsContainer.value);
-  }
+  // }
 });
 
 onBeforeMount(async () => {
