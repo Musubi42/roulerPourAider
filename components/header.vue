@@ -1,13 +1,12 @@
 <template>
-  <header class="fixed block w-full z-50" 
+  <header class="fixed block w-full z-50 bg-transparent" 
     :style="{ 'box-shadow': ( dynamicStyle && !isMobile ) ? 'var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)' : 'de', '--tw-shadow-colored': ( dynamicStyle && !isMobile ) ? '0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color)' : '', '--tw-shadow': ( dynamicStyle && !isMobile ) ? '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)' : '' }"
     :class="{ 'bg-white': (isHovered && !isMobile) }"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave" >
-
     <!-- Partie Desktop -->
     <nav class="relative h-16 bg-transparent z-[1000]" 
-      :style="{ 'background-color': ( dynamicStyle && !isMobile ) ? 'white' : '' }" >
+      :style="{ 'background-color': ( dynamicStyle && !isMobile && !isTop ) ? 'white' : '' }" >
       <div class="px-4">
         <div class="flex items-center justify-between relative">
           <!-- Logo -->
@@ -42,7 +41,7 @@
               class="cursor-pointer" >
               Qui sommes-nous ?
             </HeadersSubNavTest>
-            <HeadersLinkDesktop to="/1ere-edition">Première édition</HeadersLinkDesktop>
+            <HeadersLinkDesktop to="/premiere-edition">Première édition</HeadersLinkDesktop>
             <HeadersLinkDesktop to="/nos-partenaires">Nos partenaires</HeadersLinkDesktop>
             <HeadersSubNavTest
               class="cursor-pointer"
@@ -320,10 +319,14 @@ export default {
       burgerHeight: 24,
       y: 0,
       isMobile: false,
+      isTop: true,
     };
   },
   //   { name: 'Gallerie photo', path: '/qui-sommes-nous/gallerie' },
   methods: {
+    checkScroll() {
+      this.isTop = window.scrollY === 0;
+    },
     handleMouseEnter() {
       this.isHovered = true;
     },
@@ -391,6 +394,10 @@ export default {
 
   mounted() {
     this.isMobile = window.innerWidth <= 768;
+    window.addEventListener('scroll', this.checkScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.checkScroll);
   },
 };
 </script>

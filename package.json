@@ -17,6 +17,7 @@
     "@nuxtjs/i18n": "^8.0.0",
     "@pinia/nuxt": "^0.5.1",
     "@unlighthouse/nuxt": "^0.10.6",
+    "@vueuse/core": "^10.9.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.3",
     "gsap": "^3.12.4",

@@ -49,10 +49,10 @@
             </div>
             <div class="z-10 relative">
               <NuxtLink
-                to="/1ere-edition"
+                to="/premiere-edition"
                 class="block"
                 @click="goToPage"
-                >1<sup>ère</sup>&#160;&#160;édition</NuxtLink
+                >Première édition</NuxtLink
               >
             </div>
             <div class="z-10 relative">

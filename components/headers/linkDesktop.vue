@@ -41,8 +41,6 @@
         }
     });
 
-    console.log("props", props.target);
-
     const isClicked = ref(false);
 
     const clicked = () => {

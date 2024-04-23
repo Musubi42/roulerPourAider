@@ -2,21 +2,22 @@
   <section class="relative py-16">
     <!-- En attendant d'avoir les éléments de déco, filigrane -->
 
-    <section class="flex flex-col md:flex-row w-full h-full md:h-screen mb-0 md:mb-8">
+    <!-- Présentation -->
+    <section class="flex flex-col md:flex-row w-full h-full md:h-12/12 mb-8">
       <!-- PP -->
-      <div class="h-full w-full md:w-[47%] bg-[#F0EEEE] flex justify-center">
+      <div class="flex-1 h-auto w-full md:w-[47%] bg-[#F0EEEE] flex justify-center">
         
         <!-- <NuxtImg src="/oui/image00025.jpeg" alt="Photo de l'hôpital Necker" 
         class="h-full w-full object-cover rounded-lg" />-->
         <!-- <div style="mask-image: url('/mask.svg'); mask-size: cover;"> -->
-        <img src="/necker.webp" alt="" class="w-4/5 m-auto" />
+        <img src="/necker.webp" alt="" class="w-4/5 m-auto py-4" />
         <!-- </div> -->
       </div>
       <!-- Texte -->
       <div
-        class="flex flex-col h-full w-full md:w-[53%] content-between gap-6 text-xl items-center py-6"
+        class="flex flex-1 flex-col w-full md:w-[53%] content-between gap-6 text-xl items-center py-6"
       >
-        <h1 class="font-bold px-4 md:px-12 text-4xl text-secondary text-center">Hôpital Necker-Enfants malades</h1>
+        <h1 class="font-bold px-4 md:px-12 text-4xl text-secondary text-center mt-3 md:mt-16">Hôpital Necker-Enfants malades</h1>
         <div class="text-justify px-4 md:px-12 flex flex-col gap-12 text-xl h-auto my-auto" >
           <p>L’hôpital Necker-Enfants malades est <b>l’hôpital pédiatrique de référence en France.</b></p>
         <p>Son <b>expertise</b> dans la prise en charge des <b>pathologies de l’enfant</b> complétée par plusieurs <b>spécialités adultes</b> en fait un <b>établissement de renommée internationale.</b></p>
@@ -25,8 +26,22 @@
       </div>
     </section>
 
+
+    <!-- Chiffre clés -->
     <section>
-      <h2 class="font-bold text-3xl mb-4">Chiffres clés de l'hôpital</h2>
+    <div class="flex items-center justify-center my-10">
+      <img
+        src="/dashedLine-straight.png"
+        alt=""
+        class="mr-4"
+      />
+      <h2 class="font-bold text-3xl text-secondary text-center">Chiffres clés de l'hôpital</h2>
+      <img
+        src="/dashedLine-straight.png"
+        alt=""
+        class="ml-4"
+      />
+    </div>
       <div class="bg-[#F7F7FA] rounded-lg flex flex-col px-4 md:px-10 py-5 gap-6">
         <!-- Mettre 3 par div -->
         <div class="flex flex-row justify-between">
@@ -60,6 +75,13 @@
         </div>
       </div>
     </section>
+
+
+    <!-- Histoire -->
+    <HopitalHistoire />
+
+    <!-- Offre de soins -->
+    <HopitalHorizontalScrolling />
   </section>
 </template>
 

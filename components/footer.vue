@@ -14,7 +14,8 @@
             <button type="" class="mb-5">
               <NuxtLink
                 to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr"
-                class="text-white bg-primary py-3 px-5 rounded-xl" >
+                class="text-white bg-primary py-3 px-5 rounded-xl"
+                target="_blank" >
                 Faites un don
               </NuxtLink>
             </button>

@@ -100,7 +100,11 @@ export default defineNuxtConfig({
   plugins: [
     // '/plugins/axios.js',
     // '/plugins/test.js',
+    // '/plugins/gsap.client.js',
   ],
+  build: {
+    transpile: ['gsap'],
+  },
   components: true,
   css: ["~/assets/css/main.css"],
   postcss: {

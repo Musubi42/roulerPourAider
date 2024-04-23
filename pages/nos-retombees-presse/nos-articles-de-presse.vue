@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="flex flex-wrap flex-col md:flew-row bg-gray-200 pt-10">
+    <section class="flex flex-wrap flex-col md:flex-row md:flew-row bg-gray-200 pt-10">
       <div
         v-for="(article, index) in articles"
         :key="index"
@@ -31,9 +31,7 @@
           </div>
           <div class="flex flex-col justify-between flex-wrap h-full" >
             <h3 class="mb-4 md:mb-1 text-2xl font-bold text-ellipsis line-clamp-3 whitespace-break-spaces overflow-hidden" >
-              Je suis un titre Je suis un titre Je suis un titre Je suis un titre Je suis
-              un titre Je suis un titre Je suis un titre Je suis un titre Je suis un titre
-              Je suis un titre
+              {{ article.title }}
             </h3>
             <div class="flex justify-between">
               <p class="font-light">{{ formatDate(article.datePublication) }}</p>

@@ -37,6 +37,6 @@ export default {
       },
     },
   },
-  safelist: ["lilas-pop", "rose-neon", "bleu-ciel", "jaune-citron", "w-20", "font-semibold", "overflow-y-scroll", "w-20", "flex-row-reverse", "bg-green-500", "bg-secondary", "rounded-b-xl"],
+  safelist: ["lilas-pop", "rose-neon", "bleu-ciel", "jaune-citron", "w-20", "font-semibold", "overflow-y-scroll", "w-20", "flex-row-reverse", "flex-row", "bg-green-500", "bg-secondary", "rounded-b-xl"],
   plugins: [],
 };
