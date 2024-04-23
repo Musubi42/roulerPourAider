@@ -9,7 +9,7 @@
           class="w-full md:w-1/2 lg:w-1/3 p-4"
         >
           <div
-            class="p-8 rounded-3xl border border-gray-100 flex flex-col justify-center items-center gap-8 h-full"
+            class="p-8 rounded-3xl border border-gray-100 flex flex-col justify-center items-center gap-8 h-full card-shadow"
           >
             <img :src="item.logo" alt="Health" class="h-12 w-12" />
             <CountUp
@@ -25,6 +25,12 @@
     </div>
   <!-- </div> -->
 </template>
+
+<style scoped>
+.card-shadow {
+  box-shadow: 5px 5px 8px rgb(156 156 156 / 30%);
+}
+</style>
 
 <script setup lang="ts">
 const keyNumbers = [
