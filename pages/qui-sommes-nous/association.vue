@@ -9,7 +9,7 @@
       <!-- <span class="text-blue-400 uppercase font-semibold tracking-widest">New feature</span> -->
       <!-- <h2 class="mt-4 mb-6 text-4xl font-bold text-white font-heading">{{ descriptionAsso.title }}</h2>
       <p class="text-lg text-gray-50">{{ descriptionAsso.description }}</p> -->
-      <p class="text-lg text-secondary text-justify">Nous sommes deux étudiants de l’Oise à mener un défi à la fois sportif et caritatif. Nous avons créé l’association Rouler pour aider en 2019 afin de récolter des dons pour l’Hôpital Necker – Enfants malades AP-HP à Paris. Cette récolte de dons, nous voulons la mener avec un défi sportif d’ampleur car nous sommes convaincus que le sport est un des meilleurs moyens de nous rassembler et véhicule des valeurs de solidarité et de dépassement qui collent parfaitement avec ce pour quoi nous agissons.</p>
+      <p class="quote text-lg text-secondary text-justify">Nous sommes deux étudiants de l’Oise à mener un défi à la fois sportif et caritatif. Nous avons créé l’association Rouler pour aider en 2019 afin de récolter des dons pour l’Hôpital Necker – Enfants malades AP-HP à Paris. Cette récolte de dons, nous voulons la mener avec un défi sportif d’ampleur car nous sommes convaincus que le sport est un des meilleurs moyens de nous rassembler et véhicule des valeurs de solidarité et de dépassement qui collent parfaitement avec ce pour quoi nous agissons.</p>
       <br>
       <p class="text-lg text-secondary text-justify">En 2020, nous avons traversé la France de Lille à Nice à vélo et avons récolté plus de 33 000 euros. Ces dons sont venus soutenir des actions d’amélioration du bien-être de l’enfant à l’hôpital. Nous pensons avec force que dans le combat d’une maladie le bien-être du patient et de la famille du patient est une composante majeure dont on ne peut faire fi.</p>
       <br>
@@ -96,6 +96,16 @@
 
   </section>
 </template>
+
+<style scoped>
+.quote::before {
+  content: "“";
+  font-size: 3em;
+  top: -10px;
+  left: -20px;
+  color: #72BC7A;
+}
+</style>
 
 <script setup lang="ts">
 interface Person {
