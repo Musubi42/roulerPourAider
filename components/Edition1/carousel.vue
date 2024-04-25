@@ -7,9 +7,9 @@
       :autoplay="{ delay: 4000 }"
       :pagination="{ enabled: true, clickable: true, dynamicBullets: true, type: 'bullets', dynamicMainBullets: 2 }"
       :centeredSlides="true"
-      class="w-full h-[500px] mx-auto "
+      class="w-full h-auto md:h-[500px] mx-auto "
     >
-      <SwiperSlide v-for="(image, index) in images" :key="index" class="p-10">
+      <SwiperSlide v-for="(image, index) in images" :key="index" class="p-10 my-auto">
         <img :src="image.src" :alt="image.alt" class="h-full w-auto mx-auto rounded-3xl" />
       </SwiperSlide>
     </Swiper>
