@@ -102,7 +102,12 @@ function main() {
             Authorization: `Bearer ${strapiToken}`,
         };
 
-        const allEntries = await axios.get(endpointUrl, { headers });
+        let allEntries;
+        try {
+            allEntries = await axios.get(endpointUrl, { headers });
+        } catch (error) {
+            console.error(`Erreur lors de la récupération des données de ${endpointUrl}:`, error);
+        }
 
         allEntries.data.data.forEach(async entry => {
             const slug = qs.stringify({

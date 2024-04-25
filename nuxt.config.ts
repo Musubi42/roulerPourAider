@@ -25,14 +25,15 @@ export default defineNuxtConfig({
         },
       },
   },
-  toast: {
-      position: 'top-center',
-      duration: 5000,
-      keepOnHover: true,
-  },
+  // toast: {
+  //     position: 'top-center',
+  //     duration: 5000,
+  //     keepOnHover: true,
+  // },
   plugins: [
     '/plugins/clarity-plugin.js',
-    '/plugins/vue3-toastify.js',
+    // '/plugins/vue3-toastify.js',
+    '/plugins/google-analytics.client.js'
   ],
   modules: [
     "nuxt-svgo",
@@ -84,7 +85,7 @@ export default defineNuxtConfig({
   },
   unlighthouse: {
     scanner: {
-      // simulate a desktop device
+      site: 'http://localhost:3000',
       device: 'desktop',
     },
   },
@@ -97,14 +98,6 @@ export default defineNuxtConfig({
   // router: {
   //   middleware: 'maintenance'
   // },
-  plugins: [
-    // '/plugins/axios.js',
-    // '/plugins/test.js',
-    // '/plugins/gsap.client.js',
-  ],
-  build: {
-    transpile: ['gsap'],
-  },
   components: true,
   css: ["~/assets/css/main.css"],
   postcss: {

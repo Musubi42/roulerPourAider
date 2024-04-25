@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-slate-50" >
     <Header :dynamicStyle="headerStyle" />
     <HeroAccueil />
     <NuxtPage />

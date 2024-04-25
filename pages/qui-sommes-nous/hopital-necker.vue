@@ -81,7 +81,7 @@
     <HopitalHistoire />
 
     <!-- Offre de soins -->
-    <HopitalHorizontalScrolling />
+    <!-- <HopitalHorizontalScrolling /> -->
   </section>
 </template>
 

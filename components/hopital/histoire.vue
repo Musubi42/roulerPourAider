@@ -27,13 +27,13 @@
             <div class="relative wrap overflow-hidden p-10 h-full">
 
               <!-- Vertical line -->
-              <div
+              <!-- <div
                 :style="{height: leftLineHeight}"
-                class="absolute right-1/2 border-2 border-secondary"
-              ></div>
+                class="absolute right-1/2 border-2 border-secondary rounded-b-full"
+              ></div> -->
               <div
-                :style="{height: rightLineHeight}"
-                class="absolute left-1/2 border-2 border-secondary"
+                :style="{height: progressLineHeight}"
+                class="absolute right-1/2 bg-secondary w-2 rounded-b-full z-0"
               ></div>
 
               <div v-for="(history, index) in histories" :key="index"
@@ -52,15 +52,17 @@
                   </p>
                   <p
                     class="text-sm md:text-base leading-snug text-black text-opacity-100" >
-                    {{history.description}}
+                    {{history.description2}}
                   </p>
                 </div>
               </div>
 
             </div>
-            <img
-              class="mx-auto -mt-36 md:-mt-36"
-              src=""
+            <NuxtImg
+              format="webp"
+              quality="80"
+              class="mx-auto -mt-20 z-10 relative"
+              src="/hospital.png"
             />
           </div>
         </div>
@@ -120,17 +122,22 @@ const histories = [
 import { useWindowScroll } from '@vueuse/core';
 
 // Refs for line heights
-const leftLineHeight = ref('0%');
-const rightLineHeight = ref('0%');
+const progressLineHeight = ref('0%');
+const timelineOffset = ref(0);
 
 // Use the useWindowScroll composable to react to scroll changes
 const { y } = useWindowScroll();
 
-// TODO : Travailler le calcul de la hauteur de la ligne
+onMounted(() => {
+  // Calculate the offset of the timeline from the top of the page
+  const timelineElement = document.querySelector('.right-timeline');
+  timelineOffset.value = timelineElement.getBoundingClientRect().top + window.pageYOffset;
+});
+
 watch(y, (newY) => {
   const totalHeight = document.body.scrollHeight - window.innerHeight;
-  const progress = newY / totalHeight * 100;
-  leftLineHeight.value = `${progress}%`;
-  rightLineHeight.value = `${progress}%`;
+  const adjustedScrollPosition = newY - timelineOffset.value;
+  const progress = Math.max(0, adjustedScrollPosition / (totalHeight - timelineOffset.value) * 100);
+  progressLineHeight.value = `${progress}%`;
 });
 </script>

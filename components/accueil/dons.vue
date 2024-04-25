@@ -198,15 +198,15 @@
 <script setup lang="ts">
 const donationGoals = reactive([
   {
-    logo: "logos/animation.png",
-    text: "2 semaines d'animation",
+    logo: "logos/lit-hopitaux.png",
+    text: "10 fauteuils-lits",
     objective: 10000,
     current_amount: 0,
     percentage: 0,
   },
   {
-    logo: "logos/lit-hopitaux.png",
-    text: "10 lits",
+    logo: "logos/animation.png",
+    text: "2 semaines d'animation",
     objective: 10000,
     current_amount: 0,
     percentage: 0,

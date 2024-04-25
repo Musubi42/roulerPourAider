@@ -5,11 +5,14 @@
     <!-- Chiffres clés -->
     <div class="flex flex-wrap my-10">
       <div class="w-full  p-4">
-        <p class="text-gray-600 text-lg text-center">En 2020, nous avons traversé la France de Lille à Nice à vélo et nous avons récolté plus de 33 000 euros pour l’Hôpital Necker – Enfants malades AP-HP.</p>
+        <p class="text-white text-2xl font-medium text-center bg-secondary rounded-md p-10">En 2020, nous avons traversé la France de Lille à Nice à vélo et nous avons récolté plus de 33 000 euros pour l’Hôpital Necker – Enfants malades AP-HP.</p>
       </div>
     </div>
     <Edition1RouleurChiffresCles />
-    <h2 class="text-4xl lg:text-5xl font-semibold text-center mb-14">Une récolte de dons pour l’Hôpital Necker – Enfants malades AP-HP à Paris</h2>
+    <h2 class="text-4xl lg:text-5xl font-semibold text-center mb-14 whitespace-pre-line">
+      <pre class="font-Omnes" >Une récolte de dons pour l’Hôpital Necker
+      Enfants malades AP-HP à Paris</pre>
+    </h2>
     <div class="flex flex-wrap mb-28 md:mb-32">
       <div class="w-full lg:w-1/2 p-4">
         <p class="text-gray-600 text-lg">Peu importe d’où l’on vient en France, quand un enfant est touché par la maladie et en particulier par une maladie rare, Necker est un hôpital de référence.</p>
@@ -25,10 +28,10 @@
     <div class="flex flex-wrap mb-28 md:mb-32">
       <div class="w-full lg:w-1/2 px-8">
         <h2 class="text-3xl lg:text-5xl font-bold font-heading mb-20 max-w-xs lg:max-w-lg">Qu’a permis la collecte de dons ?</h2>
-                <NuxtImg format="webp" quality="100" class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/tablette.webp" alt="" />
-                <!-- <NuxtImg class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/tablette.jpeg" alt="" /> -->
-                <NuxtImg format="webp" quality="100" class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/fresque.webp" alt="" />
-                <!-- <NuxtImg class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/fresque.jpeg" alt="" /> -->
+        <NuxtImg format="webp" quality="100" class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/tablette.webp" alt="" />
+        <!-- <NuxtImg class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/tablette.jpeg" alt="" /> -->
+        <NuxtImg format="webp" quality="100" class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/fresque.webp" alt="" />
+        <!-- <NuxtImg class="rounded-3xl mb-8 w-full lg:w-auto" src="/hopital-necker-visite/fresque.jpeg" alt="" /> -->
       </div>
       <div class="w-full lg:w-1/2 px-8">
         <p class="text-gray-600 text-lg mb-6">Les dons que nous avons récoltés ont permis de financer des projets d’amélioration de vie du bien-être de l’enfant à l’hôpital comme :</p>
