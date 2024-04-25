@@ -1,6 +1,6 @@
 <template>
-    <li class="hover-effect" @click="clicked"
-        :class="{ 'clicked-class': isClicked }">
+    <li class="hover-effect" @click="handleClick"
+        :class="{ 'clicked-class': isHeaderActiveLink(to) }">
         <nuxt-link class="flex items-center h-full text-sm hover:text-primary transition-colors duration-300 font-medium" :target="target" :to="to">
             <!-- You can use slots to make the component's content dynamic -->
                 <slot></slot>
@@ -30,6 +30,8 @@
 </style>
 
 <script setup lang="ts" >
+    const { setHeaderActiveLink, isHeaderActiveLink } = useHeaderActiveLink();
+
     const props = defineProps({
         to: {
             type: String,
@@ -40,6 +42,10 @@
             default: '_self'
         }
     });
+
+    const handleClick = () => {
+        setHeaderActiveLink(props.to);
+    };
 
     const isClicked = ref(false);
 

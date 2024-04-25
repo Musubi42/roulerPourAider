@@ -1,21 +1,22 @@
 <template>
   <section class="mt-10" >
-    <div class="flex flex-row gap-4 -mx-6 px-4 md:px-6 py-6 bg-secondary/20 overflow-x-auto" >
+    <div class="flex flex-row gap-4 px-4 md:px-6 py-6 bg-secondary/20 overflow-x-auto -mx-40" >
       <div class="flex flex-1 justify-center text-primary font-medium py-3 px-5 rounded-xl cursor-pointer border border-primary"
         v-for="(mounth, index) in eventMounth"
         :key="index"
         @click="chooseMounth(index)"
-        :class="{'bg-primary': selectedMounth[index], 'text-white': selectedMounth[index]}" >
+        :class="{'bg-primary': selectedMounth[index], 'text-white': selectedMounth[index], 'hover:bg-primary/10': !selectedMounth[index]}" >
         {{ mounth }}
       </div>
     </div>
 
     <div class="flex flex-wrap items-center">
       <div class="w-full sm:w-1/2 md:w-1/3 p-4" v-for="(event, index) in evenements[mounth]" :key="index">
-        <div class="relative" >
+        <NuxtLink class="relative cursor-pointer" target="_blank"
+          :href="buildGoogleCalendarLink(event.titre, event.description, event.localisation, event.debut, event.fin)" >
         <!-- :style="{ 'border-color': event?.isPast ? 'gray' : 'lawngreen' }" -->
           <div class="flex flex-col gap-2 border p-4 rounded-xl ombre"
-            :class="{'border-primary': !event.isPast, 'border-gray-300': event.isPast, 'cursor-not-allowed': event?.isPast }">
+            :class="{'border-primary': !event.isPast, 'border-gray-300': event.isPast, 'cursor-not-allowed': event?.isPast, 'hover:-translate-y-2': !event.isPast }">
             <div class="flex flex-row place-content-between items-center">
               <div class="text-primary font-semibold">
                 {{ event.titre }}
@@ -27,7 +28,7 @@
             <div class="text-gray-500 text-ellipsis line-clamp-3 whitespace-break-spaces overflow-hidden min-h-[70px]">
               {{ event.description }} 
             </div>
-            <a :href="buildGoogleCalendarLink(event.titre, event.description, event.localisation, event.debut, event.fin)" class="text-primary underline">
+            <a class="text-primary underline">
               Ajouter à mon calendrier
             </a>
           </div>
@@ -35,7 +36,7 @@
           <!-- inset-0 bg-gray-200/10 m-[1px] backdrop-blur-[1px]  -->
           <div v-if="event?.isPast" class="absolute glassmorphism inset-0 rounded-xl" :class="{ 'cursor-not-allowed': event?.isPast }"></div>
           <!-- <div v-if="event?.isPast" class="absolute inset-0 bg-gray-200/10 m-[1px] backdrop-blur-[1px] rounded-xl"></div> -->
-        </div>
+        </NuxtLink>
       </div>
     </div>
   </section>
@@ -131,6 +132,13 @@ const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLAT
 
 // Utilisez googleCalendarUrl comme l'attribut href de votre lien
 const buildGoogleCalendarLink = (title, description, location, startDate, endDate) => {
+  const now = new Date();
+  const convertedNow = formatDateToCustom(now);
+
+  if (startDate < convertedNow) {
+    return;
+  }
+
   const eventTitle = encodeURIComponent(title);
   const eventDetails = encodeURIComponent(description);
   const eventLocation = encodeURIComponent(location);
@@ -139,6 +147,23 @@ const buildGoogleCalendarLink = (title, description, location, startDate, endDat
 
   return `https://www.google.com/calendar/render?action=TEMPLATE&text=${eventTitle}&dates=${formattedStartDate}/${formattedEndDate}&details=${eventDetails}&location=${eventLocation}&sf=true&output=xml`;
 };
+
+function formatDateToCustom(date) {
+    if (!(date instanceof Date)) {
+        throw new Error("Input must be a Date object.");
+    }
+
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth() + 1; 
+    const day = date.getUTCDate();
+    
+    const milliseconds = date.getUTCHours() * 3600000 + date.getUTCMinutes() * 60000 + date.getUTCSeconds() * 1000 + date.getUTCMilliseconds();
+
+    const monthFormatted = month.toString().padStart(2, '0');
+    const dayFormatted = day.toString().padStart(2, '0');
+    
+    return `${year}${monthFormatted}${dayFormatted}T${milliseconds}Z`;
+}
 
 const evenements = ref<[]>([]);
 

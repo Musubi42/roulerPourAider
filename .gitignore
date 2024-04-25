@@ -27,10 +27,17 @@ logs
 .unlighthouse/
 
 # tmp
+/tmp/
+
 /public/oui/
+/public/backoffice/
+/public/hopital-necker-visite/
 
 /public/1ere-edition/*.png
 /public/1ere-edition/*.jpg
 /public/1ere-edition/*.jpeg
 
 /assets/*.pdf
+/assets/*.docx
+
+/assets/Rouler pour aider dossier.pages

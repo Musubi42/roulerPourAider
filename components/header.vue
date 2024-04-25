@@ -1,6 +1,6 @@
 <template>
   <header class="fixed block w-full z-50 bg-transparent" 
-    :style="{ 'box-shadow': ( dynamicStyle && !isMobile ) ? 'var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)' : 'de', '--tw-shadow-colored': ( dynamicStyle && !isMobile ) ? '0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color)' : '', '--tw-shadow': ( dynamicStyle && !isMobile ) ? '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)' : '' }"
+    :style="{ 'box-shadow': ( !dynamicStyle && !isMobile ) ? 'var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)' : 'de', '--tw-shadow-colored': ( dynamicStyle && !isMobile ) ? '0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color)' : '', '--tw-shadow': ( dynamicStyle && !isMobile ) ? '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)' : '' }"
     :class="{ 'bg-white': (isHovered && !isMobile) }"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave" >
@@ -11,9 +11,11 @@
         <div class="flex items-center justify-between relative">
           <!-- Logo -->
           <NuxtLink class="flex text-lg font-bold" to="/">
-            <img
+            <NuxtImg
+              format="webp"
+              quality="80"
               class="h-16 w-auto cursor-pointer"
-              src="/public/images/logoBig_roulerPourAider.png"
+              src="/images/logoBig_roulerPourAider.png"
               alt="Logo rouler pour aider"
             />
           </NuxtLink>

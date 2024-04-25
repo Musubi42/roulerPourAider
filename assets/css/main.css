@@ -70,8 +70,22 @@
 body {
   font-family: "Omnes", sans-serif;
 }
+
+pre {
+  font-family: "Omnes", sans-serif;
+}
 .custom_class {
   /* To create unique component */
+}
+
+.title-underline::after {
+  content: "";
+  display: block;
+  width: 6.4rem;
+  height: 4px;
+  background-color: #72BC7A;
+  margin-top: 5px;
+  border-radius: 5px;
 }
 
 .active {

@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="relative bottom-0 w-screen text-sm font-normal text-secondary mt-20"
+    class="relative bottom-0 w-full text-sm font-normal text-secondary mt-20"
     :style="{ 'margin-bottom': isRadioPage ? '80px' : '' }"
   >
     <div class="mx-6 md:mx-32">

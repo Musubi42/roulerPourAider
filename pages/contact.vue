@@ -88,9 +88,11 @@
               <input
                 class="w-full mb-4 rounded-full p-4 outline-none border border-gray-100 shadow placeholder-gray-500 focus:ring focus:ring-secondary transition duration-200"
                 v-model="email"
-                type="text"
+                type="email"
                 placeholder="john@email.com"
+                @blur="validateEmail"
               />
+              <p v-if="emailError" class="text-red-500">{{ emailError }}</p>
               <label class="text-sm font-medium mb-2 block" for="textInput4"
                 >Message</label
               >
@@ -165,6 +167,18 @@ const contacts = ref<contact[]>([]);
 
 const runtimeConfig = useRuntimeConfig();
 const { public: { strapiBaseUrl, strapiToken } } = runtimeConfig;
+
+let emailError = ref("");
+
+const validateEmail = () => {
+  const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  if (!regex.test(email)) {
+    console.log(email);
+    emailError = 'Email non valide';
+  } else {
+    emailError = '';
+  }
+};
 
 const transformContactObject = (contactData) => {
   return contactData.map((data) => {
