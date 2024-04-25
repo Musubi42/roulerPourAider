@@ -2,7 +2,7 @@
   <section class="relative py-24 overflow-hidden">
 
     
-    <div class="max-w-3xl mx-auto mb-12 md:mb-20 text-center -mt-14">
+    <div class="max-w-3xl mx-10 md:mx-auto mb-12 md:mb-20 text-center -mt-14">
 
     <!-- TODO : Add countUp & chiffre cles -->
     <!-- flex flex-row -->

@@ -1,6 +1,6 @@
 <template>
-  <div class="mx-40">
-    <p class="quote mt-10 mx-20 text-lg text-secondary text-justify">Nous sommes deux étudiants de l’Oise à mener un défi à la fois sportif et caritatif. Nous avons créé l’association Rouler pour aider en 2019 afin de récolter des dons pour l’Hôpital Necker – Enfants malades AP-HP à Paris. Cette récolte de dons, nous voulons la mener avec un défi sportif d’ampleur car nous sommes convaincus que le sport est un des meilleurs moyens de nous rassembler et véhicule des valeurs de solidarité et de dépassement qui collent parfaitement avec ce pour quoi nous agissons.</p>
+  <div class="mx-6 md:mx-40">
+    <p class="quote mt-10 mx-4 md:mx-20 text-lg text-secondary text-justify">Nous sommes deux étudiants de l’Oise à mener un défi à la fois sportif et caritatif. Nous avons créé l’association Rouler pour aider en 2019 afin de récolter des dons pour l’Hôpital Necker – Enfants malades AP-HP à Paris. Cette récolte de dons, nous voulons la mener avec un défi sportif d’ampleur car nous sommes convaincus que le sport est un des meilleurs moyens de nous rassembler et véhicule des valeurs de solidarité et de dépassement qui collent parfaitement avec ce pour quoi nous agissons.</p>
     <section class="mt-10" >
       <h2 class="font-semibold text-3xl text-secondary title-underline">Un défi sportif ambitieux</h2>
       <!-- TODO : rajouter le text du qui sommes nous -->
