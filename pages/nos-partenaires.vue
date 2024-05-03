@@ -13,11 +13,28 @@
             'flex-row': index % 2 === 0,
           }"
         >
-          <div class="flex flex-col gap-4 justify-start items-center align-middle w-7/12">
+          <div class="flex flex-col gap-4 justify-start items-center align-middle w-full md:w-7/12">
             <!-- Title -->
             <div class="font-semibold text-3xl w-full text-left md:text-center">
               {{ partenaire.title }}
             </div>
+            <div
+            v-if="isMobile"
+            class="w-5/12 md:w-5/12"
+            :class="{
+              'mr-10': index % 2 === 1,
+              'md:mr-20': index % 2 === 1,
+              'ml-10': index % 2 === 0,
+            }" >
+            <!-- TODO : Trouver le moyen d'host les images venant du backoffice directement sur Vercel, Git webhooks ? -->
+            <NuxtImg
+              format="webp"
+              quality="80"
+              :src="`${partenaire.partenairePhotoPath}`"
+              class="h-full md:h-72 object-contain"
+              alt=""
+            />
+          </div>
             <!-- Description -->
             <div class="w-full text-left">{{ partenaire.description }}</div>
             <!-- Réseaux sociaux -->
@@ -26,8 +43,7 @@
               class="hidden md:absolute mt-7 md:mt-0 bottom-0 left-0 md:flex items-center w-full"
               :class="{
                 'flex-row': index % 2 === 1,
-              }"
-            >
+              }" >
               <NuxtLink
                 v-if="partenaire.siteWebUrl"
                 class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
@@ -72,15 +88,17 @@
           </div>
           <!-- Image -->
           <div
+            v-if="!isMobile"
             class="w-5/12 md:w-5/12"
             :class="{
               'mr-10': index % 2 === 1,
               'md:mr-20': index % 2 === 1,
               'ml-10': index % 2 === 0,
-            }"
-          >
+            }" >
             <!-- TODO : Trouver le moyen d'host les images venant du backoffice directement sur Vercel, Git webhooks ? -->
-            <img
+            <NuxtImg
+              format="webp"
+              quality="80"
               :src="`${partenaire.partenairePhotoPath}`"
               class="h-full md:h-72 object-contain"
               alt=""
@@ -199,4 +217,11 @@ const getPartenaires = async () => {
 };
 
 getPartenaires();
+
+const isMobile = ref(false);
+
+onMounted(() => {
+  // Initialize carousel or set up resize observers if needed
+  isMobile.value = window.innerWidth < 768;
+});
 </script>

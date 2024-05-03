@@ -1,6 +1,6 @@
 <template>
   <section class="mt-10" >
-    <div class="flex flex-row gap-4 px-4 md:px-6 py-6 bg-secondary/20 overflow-x-auto -mx-40" >
+    <div class="flex flex-row gap-4 px-4 md:px-6 py-6 bg-secondary/20 overflow-x-auto -mx-6 md:-mx-40" >
       <div class="flex flex-1 justify-center text-primary font-medium py-3 px-5 rounded-xl cursor-pointer border border-primary"
         v-for="(mounth, index) in eventMounth"
         :key="index"
