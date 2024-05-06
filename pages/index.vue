@@ -64,14 +64,14 @@
 definePageMeta({
   layout: "accueil",
 });
-// useSeoMeta({
-//   title: 'LMLC COMMUNICATION',
-//   ogTitle: 'My Amazing Site',
-//   description: 'This is my amazing site, let me tell you all about it.',
-//   ogDescription: 'This is my amazing site, let me tell you all about it.',
-//   ogImage: 'https://example.com/image.png',
-//   twitterCard: 'summary_large_image',
-// });
+
+useSeoMeta({
+  title: 'Rouler pour aider - Accueil',
+  ogTitle: 'Rouler pour aider - Accueil',
+  description: 'L\'association Rouler pour aider récolte des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP. Cette ...',
+  ogDescription: 'L\'association Rouler pour aider récolte des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP. Cette ...',
+  ogImage: 'https://roulerpouraider.fr/images/logoBig_roulerPourAider.png',
+})
 
 
 </script>

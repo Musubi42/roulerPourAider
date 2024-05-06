@@ -1,5 +1,5 @@
 <template>
-  <section class="overflow-hidden pt-6 bg-white">
+  <section class="overflow-hidden pt-6">
     <div class="container mx-auto md:px-4">
       <div class="rounded-2xl pt-14 lg:px-18">
         <div class="flex flex-wrap">
@@ -71,7 +71,7 @@
                     </NuxtLink>
                   </button>
 
-                  <NuxtLink to="" class="text-white underline drop-shadow-md"
+                  <NuxtLink to="/qui-sommes-nous/hopital-necker" class="text-white underline drop-shadow-md"
                     ><p class="drop-shadow-xl">En savoir plus</p></NuxtLink
                   >
                 </div>

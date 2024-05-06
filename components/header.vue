@@ -31,9 +31,9 @@
               @click="toggleMenuBurger"
             />
           </div>
-
-          <ul class="hidden lg:flex lg:w-auto lg:space-x-12 h-16 items-stretch"
-            :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }">
+          <!-- :style="{ 'color': ( !isTop && ( dynamicStyle || isHovered ) ) ? 'blue' : 'white' }" -->
+          <ul class="hidden lg:flex lg:w-auto lg:space-x-12 h-16 items-stretch text-white"
+            :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }" >
             <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
             <HeadersLinkDesktop to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr" target="_blank" >Faire un don</HeadersLinkDesktop>
             <HeadersSubNavTest

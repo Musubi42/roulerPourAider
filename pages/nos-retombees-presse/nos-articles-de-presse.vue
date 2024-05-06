@@ -40,7 +40,7 @@
                 <NuxtLink
                   :to="`${article.articleUrl}`"
                   class="rounded-md bg-primary/90 text-white hover:bg-primary py-1 px-2"
-                  _target="blank" >Lire sur {{ article.articleUrlOrigin }}
+                  target="_blank" >Lire sur {{ article.articleUrlOrigin }}
                   </NuxtLink >
               </button>
             </div>
@@ -52,6 +52,14 @@
 </template>
 
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Rouler pour aider - Nos articles de presse',
+  ogTitle: 'Rouler pour aider - Nos articles de presse',
+  description: 'L\'association Rouler pour aider récolte des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP. Cette ...',
+  ogDescription: 'L\'association Rouler pour aider récolte des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP. Cette ...',
+  ogImage: 'https://roulerpouraider.fr/images/logoBig_roulerPourAider.png',
+});
+
 interface Article {
   id: number;
   source: string;

@@ -40,7 +40,7 @@
                 <NuxtLink
                   :to="`${reportage.reportageUrl}`"
                   class="rounded-md bg-primary/90 text-white hover:bg-primary py-1 px-2"
-                  _target="blank" >Regarder sur {{ reportage.reportageUrlOrigin }}
+                  target="_blank" >Regarder sur {{ reportage.reportageUrlOrigin }}
                   </NuxtLink >
               </button>
             </div>
@@ -52,6 +52,14 @@
 </template>
 
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Rouler pour aider - Nos reportages TV',
+  ogTitle: 'Rouler pour aider - Nos reportages TV',
+  description: 'L\'association Rouler pour aider récolte des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP. Cette ...',
+  ogDescription: 'L\'association Rouler pour aider récolte des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP. Cette ...',
+  ogImage: 'https://roulerpouraider.fr/images/logoBig_roulerPourAider.png',
+});
+
 interface Reportage {
   id: number;
   source: string;

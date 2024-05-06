@@ -86,6 +86,13 @@
 </template>
 
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Rouler pour aider - première édition',
+  ogTitle: 'Rouler pour aider - première édition',
+  description: 'Découvrez la première édition de Rouler pour aider, une association qui récolte des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP.',
+  ogDescription: 'Découvrez la première édition de Rouler pour aider, une association qui récolte des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP.',
+  ogImage: 'https://roulerpouraider.fr/images/logoBig_roulerPourAider.png',
+})
 definePageMeta({
   layout: "default",
 });

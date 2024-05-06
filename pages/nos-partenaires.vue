@@ -161,6 +161,14 @@
 </template>
 
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Rouler pour aider - Nos partenaires',
+  ogTitle: 'Rouler pour aider - Nos partenaires',
+  description: 'Découvrez nos partenaires qui nous soutiennent dans notre mission de récolter des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP.',
+  ogDescription: 'Découvrez nos partenaires qui nous soutiennent dans notre mission de récolter des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP.',
+  ogImage: 'https://roulerpouraider.fr/images/logoBig_roulerPourAider.png',
+})
+
 interface Partenaire {
   title: string;
   description: string;
