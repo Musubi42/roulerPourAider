@@ -43,7 +43,8 @@ export default defineNuxtConfig({
     "nuxt-swiper",
     // '@unlighthouse/nuxt',
     "@pinia/nuxt",
-    "@pinia/nuxt"
+    "@pinia/nuxt",
+    'nuxt3-leaflet'
   ],
   // image: {
   //   // Use 'static' for Nuxt 3 as the local provider
