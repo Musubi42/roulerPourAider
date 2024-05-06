@@ -122,6 +122,15 @@
 </template>
 
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Rouler pour aider - Contact',
+  ogTitle: 'Rouler pour aider - Contact',
+  description: 'Contactez-nous pour plus d\'informations sur notre association. Nous serons ravis de vous répondre.',
+  ogDescription: 'Contactez-nous pour plus d\'informations sur notre association. Nous serons ravis de vous répondre.',
+  ogImage: 'https://roulerpouraider.fr/images/logoBig_roulerPourAider.png',
+  twitterCard: 'summary_large_image',
+})
+
 // import nodemailer from "nodemailer";
 const mail = useMail();
 
