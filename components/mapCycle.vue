@@ -63,6 +63,20 @@ onMounted(() => {
   }).addTo(map);
 
   // Add markers
+
+  // En dynamique
+  // var cities = [
+  //   {name: "Paris", coord: [48.8566, 2.3522], details: "Details about Paris step..."},
+  //   {name: "Lyon", coord: [45.7640, 4.8357], details: "Details about Lyon step..."},
+  //   // Add other cities similarly
+  // ];
+
+  // cities.forEach(function(city) {
+  //     var marker = L.marker(city.coord).addTo(map)
+  //         .bindPopup(`<b>${city.name}</b><br>${city.details}`);
+  // });
+
+  
   const parisMarker = L.marker([48.8566, 2.3522], { icon: customIcon }).addTo(map);
   parisMarker.bindPopup('Paris, 1ère étape, Paris à Blois 250km', {
     offset: L.point(-2, 35) // Moves the popup 20 pixels down from the marker

@@ -108,6 +108,14 @@
 </style>
 
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Rouler pour aider - L\'association',
+  ogTitle: 'Rouler pour aider - L\'association',
+  description: 'L\'association Rouler pour aider récolte des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP. Cette ...',
+  ogDescription: 'L\'association Rouler pour aider récolte des dons pour améliorer le bien-être des enfants et de leur famille à l\'Hôpital Necker – Enfants malades AP-HP. Cette ...',
+  ogImage: 'https://roulerpouraider.fr/images/logoBig_roulerPourAider.png',
+});
+
 interface Person {
   personPhotolUrl: string;
   prenom: string;

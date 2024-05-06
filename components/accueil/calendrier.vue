@@ -21,7 +21,7 @@
               <div class="text-primary font-semibold">
                 {{ event.titre }}
               </div>
-              <div v-if="event?.isPast" class="p-2 rounded-md text-sm bg-primary text-white z-10" >
+              <div v-if="event?.isPast" class="p-2 rounded-md text-sm bg-primary text-white z-10 min-w-[121px]" >
                 événement passé
               </div>
             </div>
