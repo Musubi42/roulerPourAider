@@ -5,7 +5,7 @@ export const locations = [
     latLng: [48.8566, 2.3522],
     popup: "Paris, 1ère étape, Paris à Blois 250km",
     route: generateIntermediatePoints([48.8566, 2.3522], [47.593899, 1.328100], 10),
-    imageUrl: '/paris.jpeg'
+    imageUrl: '/steps/paris.jpeg'
   },
   {
     name: "blois",
@@ -13,15 +13,15 @@ export const locations = [
     latLng: [47.593899, 1.328100],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([47.593899, 1.328100], [46.580002, 0.340000], 10), // Just an example
-    imageUrl: '/blois.jpeg'
+    imageUrl: '/steps/blois.jpeg'
   },
   {
-    name: "poitier",
+    name: "poitiers",
     labelPosition: 'left',
     latLng: [46.580002, 0.340000],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([46.580002, 0.340000], [45.625580, -1.026930], 10), // Just an example
-    imageUrl: '/poitier.jpeg'
+    imageUrl: '/steps/poitiers.webp'
   },
   {
     name: "royan",
@@ -29,22 +29,22 @@ export const locations = [
     latLng: [45.625580, -1.026930],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([45.625580, -1.026930], [43.890970, -0.497870], 10), // Just an example
-    imageUrl: '/royan.jpeg'
+    imageUrl: '/steps/royan.jpeg'
   },
   {
-    name: "mont-de-marsan",
+    name: "mont-de-Marsan",
     labelPosition: 'left',
     latLng: [43.890970, -0.497870],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([43.890970, -0.497870], [43.097710, -0.045710], 10), // Just an example
-    imageUrl: '/mont-de-marsan.jpeg'
+    imageUrl: '/steps/mont-de-marsan.jpeg'
   },
   {
     name: "lourdes",
     latLng: [43.097710, -0.045710],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([43.097710, -0.045710], [42.795689, 0.412230], 10), // Just an example
-    imageUrl: '/lourdes.jpeg'
+    imageUrl: '/steps/lourdes.jpeg'
   },
   {
     name: "loudenvielle",
@@ -52,85 +52,85 @@ export const locations = [
     latLng: [42.795689, 0.412230],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([42.795689, 0.412230], [42.7218637792, 1.6878555819], 10), // Just an example
-    imageUrl: '/loudenvielle.jpeg'
+    imageUrl: '/steps/loudenvielle.jpeg'
   },
   {
-    name: "plateau-de-beille",
+    name: "plateau-de-Beille",
     latLng: [42.7218637792, 1.6878555819],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([42.7218637792, 1.6878555819], [43.344233, 3.215795], 10), // Just an example
-    imageUrl: '/plateau-de-beille.jpeg'
+    imageUrl: '/steps/plateau-de-beille.jpeg'
   },
   {
     name: "béziers",
     latLng: [43.344233, 3.215795],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([43.344233, 3.215795], [43.949317, 4.805528], 10), // Just an example
-    imageUrl: '/béziers.jpeg'
+    imageUrl: '/steps/beziers.jpeg'
   },
   {
     name: "avignon",
     latLng: [43.949317, 4.805528],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([43.949317, 4.805528], [44.198475, 5.939613], 10), // Just an example
-    imageUrl: '/avignon.jpeg'
+    imageUrl: '/steps/avignon.jpeg'
   },
   {
     name: "sisteron",
     latLng: [44.198475, 5.939613],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([44.198475, 5.939613], [44.386300, 6.650463], 10), // Just an example
-    imageUrl: '/sisteron.jpeg'
+    imageUrl: '/steps/sisteron.jpeg'
   },
   {
     name: "barcelonnette",
     latLng: [44.386300, 6.650463],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([44.386300, 6.650463], [45.275403, 6.344886], 10), // Just an example
-    imageUrl: '/barcelonnette.jpeg'
+    imageUrl: '/steps/barcelonnette.jpeg'
   },
   {
-    name: "st-jean-de-maurienne",
+    name: "st-Jean-de-Maurienne",
     latLng: [45.275403, 6.344886],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([45.275403, 6.344886], [45.899247, 6.129384], 10), // Just an example
-    imageUrl: '/st-jean-de-maurienne.jpeg'
+    imageUrl: '/steps/st-jean-de-maurienne.jpeg'
   },
   {
     name: "annecy",
     latLng: [45.899247, 6.129384],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([45.899247, 6.129384], [46.671361, 5.550796], 10), // Just an example
-    imageUrl: '/annecy.jpeg'
+    imageUrl: '/steps/annecy.jpeg'
   },
   {
-    name: "lons-le-saunier",
+    name: "lons-le-Saunier",
     latLng: [46.671361, 5.550796],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([46.671361, 5.550796], [48.113748, 5.1392559], 10), // Just an example
-    imageUrl: '/lons-le-saunier.jpeg'
+    imageUrl: '/steps/lons-le-saunier.jpeg'
   },
   {
     name: "chaumont",
     latLng: [48.113748, 5.1392559],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([48.113748, 5.1392559], [49.258329, 4.031696], 10), // Just an example
-    imageUrl: '/chaumont.jpeg'
+    imageUrl: '/steps/chaumont.jpeg'
   },
   {
     name: "reims",
     latLng: [49.258329, 4.031696],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([49.258329, 4.031696], [49.283329, 2.51667], 10), // Just an example
-    imageUrl: '/reims.jpeg'
+    imageUrl: '/steps/reims.jpeg'
   },
   {
-    name: "verneuil-en-halatte",
+    name: "verneuil-en-Halatte",
     labelPosition: 'left',
     latLng: [49.283329, 2.51667],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([49.283329, 2.51667], [48.8566, 2.3522], 10), // Just an example
-    imageUrl: '/verneuil-en-halatte.jpeg'
+    imageUrl: '/steps/verneuil-en-halatte.jpeg'
   }
   // Add more locations as needed
 ];
@@ -141,14 +141,17 @@ export const mapOptions = {
   center: [46.2276, 2.2137],
   touchZoom: false,
   dragging: false,
-  zoomControl: false
-
+  zoomControl: false,
+  scrollWheelZoom: false,
+  doubleClickZoom: false,
+  attributionControl: false,
 };
 
 export const primary = "#72BC7A";
 export const secondary = "#2A5FA4";
 
 export const geojsonOptions = {
+  zoomControl: false,
   style: () => ({
     fillColor: primary,     // Only inside France
     weight: 1,
@@ -207,13 +210,14 @@ function convertCoordinatesToPath(coordinates, map) {
     return path + 'Z'; // Close the path
 }
 
-export function createSVGFromPath(map, pathData, imageUrl) {
+export function createSVGFromPath(map, pathData) {
     const svgNS = "http://www.w3.org/2000/svg";
     const mapSize = map.getSize();  // Get current map dimensions
     const bounds = map.getBounds(); // Get geographic bounds visible in the map
     let topLeft = map.latLngToLayerPoint(bounds.getNorthWest());
     let bottomRight = map.latLngToLayerPoint(bounds.getSouthEast());
 
+    console.log("mapSize", mapSize);
     let svg = document.createElementNS(svgNS, "svg");
     svg.setAttribute("id", "svg-overlay");
     svg.setAttribute("width", mapSize.x + "px");
@@ -222,6 +226,10 @@ export function createSVGFromPath(map, pathData, imageUrl) {
     svg.style.position = "absolute";
     svg.style.left = "0px";
     svg.style.top = "0px";
+    svg.style.backgroundColor = "rgb(248 250 252)";
+    // svg.setAttribute("viewBox", "0 0 800 600");  // Adjust based on the desired viewable area
+    
+
 
     const defs = document.createElementNS(svgNS, "defs");
 
@@ -250,8 +258,24 @@ export function createSVGFromPath(map, pathData, imageUrl) {
     const image = document.createElementNS(svgNS, "image");
     image.setAttribute("id", "backgroundImage");
     image.setAttributeNS("http://www.w3.org/1999/xlink", "href", '/paris.jpeg');
+    console.log(Math.abs(bottomRight.x - topLeft.x));
+    console.log(Math.abs(bottomRight.y - topLeft.y));
     image.setAttribute("width", Math.abs(bottomRight.x - topLeft.x) + "px");
     image.setAttribute("height", Math.abs(bottomRight.y - topLeft.y) + "px");
+
+    // // Adjust these values based on trial and error or calculations
+    // let scaleX = 1;  // Scale factor for width (adjust as needed)
+    // let scaleY = 1;  // Scale factor for height (adjust as needed)
+    // let translateX = -50;  // X translation to center the image (adjust as needed)
+    // let translateY = -50;  // Y translation to center the image (adjust as needed)
+
+    // image.setAttribute("transform", `scale(${scaleX} ${scaleY}) translate(${translateX} ${translateY})`);
+    // image.setAttribute("preserveAspectRatio", "xMidYMid meet");  // Ensures the image is centered and scaled to fit within the viewBox
+
+
+    // image.setAttribute("width", 700 + "px");
+    // image.setAttribute("height", 711 + "px");
+    // image.style.transform = "translate(350px, -100px)";
     image.setAttribute("clip-path", "url(#france-clip)");
     svg.appendChild(image);
 
