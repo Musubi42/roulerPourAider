@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <BicycleTourMap /> -->
-    <MapCycle />
+    <AccueilMapCycle />
     <!-- <Clipping /> -->
   </div>
 </template>

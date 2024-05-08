@@ -1,5 +1,5 @@
 <template>
-  <div ref="mapContainer" class="map-container"></div>
+  <div ref="mapContainer" id="mapContainer" class="map-container"></div>
 </template>
 
 <style scoped>
@@ -91,6 +91,12 @@ const CustomOverlay = L.Layer.extend({
 });
 
 onMounted(() => {
+  // depending on the device size change the zoom before the creation of the map
+  if (window.innerWidth < 600) {
+    console.log("ici");
+    mapOptions.zoom = 5.2;
+    // textOverlay._updateFontSize("0.7rem")
+  }
   map = L.map(mapContainer.value, mapOptions);
   map.trackResize = false;
   map.closePopupOnClick = false;
@@ -134,13 +140,13 @@ onMounted(() => {
       if (current) {
         current.marker.setIcon(
           new L.icon({
-            iconUrl: "/white-circle.svg", // Adjust the path as necessary
+            iconUrl: "/steps/primary-circle.svg", // Adjust the path as necessary
             iconSize: [25, 41], // Size of the icon
             iconAnchor: [14, 20], // Point of the icon which will correspond to marker's location
             popupAnchor: [1, -34], // Point from which the popup should open relative to the iconAnchor
           })
         );
-        current.textOverlay._updateColor("white");
+        current.textOverlay._updateColor(primary);
       }
 
       // Update next marker if it exists
@@ -148,13 +154,13 @@ onMounted(() => {
       if (next) {
         next.marker.setIcon(
           new L.icon({
-            iconUrl: "/white-circle.svg",
+            iconUrl: "/steps/primary-circle.svg",
             iconSize: [25, 41],
             iconAnchor: [14, 20],
             popupAnchor: [1, -34],
           })
         );
-        next.textOverlay._updateColor("white");
+        next.textOverlay._updateColor(primary);
       }
     }
 
@@ -190,34 +196,38 @@ onMounted(() => {
 
     // Check the size of the map and adjust the view accordingly
     // TODO : Mettre à jour le taille du texte et leur positionnement
-    const adjustMapView = () => {
-      nextTick(() => {
-        const svgOverlay = document.getElementById("svg-overlay");
-        if (window.innerWidth < 600) {
-          // Example breakpoint
-          // map.setView(5); // Adjust zoom level and center
-          map.setZoom(5.2);
-          textOverlay._updateFontSize("0.5rem")
-          // Update mapSize of the background image
-        } else {
-          map.setZoom(mapOptions.zoom);
-        }
-        let mapSize = map.getSize(); // Get current map dimensions
-        // svgOverlay.style.width = mapSize.x + "px"; // Update SVG dimensions
-        // svgOverlay.style.height = mapSize.y + "px";
-        svgOverlay.setAttribute("width", mapSize.x + "px");
-        svgOverlay.setAttribute("height", mapSize.y + "px");
-        svgOverlay.setAttribute("viewBox", `0 0 ${mapSize.x} ${mapSize.y}`);
-      });
-    };
+    // const adjustMapView = () => {
+    //   nextTick(() => {
+    //     const svgOverlay = document.getElementById("svg-overlay");
+    //     if (window.innerWidth < 600) {
+    //       // Example breakpoint
+    //       // map.setView(5); // Adjust zoom level and center
+    //       map.setZoom(5.2);
+    //       textOverlay._updateFontSize("0.5rem");
+    //       // Update mapSize of the background image
+    //     } else {
+    //       map.setZoom(mapOptions.zoom);
+    //     }
+    //     let mapSize = map.getSize(); // Get current map dimensions
+    //     // svgOverlay.style.width = mapSize.x + "px"; // Update SVG dimensions
+    //     // svgOverlay.style.height = mapSize.y + "px";
+    //     svgOverlay.setAttribute("width", mapSize.x + "px");
+    //     svgOverlay.setAttribute("height", mapSize.y + "px");
+    //     svgOverlay.setAttribute("viewBox", `0 0 ${mapSize.x} ${mapSize.y}`);
+    //   });
+    // };
 
-    adjustMapView(); // Adjust on initial load
-    window.addEventListener("resize", adjustMapView); // Adjust on window resize
+    // adjustMapView(); // Adjust on initial load
+    // window.addEventListener("resize", adjustMapView); // Adjust on window resize
   });
 
   const svgPath = geoJSONToSVGPath(franceBorderMetropole, map);
   const svgElement = createSVGFromPath(map, svgPath, "/paris.jpeg");
-  document.body.appendChild(svgElement);
+
+  nextTick(() => {
+    const mapContainer = document.getElementById("mapContainer");
+    mapContainer.appendChild(svgElement);
+  });
 
   // TODO: Il faut que je crée le SVGElement au mounted, par contre à ce moment il me suffit de changer l'image
   // Créer un SVGElement sans image, au hover rajouter la bonne image
@@ -259,7 +269,7 @@ function polylineAnimation(polyline) {
     offset -= 1;
     polyline.setStyle({
       dashOffset: offset,
-      color: "white",
+      color: primary,
     });
     animateId = requestAnimationFrame(animate);
   }
@@ -284,7 +294,7 @@ function resetAnimation(line) {
 }
 
 const customIcon = new L.icon({
-  iconUrl: "/blue-circle.svg", // Adjust the path as necessary
+  iconUrl: "/steps/blue-circle.svg", // Adjust the path as necessary
   iconSize: [25, 41], // Size of the icon
   iconAnchor: [14, 20], // Point of the icon which will correspond to marker's location
   popupAnchor: [1, -34], // Point from which the popup should open relative to the iconAnchor
@@ -292,6 +302,6 @@ const customIcon = new L.icon({
 
 onBeforeUnmount(() => {
   stopAnimation();
-  window.removeEventListener("resize", adjustMapView);
+  // window.removeEventListener("resize", adjustMapView);
 });
 </script>

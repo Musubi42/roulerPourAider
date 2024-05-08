@@ -24,6 +24,9 @@
               <div v-if="event?.isPast" class="p-2 rounded-md text-sm bg-primary text-white z-10 min-w-[121px]" >
                 événement passé
               </div>
+              <div v-if="!event?.isPast" class="p-2 rounded-md text-sm bg-primary text-white z-10 min-w-[121px]" >
+                {{ event.debut | formatDate("DD MMMM YYYY") }}
+              </div>
             </div>
             <div class="text-gray-500 text-ellipsis line-clamp-3 whitespace-break-spaces overflow-hidden min-h-[70px]">
               {{ event.description }} 
@@ -63,57 +66,13 @@
 let monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
 const eventMounth = ["Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre"];
 
-const events = {
-  Mars: [
-    {
-      isPast: true,
-      title: "Mercredi 27 Mars",
-      description: "Lancement du projet et communication au grand public",
-    },
-    {
-      isPast: false,
-      title: "Dimanche 31 Mars",
-      description: "Participation à l’événement Pâques Hachette à Beauvais"
-    },
-  ],
-  Avril: [
-    {
-      title: "Samedi 6 Avril",
-      description: "Tombola au village Olympique de Beauvais",
-    },
-    {
-      title: "Du 12 au 21 Avril",
-      description: "participation à la Course croisière EDHEC en tant qu’association partenaire de la journée handisport",
-      location: "24 Av. Gustave Delory, 59100 Roubaix",
-    },
-    {
-      title: "Samedi 13 Avril",
-      description: "Participation à l’opération « Savoir rouler » à Senlis",
-      location: "Senlis, 60300, France"
-    },
-    {
-      title: "Dimanche 14 Avril",
-      description: "Participation au triathlon de Senlis",
-      location: "Senlis, 60300, France"
-    },
-    {
-      title: "Samedi 27 Avril",
-      description: "organisation d’une tombola à Cora de Saint-Maximin",
-      location: "Rue de la Mardelle, 60740 Saint-Maximin"
-    },
-    {
-      title: "Dimanche 28 Avril",
-      description: "participation à la brocante de Verneuil-en-Halatte",
-      location: "Verneuil-en-Halatte, 60550",
-      start: "20240428T090000Z",
-      end: "20240428T110000Z"
-    },
-  ],
-
-}
-
 const selectedMounth = ref([true, false, false, false, false, false, false]);
 const mounth = ref("Mars");
+
+const formatDate = (date) => {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Date(date).toLocaleDateString("fr-FR", options);
+};
 
 const chooseMounth = (index: number) => {
   selectedMounth.value = Array(eventMounth.length).fill(false);

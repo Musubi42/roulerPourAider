@@ -12,14 +12,15 @@
 
       <div class="flex flex-col md:flex-row w-full mt-6 md:mt-6" >
       <!-- TODO : Add le filigranne que j'ai déjà -->
-        <div class="w-full md:w-1/2 h-auto flex flex-col justify-around items-center" >
+        <!-- <div class="w-full md:w-1/2 h-auto flex flex-col justify-around items-center" >
           <img src="/velo.png" alt="" class="w-max">
           <img class="object-contain" src="/1ere-edition/map.png" alt="">
           <img src="/velo.png" alt="" class="w-max" >
-        </div>
+        </div> -->
 
-        <div class="w-full md:w-1/2" >
-          <AccueilEtapes />
+        <div class="w-full h-1/2 -translate-x-[200px]" >
+          <!-- <AccueilEtapes /> -->
+          <AccueilMapCycle />
         </div>
       </div>
     </section>
