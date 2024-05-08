@@ -12,146 +12,139 @@
 <script setup>
 import L from 'leaflet';
 import franceBorderMetropole from '/assets/france-geojson-metropole.json'; 
+import { locations, primary, secondary, mapOptions, geojsonOptions, geoJSONToSVGPath, createSVGFromPath } from '/data/locations.js';
 
 const mapContainer = ref(null);
 let geoFranceBorder = ref(null);
 
-const polyline = ref(null);
+const polyline = ref([]);
 let animateId = null; // To hold the requestAnimationFrame ID
 
 const markers = ref([]);
 
+const CustomOverlay = L.Layer.extend({
+  initialize: function(options) {
+      // Store options or set defaults
+      this._latlng = options.latlng || new L.LatLng(0, 0);  // Default to 0,0 if not provided
+      this._text = options.text.charAt(0).toUpperCase() + options.text.slice(1) || '';  // Default to empty string if not provided
+      this._labelPosition = options.labelPosition || 'right';  // Default to right if not provided
+  },
+  onAdd: function (map) {
+    const latlng = this._latlng;
+    this._div = L.DomUtil.create('div', 'my-custom-overlay'); // Create a div element with a class for styling
+    this._div.innerText = this._text; 
+    // Position it at the marker's location
+    const position = map.latLngToLayerPoint(latlng);
+    this._div.style.position = 'absolute';
+    this._div.style.color = secondary;
+    this._div.style.fontSize = this._text === 'Paris' ? '1.5rem' : '1.1rem';
+    this._div.style.fontWeight = this._text === 'Paris' ? 800 : 700;
+    // this._div.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.5)';
 
-// TODO: Le zoom n'est pas désactivé
-const mapOptions = {
-  zoom: 5.5,
-  center: [46.2276, 2.2137],
-  touchZoom: false,
-  dragging: false,
-  zoomControl: false
+    // Déterminer si left ou right
+    // Si right, position.x + 20
+    // Si left = position.x - _div.width - 20
+    if (this._labelPosition === 'right') {
+      this._div.style.left = (position.x + 20) + 'px';
+    } else {
+      this._div.style.left = (position.x - this._div.offsetWidth - 20) + 'px';
+    }
+    // this._div.style.left = (position.x + 20) + 'px';
+    this._div.style.top = this._text === 'Lourdes' || this._text === 'Barcelonnette' ? (position.y - 15) + 'px' : (position.y - 5) + 'px';
+    this._div.style.width = 'max-content';
+    this._div.style.zIndex = 1000;
+    map.getPanes().overlayPane.appendChild(this._div);
 
-};
-
-const primary = "#72BC7A";
-const secondary = "#2A5FA4";
-
-const geojsonOptions = {
-  style: () => ({
-    fillColor: primary,     // Only inside France
-    weight: 1,
-    opacity: 1,
-    color: secondary,      // Color of the border line
-    fillOpacity: 1,         // Solid fill
-  }),
-  interactive: false  // This prevents the layer from being interactive
-};
+    // Use requestAnimationFrame to wait for the next repaint
+    window.requestAnimationFrame(() => {
+      // Now the element is in the DOM and we can measure it
+      const width = this._div.offsetWidth;
+      if (this._labelPosition === 'right') {
+        this._div.style.left = (position.x + 20) + 'px';
+      } else {
+        this._div.style.left = (position.x - width - 20) + 'px';
+      }
+    });
+  },
+  // TODO : Comme la map ne doit pas être zoomé ou autre modification, pas besoin d'update
+  // onRemove: function (map) {
+  //   L.DomUtil.remove(this._div);
+  // }
+});
 
 onMounted(() => {
   const map = L.map(mapContainer.value, mapOptions);
-
-  mapContainer.value.style.cursor = 'default'; 
+  mapContainer.value.style.cursor = 'default';
 
   geoFranceBorder = L.geoJSON(franceBorderMetropole, geojsonOptions).addTo(map);
+  locations.forEach(location => {
+    // Add city markers
+    const marker = L.marker(location.latLng, { icon: customIcon }).addTo(map);
 
-  // TODO: Create a route that isn't linear but with curves
-  const routeParisToBlois = generateIntermediatePoints([48.8566, 2.3522], [47.5939, 1.3281], 10);
-  polyline.value = L.polyline(routeParisToBlois, {
-    color: 'white',
-    dashArray: '20, 20',
-    dashOffset: '0',
-    weight: 5
-  }).addTo(map);
+    // Add text overlay next to the marker
+    const textOverlay = new CustomOverlay({
+      latlng: L.latLng(location.latLng[0], location.latLng[1]),
+      text: location.name,
+      labelPosition: location.labelPosition
+    }).addTo(map);
 
-  // Add markers
+    // Add popups to the markers
+    marker.bindPopup(location.popup, {
+      offset: L.point(-2, 35) // Adjust as necessary
+    });
 
-  // En dynamique
-  // var cities = [
-  //   {name: "Paris", coord: [48.8566, 2.3522], details: "Details about Paris step..."},
-  //   {name: "Lyon", coord: [45.7640, 4.8357], details: "Details about Lyon step..."},
-  //   // Add other cities similarly
-  // ];
+    // Add event listeners to the markers
+    marker.on('mouseover', () => {
+      polylineAnimation(line);
+      changeBackgroundImage(location.name, location.imageUrl);
+    });
 
-  // cities.forEach(function(city) {
-  //     var marker = L.marker(city.coord).addTo(map)
-  //         .bindPopup(`<b>${city.name}</b><br>${city.details}`);
-  // });
+    marker.on('mouseout', () => {
+      stopAnimation();
+      resetAnimation(line);
+      resetBackgroundImage();
+    });
 
-  
-  const parisMarker = L.marker([48.8566, 2.3522], { icon: customIcon }).addTo(map);
-  parisMarker.bindPopup('Paris, 1ère étape, Paris à Blois 250km', {
-    offset: L.point(-2, 35) // Moves the popup 20 pixels down from the marker
-  });
-  markers.value.push(parisMarker);
+    // Store marker in the Vue reactive data if needed
+    markers.value.push({ marker });
 
-  parisMarker.on('mouseover', () => {
-    polylineAnimation(polyline.value);
-    changeBackgroundImage('paris');
-  });
+    // Add lines between the markers
+    const line = L.polyline(location.route, {
+      color: secondary,
+      dashArray: '5, 10',
+      dashOffset: '0',
+      weight: 5
+    }).addTo(map);
 
-  parisMarker.on('mouseout', () => {
-    stopAnimation();
-    resetAnimation();
-    resetBackgroundImage();
-  });
+    // Store the line in the Vue reactive data if needed
+    polyline.value.push(line);
 
-
-  const bloisMarker = L.marker([47.5939, 1.3281], { icon: customIcon }).addTo(map);
-  var point = L.point(200, 300);
-  bloisMarker.bindPopup('Blois, a beautiful city with rich history in the Loire Valley.', {
-    offset: L.point(-2, 35) // Moves the popup 20 pixels down from the marker
+    
   });
 
-  const CustomOverlay = L.Layer.extend({
-    onAdd: function (map) {
-      console.log(map);
-      const latlng = new L.LatLng(47.5939, 1.3281);
-      console.log("latlng", latlng);
-      this._div = L.DomUtil.create('div', 'my-custom-overlay'); // Create a div element with a class for styling
-      this._div.innerText =  "Blois"
-      // Position it at the marker's location
-      const position = map.latLngToLayerPoint(latlng);
-      this._div.style.position = 'absolute';
-      this._div.style.left = (position.x + 20) + 'px';
-      this._div.style.top = position.y + 'px';
-      this._div.style.zIndex = 1000;
-      map.getPanes().overlayPane.appendChild(this._div);
-    },
-    onRemove: function (map) {
-      L.DomUtil.remove(this._div);
-    },
-    updatePosition: function() {
-      const position = this._map.latLngToLayerPoint(latlng);
-      this._div.style.left = position.x + 'px';
-      this._div.style.top = position.y + 'px';
-    }
-  });
-
-  // Add custom overlay next to the marker
-  const textOverlay = new CustomOverlay({
-    latlng: new L.LatLng(47.5939, 1.3281),
-    text: 'Blois'
-  }).addTo(map);
-
-  markers.value.push(bloisMarker);
-
-
+  const svgPath = geoJSONToSVGPath(franceBorderMetropole, map)
+  const svgElement = createSVGFromPath(map, svgPath, "/paris.jpeg");
+  document.body.appendChild(svgElement);
 
   // TODO: Il faut que je crée le SVGElement au mounted, par contre à ce moment il me suffit de changer l'image
   // Créer un SVGElement sans image, au hover rajouter la bonne image
-  function changeBackgroundImage(city) {
-    geoFranceBorder.setStyle({
-      fillColor: 'transparent',
+  function changeBackgroundImage(city, cityImage) {
+    const backgroundImage = document.getElementById('backgroundImage');
+
+    // Créez une nouvelle promesse qui se résout lorsque l'image est chargée
+    const imageLoaded = new Promise((resolve) => {
+      backgroundImage.onload = resolve;
     });
 
-    if (city === 'paris') {
-      console.log("Paris");
-      
-      const svgPath = geoJSONToSVGPath(franceBorderMetropole, map)
+    // Changez l'URL de l'image
+    backgroundImage.setAttributeNS("http://www.w3.org/1999/xlink", 'href', cityImage);
 
-      const svgElement = createSVGFromPath(map, svgPath, '/paris.jpeg');
-      document.body.appendChild(svgElement);
-    }
-    // Add cases for other cities similarly
+    // Attendez que l'image soit chargée avant de modifier le style
+    imageLoaded.then(() => {
+      geoFranceBorder.setStyle({
+        fillColor: 'transparent',
+      });
+    });
   }
 
   function resetBackgroundImage() {
@@ -159,85 +152,15 @@ onMounted(() => {
       fillColor: primary,
     });
   }
+
+
+
+  // Add custom overlay next to the marker
+  // const textOverlay = new CustomOverlay({
+  //   latlng: new L.LatLng(47.5939, 1.3281),
+  //   text: 'Blois'
+  // }).addTo(map);
 });
-
-function geoJSONToSVGPath(geoJson, map) {
-  let pathString = '';
-  const layer = L.geoJSON(geoJson);
-  layer.eachLayer(function(layer) {
-      const svgPath = new L.SVG();
-      svgPath._container = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      const feature = layer.feature;
-
-      if (feature.geometry.type === 'Polygon') {
-          const latlngs = layer.getLatLngs();
-          // Single Polygon
-          pathString += convertCoordinatesToPath(latlngs[0], map);
-      } else if (feature.geometry.type === 'MultiPolygon') {
-          // MultiPolygon handling
-          const multiLatlngs = layer.getLatLngs();
-          multiLatlngs.forEach((polygon) => {
-              pathString += convertCoordinatesToPath(polygon[0], map);  // Assuming the first array is the outer boundary
-              // If there are holes, they are subsequent arrays
-              for (let i = 1; i < polygon.length; i++) {
-                  pathString += convertCoordinatesToPath(polygon[i], map);
-              }
-          });
-      }
-  });
-  return pathString;
-}
-
-function convertCoordinatesToPath(coordinates, map) {
-    let path = '';
-    coordinates.forEach((point, index) => {
-        const pt = map.latLngToLayerPoint(point);
-        const command = index === 0 ? 'M' : 'L';
-        path += `${command}${pt.x},${pt.y} `;
-    });
-    return path + 'Z'; // Close the path
-}
-
-function createSVGFromPath(map, pathData, imageUrl) {
-  const svgNS = "http://www.w3.org/2000/svg";
-  const mapSize = map.getSize();  // Get current map dimensions
-  const bounds = map.getBounds(); // Get geographic bounds visible in the map
-  let topLeft = map.latLngToLayerPoint(bounds.getNorthWest());
-  let bottomRight = map.latLngToLayerPoint(bounds.getSouthEast());
-
-  let svg = document.createElementNS(svgNS, "svg");
-  svg.setAttribute("width", mapSize.x + "px");
-  svg.setAttribute("height", mapSize.y + "px");
-  svg.setAttribute("viewBox", `0 0 ${mapSize.x} ${mapSize.y}`);
-  svg.style.position = "absolute";
-  svg.style.left = "0px";  // Align to the map container
-  svg.style.top = "0px";
-
-  const defs = document.createElementNS(svgNS, "defs");
-  const pattern = document.createElementNS(svgNS, "pattern");
-  pattern.setAttribute("id", "img-pattern");
-  pattern.setAttribute("patternUnits", "userSpaceOnUse");
-  pattern.setAttribute("width", Math.abs(bottomRight.x - topLeft.x) + "px");
-  pattern.setAttribute("height", Math.abs(bottomRight.y - topLeft.y) + "px");
-
-  const image = document.createElementNS(svgNS, "image");
-  image.setAttributeNS("http://www.w3.org/1999/xlink", "href", imageUrl);
-  image.setAttribute("width", Math.abs(bottomRight.x - topLeft.x) + "px");
-  image.setAttribute("height", Math.abs(bottomRight.y - topLeft.y) + "px");
-
-  pattern.appendChild(image);
-  defs.appendChild(pattern);
-  svg.appendChild(defs);
-
-  let path = document.createElementNS(svgNS, "path");
-  path.setAttribute("d", pathData);
-  path.setAttribute("fill", "url(#img-pattern)");
-  path.setAttribute("stroke", "transparent");
-  path.setAttribute("stroke-width", "2");
-  svg.appendChild(path);
-
-  return svg;
-}
 
 function polylineAnimation(polyline) {
   let offset = 0;
@@ -245,7 +168,7 @@ function polylineAnimation(polyline) {
     offset -= 1;
     polyline.setStyle({
       dashOffset: offset,
-      color: primary
+      color: 'white'
     });
     animateId = requestAnimationFrame(animate);
   }
@@ -264,8 +187,8 @@ function stopAnimation() {
   }
 }
 
-function resetAnimation() {
-    polyline.value.setStyle({ color: 'white' });
+function resetAnimation(line) {
+    line.setStyle({ color: secondary });
 }
 
 const customIcon = new L.icon({
@@ -275,16 +198,7 @@ const customIcon = new L.icon({
   popupAnchor: [1, -34] // Point from which the popup should open relative to the iconAnchor
 });
 
-function generateIntermediatePoints(start, end, numPoints) {
-  let points = [start];
-  for (let i = 1; i <= numPoints; i++) {
-    let lat = start[0] + (end[0] - start[0]) * i / (numPoints + 1);
-    let lng = start[1] + (end[1] - start[1]) * i / (numPoints + 1);
-    points.push([lat, lng]);
-  }
-  points.push(end);
-  return points;
-}
+
 
 onBeforeUnmount(() => {
   stopAnimation(); // Ensure the animation is stopped when the component unmounts
