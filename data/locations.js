@@ -137,7 +137,7 @@ export const locations = [
 
 // TODO: Le zoom n'est pas désactivé
 export const mapOptions = {
-  zoom: 5.5,
+  zoom: 5.5, // Default zoom for dektop devices
   center: [46.2276, 2.2137],
   touchZoom: false,
   dragging: false,
@@ -215,6 +215,7 @@ export function createSVGFromPath(map, pathData, imageUrl) {
     let bottomRight = map.latLngToLayerPoint(bounds.getSouthEast());
 
     let svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("id", "svg-overlay");
     svg.setAttribute("width", mapSize.x + "px");
     svg.setAttribute("height", mapSize.y + "px");
     svg.setAttribute("viewBox", `0 0 ${mapSize.x} ${mapSize.y}`);
