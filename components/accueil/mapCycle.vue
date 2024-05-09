@@ -1,12 +1,9 @@
 <template>
-  <div ref="mapContainer" id="mapContainer" class="map-container"></div>
+  <div ref="mapContainer" id="mapContainer" class="h-[800px] w-full"></div>
 </template>
 
 <style scoped>
-.map-container {
-  height: 100vh;
-  width: 100;
-}
+
 </style>
 
 <script setup>
@@ -115,17 +112,22 @@ onMounted(() => {
     }).addTo(map);
 
     // Add popups to the markers
-    marker.bindPopup(location.popup, {
-      offset: L.point(-2, 35), // Adjust as necessary
-    });
+    // marker.bindPopup(location.popup, {
+    //   offset: L.point(-2, 35), // Adjust as necessary
+    // });
 
-    marker.closePopupOnClick = false;
+    // marker.closePopupOnClick = true;
+
+    const emit = getCurrentInstance().emit;
 
     // Add event listeners to the markers
     marker.on("mouseover", () => {
       focusMarkers(index);
       polylineAnimation(line);
       changeBackgroundImage(location.name, location.imageUrl);
+
+      // Emit a custom event with the location object
+      emit('location-hovered', location?.etape, location?.etapeVille, location?.etapeDate, location?.etapeDistance);
     });
 
     marker.on("mouseout", () => {
