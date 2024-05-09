@@ -1,6 +1,10 @@
 export const locations = [
   {
     name: "paris",
+    etape: 1,
+    etapeVille: "Paris > Blois",
+    etapeDate: "DIM. 07/07",
+    etapeDistance: "250km",
     labelPosition: 'right',
     latLng: [48.8566, 2.3522],
     popup: "Paris, 1ère étape, Paris à Blois 250km",
@@ -9,6 +13,10 @@ export const locations = [
   },
   {
     name: "blois",
+    etape: 2,
+    etapeVille: "Blois > Poitiers",
+    etapeDate: "",
+    etapeDistance: "250km",
     labelPosition: 'left',
     latLng: [47.593899, 1.328100],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
@@ -17,6 +25,10 @@ export const locations = [
   },
   {
     name: "poitiers",
+    etape: 3,
+    etapeVille: "Poitiers > Royan",
+    etapeDate: "",
+    etapeDistance: "250km",
     labelPosition: 'left',
     latLng: [46.580002, 0.340000],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
@@ -25,6 +37,10 @@ export const locations = [
   },
   {
     name: "royan",
+    etape: 4,
+    etapeVille: "Royan > Mont-de-Marsan",
+    etapeDate: "",
+    etapeDistance: "250km",
     labelPosition: 'left',
     latLng: [45.625580, -1.026930],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
@@ -33,6 +49,10 @@ export const locations = [
   },
   {
     name: "mont-de-Marsan",
+    etape: 5,
+    etapeVille: "Mont-de-Marsan > Lourdes",
+    etapeDate: "",
+    etapeDistance: "250km",
     labelPosition: 'left',
     latLng: [43.890970, -0.497870],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
@@ -41,6 +61,10 @@ export const locations = [
   },
   {
     name: "lourdes",
+    etape: 6,
+    etapeVille: "Loures > Loudenvielle",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [43.097710, -0.045710],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([43.097710, -0.045710], [42.795689, 0.412230], 10), // Just an example
@@ -48,6 +72,10 @@ export const locations = [
   },
   {
     name: "loudenvielle",
+    etape: 7,
+    etapeVille: "Loudenvielle > Plateau-de-Beille",
+    etapeDate: "",
+    etapeDistance: "250km",
     labelPosition: 'left',
     latLng: [42.795689, 0.412230],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
@@ -56,6 +84,10 @@ export const locations = [
   },
   {
     name: "plateau-de-Beille",
+    etape: 8,
+    etapeVille: "Plateau-de-Beille > Béziers",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [42.7218637792, 1.6878555819],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([42.7218637792, 1.6878555819], [43.344233, 3.215795], 10), // Just an example
@@ -63,6 +95,10 @@ export const locations = [
   },
   {
     name: "béziers",
+    etape: 9,
+    etapeVille: "Béziers > Avignon",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [43.344233, 3.215795],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([43.344233, 3.215795], [43.949317, 4.805528], 10), // Just an example
@@ -70,6 +106,10 @@ export const locations = [
   },
   {
     name: "avignon",
+    etape: 10,
+    etapeVille: "Avignon > Sisteron",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [43.949317, 4.805528],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([43.949317, 4.805528], [44.198475, 5.939613], 10), // Just an example
@@ -77,6 +117,10 @@ export const locations = [
   },
   {
     name: "sisteron",
+    etape: 11,
+    etapeVille: "Sisteron > Barcelonnette",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [44.198475, 5.939613],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([44.198475, 5.939613], [44.386300, 6.650463], 10), // Just an example
@@ -84,6 +128,10 @@ export const locations = [
   },
   {
     name: "barcelonnette",
+    etape: 12,
+    etapeVille: "Barcelonnette > St-Jean-de-Maurienne",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [44.386300, 6.650463],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([44.386300, 6.650463], [45.275403, 6.344886], 10), // Just an example
@@ -91,6 +139,10 @@ export const locations = [
   },
   {
     name: "st-Jean-de-Maurienne",
+    etape: 13,
+    etapeVille: "St-Jean-de-Maurienne > Annecy",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [45.275403, 6.344886],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([45.275403, 6.344886], [45.899247, 6.129384], 10), // Just an example
@@ -98,6 +150,10 @@ export const locations = [
   },
   {
     name: "annecy",
+    etape: 14,
+    etapeVille: "Annecy > Lons-le-Saunier",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [45.899247, 6.129384],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([45.899247, 6.129384], [46.671361, 5.550796], 10), // Just an example
@@ -105,6 +161,10 @@ export const locations = [
   },
   {
     name: "lons-le-Saunier",
+    etape: 15,
+    etapeVille: "Lons-le-Saunier > Chaumont",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [46.671361, 5.550796],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([46.671361, 5.550796], [48.113748, 5.1392559], 10), // Just an example
@@ -112,6 +172,10 @@ export const locations = [
   },
   {
     name: "chaumont",
+    etape: 16,
+    etapeVille: "Chauumont > Reims",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [48.113748, 5.1392559],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([48.113748, 5.1392559], [49.258329, 4.031696], 10), // Just an example
@@ -119,6 +183,10 @@ export const locations = [
   },
   {
     name: "reims",
+    etape: 17,
+    etapeVille: "Reims > Verneuil-en-Halatte",
+    etapeDate: "",
+    etapeDistance: "250km",
     latLng: [49.258329, 4.031696],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
     route: generateIntermediatePoints([49.258329, 4.031696], [49.283329, 2.51667], 10), // Just an example
@@ -126,6 +194,10 @@ export const locations = [
   },
   {
     name: "verneuil-en-Halatte",
+    etape: 18,
+    etapeVille: "Verneuil-en-Halatte > Paris",
+    etapeDate: "",
+    etapeDistance: "250km",
     labelPosition: 'left',
     latLng: [49.283329, 2.51667],
     popup: "Blois, a beautiful city with rich history in the Loire Valley.",
