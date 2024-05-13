@@ -42,10 +42,10 @@
           </div>
           <div
             ref="addToRefs"
-            class="w-fit mx-auto md:mt-0 -mt-20 z-10 my-auto md:w-1/2 lg:w-1/3 p-4 hover:-translate-y-2 transition-transform duration-300 ease-in-out"
+            class="w-auto mx-auto z-10 -mt-20 md:my-auto md:w-1/2 lg:w-1/3 p-0 md:p-4 hover:-translate-y-2 transition-transform duration-300 ease-in-out"
           >
             <div
-              class="w-max px-8 py-6 rounded-3xl border border-gray-100 flex flex-col gap-8 card-shadow h-auto"
+              class="w-max px-4 md:px-8 py-3 md:py-6 rounded-3xl border border-gray-100 flex flex-col gap-8 card-shadow h-auto"
             >
               <div class="w-full flex flex-col justify-start gap-4">
                 <div class="bg-primary px-4 py-1 rounded w-fit">
@@ -56,7 +56,7 @@
                   <span>{{ etapeVilleRef }}</span>
                 </div>
                 <!-- TODO : Choper des icons pour la longueur, plat, montagne ... -->
-                <div class="flex flex-row">
+                <div class="flex flex-row -mb-4">
                   <!-- Longueur -->
                   <!-- <div class="flex flex-row" > -->
                   <!-- <div>
