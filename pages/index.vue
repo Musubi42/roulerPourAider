@@ -42,7 +42,7 @@
           </div>
           <div
             ref="addToRefs"
-            class="w-auto mx-auto z-10 -mt-20 md:my-auto md:w-1/2 lg:w-1/3 p-0 md:p-4 hover:-translate-y-2 transition-transform duration-300 ease-in-out"
+            class="w-auto mx-auto z-10 -mt-20 md:my-auto md:-ml-[100px] md:w-1/2 lg:w-1/3 p-0 md:p-4 hover:-translate-y-2 transition-transform duration-300 ease-in-out"
           >
             <div
               class="w-max px-4 md:px-8 py-3 md:py-6 rounded-3xl border border-gray-100 flex flex-col gap-8 card-shadow h-auto"

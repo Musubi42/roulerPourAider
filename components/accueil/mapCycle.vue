@@ -47,7 +47,9 @@ const CustomOverlay = L.Layer.extend({
     // Position it at the marker's location
     const position = map.latLngToLayerPoint(latlng);
     this._div.style.position = "absolute";
-    this._div.style.color = secondary;
+    this._div.style.color = secondaryLight;
+    // TODO: retirer le text-shadow sur les villes en dehors de la carte
+    this._div.style.textShadow = "1px 1px 2px rgba(0, 0, 0, 0.5)";
     if (isMobile.value) {
       this._div.style.fontSize = this._text === "Paris" ? "1rem" : "0.7rem";
       this._div.style.fontWeight = this._text === "Paris" ? 700 : 600;
@@ -309,15 +311,16 @@ onMounted(() => {
 
 function polylineAnimation(polyline) {
   let offset = 0;
+  
   function animate() {
     offset -= 1;
     polyline.setStyle({
       dashOffset: offset,
       color: primaryLight,
     });
-    animateId = requestAnimationFrame(animate);
   }
-  animate();
+  
+  animateId = setInterval(animate, isMobile.value ? 45 : 30);
 }
 
 function startAnimation() {
@@ -327,8 +330,9 @@ function startAnimation() {
 }
 
 function stopAnimation() {
-  if (animateId) {
-    cancelAnimationFrame(animateId);
+  if (animateId !== null) {
+    clearInterval(animateId);
+    animateId = null;
   }
 }
 
