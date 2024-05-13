@@ -24,8 +24,8 @@
               <div v-if="event?.isPast" class="p-2 rounded-md text-sm bg-primary text-white z-10 min-w-[121px]" >
                 événement passé
               </div>
-              <div v-if="!event?.isPast" class="p-2 rounded-md text-sm bg-primary text-white z-10 min-w-[121px]" >
-                {{ event.debut | formatDate("DD MMMM YYYY") }}
+              <div v-if="!event?.isPast" class="p-2 rounded-md text-sm bg-primary text-white z-10 ml-5 min-w-fit" >
+                {{ formatDate(event.debutOriginal) }}
               </div>
             </div>
             <div class="text-gray-500 text-ellipsis line-clamp-3 whitespace-break-spaces overflow-hidden min-h-[70px]">
@@ -69,10 +69,19 @@ const eventMounth = ["Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septem
 const selectedMounth = ref([true, false, false, false, false, false, false]);
 const mounth = ref("Mars");
 
-const formatDate = (date) => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date(date).toLocaleDateString("fr-FR", options);
-};
+// TODO : A mettre dans utils
+// utils/formatDate.js
+const formatDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+
+  const daysOfWeek = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
+  const dayOfWeek = daysOfWeek[date.getUTCDay()];
+
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+
+  return `${dayOfWeek} ${day}/${month}`;
+}
 
 const chooseMounth = (index: number) => {
   selectedMounth.value = Array(eventMounth.length).fill(false);
@@ -143,6 +152,7 @@ const transformEvenementsObject = (partenaireData) => {
       description,
       localisation,
       debut: new Date(debut).toISOString().replace(/-|:|\.\d\d\d/g,""),
+      debutOriginal: debut,
       fin: new Date(fin).toISOString().replace(/-|:|\.\d\d\d/g,""),
       isPast: new Date(debut) < new Date(),
     };
