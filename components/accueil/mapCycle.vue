@@ -128,7 +128,7 @@ onMounted(() => {
     const textOverlay = new CustomOverlay({
       latlng: L.latLng(location.latLng[0], location.latLng[1]),
       text: location.name,
-      labelPosition: location.labelPosition,
+      labelPosition: isMobile.value && (location.name === "barcelonnette" || location.name === "st-Jean-de-Maurienne") ? "left" : location.labelPosition,
     }).addTo(map);
 
     // Add popups to the markers
