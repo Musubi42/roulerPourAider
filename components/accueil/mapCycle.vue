@@ -1,5 +1,6 @@
 <template>
-  <div ref="mapContainer" id="mapContainer" class="top-28 h-[750px] w-[885px]"></div>
+  <div ref="mapContainer" id="mapContainer" class="h-[500px] md:h-[750px] w-auto md:w-[885px]">
+  </div>
 </template>
 
 <style scoped>

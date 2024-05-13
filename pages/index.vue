@@ -24,7 +24,7 @@
 
       <div class="flex flex-col md:flex-row w-full mt-6 md:mt-6">
         <!-- TODO : Pour la partie mobile -->
-        <div v-if="isMobile">
+        <!-- <div v-if="isMobile">
           <div class="w-full md:w-1/2 h-auto flex flex-col justify-around items-center">
             <img class="object-contain" src="/1ere-edition/map.png" alt="" />
           </div>
@@ -32,11 +32,12 @@
           <div class="w-full md:w-1/2">
             <AccueilEtapes />
           </div>
-        </div>
+        </div> -->
 
         <!-- Pour la partie desktop -->
         <!-- <div > -->
-          <div v-else class="w-full h-3/4 -translate-x-[200px]">
+          <!-- <div v-else class="w-full h-3/4 -translate-x-[200px]"> -->
+          <div class="w-full h-3/4 md:-translate-x-[200px]">
             <AccueilMapCycle @location-hovered="handleLocationHovered" />
           </div>
           <div
@@ -85,7 +86,8 @@
         <!-- </div> -->
       </div>
     </section>
-    <section class="mt-24 snap-start">
+
+    <section class="mt-0 snap-start">
       <h2 class="font-semibold text-2xl md:text-3xl text-secondary title-underline">
         Nous récoltons des dons pour améliorer le bien-être des patients et de leur
         famille
