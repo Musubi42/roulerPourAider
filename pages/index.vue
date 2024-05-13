@@ -18,7 +18,7 @@
     </section>
 
     <section class="mt-24">
-      <h2 class="font-semibold text-3xl text-secondary title-underline">
+      <h2 class="relative z-10 font-semibold text-3xl text-secondary title-underline">
         Un tour de France pour les enfants hospitalisés
       </h2>
 
@@ -42,7 +42,7 @@
           </div>
           <div
             ref="addToRefs"
-            class="w-full my-auto md:w-1/2 lg:w-1/3 p-4 hover:-translate-y-2 transition-transform duration-300 ease-in-out"
+            class="w-fit mx-auto md:mt-0 -mt-20 z-10 my-auto md:w-1/2 lg:w-1/3 p-4 hover:-translate-y-2 transition-transform duration-300 ease-in-out"
           >
             <div
               class="w-max px-8 py-6 rounded-3xl border border-gray-100 flex flex-col gap-8 card-shadow h-auto"
@@ -51,7 +51,7 @@
                 <div class="bg-primary px-4 py-1 rounded w-fit">
                   {{ etapeDateRef }}
                 </div>
-                <div class="flex flex-col font-semibold text-xl">
+                <div class="flex flex-col font-semibold text-base md:text-xl">
                   <span>ÉTAPE {{ etapeNumeroRef }}</span>
                   <span>{{ etapeVilleRef }}</span>
                 </div>
@@ -87,7 +87,7 @@
       </div>
     </section>
 
-    <section class="mt-0 snap-start">
+    <section class="mt-16 md:mt-0 snap-start">
       <h2 class="font-semibold text-2xl md:text-3xl text-secondary title-underline">
         Nous récoltons des dons pour améliorer le bien-être des patients et de leur
         famille
@@ -155,7 +155,6 @@ const etapeNumeroRef = ref(null);
 const etapeVilleRef = ref(null);
 
 const handleLocationHovered = (etapeNumero, etapeVille, etapeDate, etapeDistance) => {
-  console.log(etapeDate, etapeDistance, etapeNumero, etapeVille);
   etapeDateRef.value = etapeDate;
   etapeDistanceRef.value = etapeDistance;
   etapeNumeroRef.value = etapeNumero;

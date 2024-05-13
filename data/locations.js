@@ -293,7 +293,6 @@ export function createSVGFromPath(map, pathData) {
     let topLeft = map.latLngToLayerPoint(bounds.getNorthWest());
     let bottomRight = map.latLngToLayerPoint(bounds.getSouthEast());
 
-    console.log("mapSize", mapSize);
     let svg = document.createElementNS(svgNS, "svg");
     svg.setAttribute("id", "svg-overlay");
     svg.setAttribute("width", mapSize.x + "px");
@@ -334,8 +333,6 @@ export function createSVGFromPath(map, pathData) {
     const image = document.createElementNS(svgNS, "image");
     image.setAttribute("id", "backgroundImage");
     image.setAttributeNS("http://www.w3.org/1999/xlink", "href", '/paris.jpeg');
-    console.log(Math.abs(bottomRight.x - topLeft.x));
-    console.log(Math.abs(bottomRight.y - topLeft.y));
     image.setAttribute("width", Math.abs(bottomRight.x - topLeft.x) + "px");
     image.setAttribute("height", Math.abs(bottomRight.y - topLeft.y) + "px");
 

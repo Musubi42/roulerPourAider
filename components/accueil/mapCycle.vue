@@ -1,5 +1,5 @@
 <template>
-  <div ref="mapContainer" id="mapContainer" class="h-[500px] md:h-[750px] w-auto md:w-[885px]">
+  <div ref="mapContainer" id="mapContainer" class="-mt-[60px] md:mt-0 h-[500px] md:h-[750px] w-auto md:w-[885px]">
   </div>
 </template>
 
@@ -23,6 +23,7 @@ import {
   createSVGFromPath,
 } from "/data/locations.js";
 
+var isMobile = ref(null);
 const mapContainer = ref(null);
 let map = ref(null);
 let geoFranceBorder = ref(null);
@@ -47,15 +48,20 @@ const CustomOverlay = L.Layer.extend({
     const position = map.latLngToLayerPoint(latlng);
     this._div.style.position = "absolute";
     this._div.style.color = secondary;
-    this._div.style.fontSize = this._text === "Paris" ? "1.5rem" : "1.1rem";
-    this._div.style.fontWeight = this._text === "Paris" ? 800 : 700;
+    if (isMobile.value) {
+      this._div.style.fontSize = this._text === "Paris" ? "1rem" : "0.7rem";
+      this._div.style.fontWeight = this._text === "Paris" ? 700 : 600;
+    } else {
+      this._div.style.fontSize = this._text === "Paris" ? "1.5rem" : "1.1rem";
+      this._div.style.fontWeight = this._text === "Paris" ? 800 : 700;
+    }
     // this._div.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.5)';
 
     // Déterminer si left ou right
     // Si right, position.x + 20
     // Si left = position.x - _div.width - 20
     if (this._labelPosition === "right") {
-      this._div.style.left = position.x + 20 + "px";
+      this._div.style.left = position.x - 20 + "px";
     } else {
       this._div.style.left = position.x - this._div.offsetWidth - 20 + "px";
     }
@@ -73,9 +79,11 @@ const CustomOverlay = L.Layer.extend({
       // Now the element is in the DOM and we can measure it
       const width = this._div.offsetWidth;
       if (this._labelPosition === "right") {
-        this._div.style.left = position.x + 20 + "px";
+        const offsetRight = isMobile.value ? 7 : 20;
+        this._div.style.left = position.x + offsetRight + "px";
       } else {
-        this._div.style.left = position.x - width - 20 + "px";
+        const offsetLeft = isMobile.value ? 10 : 20;
+        this._div.style.left = position.x - width - offsetLeft + "px";
       }
     });
   },
@@ -92,11 +100,20 @@ const CustomOverlay = L.Layer.extend({
 });
 
 onMounted(() => {
+  isMobile.value = window.innerWidth <= 768;
+
   // depending on the device size change the zoom before the creation of the map
-  if (window.innerWidth < 600) {
-    mapOptions.zoom = 5.2;
-    // textOverlay._updateFontSize("0.7rem")
+  if (isMobile.value) {
+    mapOptions.zoom = 5.3;
   }
+
+  const customIcon = new L.icon({
+  iconUrl: "/steps/blue-circle.svg", // Adjust the path as necessary
+  iconSize: isMobile.value ? [10, 20] : [25, 41], // Size of the icon
+  iconAnchor: isMobile.value ? [5, 10] : [14, 20], // Point of the icon which will correspond to marker's location
+  popupAnchor: [1, -34], // Point from which the popup should open relative to the iconAnchor
+});
+
   map = L.map(mapContainer.value, mapOptions);
   map.trackResize = false;
   map.closePopupOnClick = false;
@@ -146,8 +163,8 @@ onMounted(() => {
         current.marker.setIcon(
           new L.icon({
             iconUrl: "/steps/primaryLight-circle.svg", // Adjust the path as necessary
-            iconSize: [25, 41], // Size of the icon
-            iconAnchor: [14, 20], // Point of the icon which will correspond to marker's location
+            iconSize: isMobile.value ? [10, 20] : [25, 41], // Size of the icon
+            iconAnchor: isMobile.value ? [5, 10] : [14, 20], // Point of the icon which will correspond to marker's location
             popupAnchor: [1, -34], // Point from which the popup should open relative to the iconAnchor
           })
         );
@@ -161,8 +178,8 @@ onMounted(() => {
         next.marker.setIcon(
           new L.icon({
             iconUrl: "/steps/primaryLight-circle.svg",
-            iconSize: [25, 41],
-            iconAnchor: [14, 20],
+            iconSize: isMobile.value ? [10, 20] : [25, 41],
+            iconAnchor: isMobile.value ? [5, 10] : [14, 20],
             popupAnchor: [1, -34],
           })
         );
@@ -175,8 +192,8 @@ onMounted(() => {
         firstMarker.marker.setIcon(
           new L.icon({
             iconUrl: "/steps/primary-circle.svg",
-            iconSize: [25, 41],
-            iconAnchor: [14, 20],
+            iconSize: isMobile.value ? [10, 20] : [25, 41],
+            iconAnchor: isMobile.value ? [5, 10] : [14, 20],
             popupAnchor: [1, -34],
           })
         );
@@ -213,9 +230,9 @@ onMounted(() => {
     // Add lines between the markers
     const line = L.polyline(location.route, {
       color: secondary,
-      dashArray: "5, 10",
+      dashArray: isMobile.value ? "2, 5" : "5, 10",
       dashOffset: "0",
-      weight: 5,
+      weight: isMobile.value ? 2 : 5,
     }).addTo(map);
 
     // Store the line in the Vue reactive data if needed
@@ -320,12 +337,13 @@ function resetAnimation(line) {
   line.setStyle({ color: secondary });
 }
 
-const customIcon = new L.icon({
-  iconUrl: "/steps/blue-circle.svg", // Adjust the path as necessary
-  iconSize: [25, 41], // Size of the icon
-  iconAnchor: [14, 20], // Point of the icon which will correspond to marker's location
-  popupAnchor: [1, -34], // Point from which the popup should open relative to the iconAnchor
-});
+console.log(isMobile);
+// const customIcon = new L.icon({
+//   iconUrl: "/steps/blue-circle.svg", // Adjust the path as necessary
+//   iconSize: isMobile.value ? [10, 20] : [25, 41], // Size of the icon
+//   iconAnchor: isMobile.value ? [5, 10] : [14, 20], // Point of the icon which will correspond to marker's location
+//   popupAnchor: [1, -34], // Point from which the popup should open relative to the iconAnchor
+// });
 
 onBeforeUnmount(() => {
   stopAnimation();
