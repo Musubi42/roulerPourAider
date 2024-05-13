@@ -1,5 +1,5 @@
 <template>
-  <div ref="mapContainer" id="mapContainer" class="h-[800px] w-full"></div>
+  <div ref="mapContainer" id="mapContainer" class="top-28 h-[750px] w-[885px]"></div>
 </template>
 
 <style scoped>
@@ -12,7 +12,10 @@ import franceBorderMetropole from "/assets/france-geojson-metropole.json";
 import {
   locations,
   primary,
+  primaryLight,
   secondary,
+  secondaryLight,
+  secondaryDark,
   mapOptions,
   geojsonOptions,
   geoJSONToSVGPath,
@@ -90,7 +93,6 @@ const CustomOverlay = L.Layer.extend({
 onMounted(() => {
   // depending on the device size change the zoom before the creation of the map
   if (window.innerWidth < 600) {
-    console.log("ici");
     mapOptions.zoom = 5.2;
     // textOverlay._updateFontSize("0.7rem")
   }
@@ -120,9 +122,9 @@ onMounted(() => {
 
     const emit = getCurrentInstance().emit;
 
-    // Add event listeners to the markers
+    let latest = locations.length === (index + 1) ? true : false;
     marker.on("mouseover", () => {
-      focusMarkers(index);
+      focusMarkers(index, latest);
       polylineAnimation(line);
       changeBackgroundImage(location.name, location.imageUrl);
 
@@ -131,30 +133,45 @@ onMounted(() => {
     });
 
     marker.on("mouseout", () => {
-      resetMarkers(index);
+      resetMarkers(index, latest);
       resetAnimation(line);
       resetBackgroundImage();
     });
 
-    function focusMarkers(currentIndex) {
+    function focusMarkers(currentIndex, latest) {
       // Update current marker
       const current = markers.value[currentIndex];
       if (current) {
         current.marker.setIcon(
           new L.icon({
-            iconUrl: "/steps/primary-circle.svg", // Adjust the path as necessary
+            iconUrl: "/steps/primaryLight-circle.svg", // Adjust the path as necessary
             iconSize: [25, 41], // Size of the icon
             iconAnchor: [14, 20], // Point of the icon which will correspond to marker's location
             popupAnchor: [1, -34], // Point from which the popup should open relative to the iconAnchor
           })
         );
-        current.textOverlay._updateColor(primary);
+        current.textOverlay._updateColor(primaryLight);
       }
 
+      // If latest marker goes to the first one of the list
       // Update next marker if it exists
       const next = markers.value[currentIndex + 1];
       if (next) {
         next.marker.setIcon(
+          new L.icon({
+            iconUrl: "/steps/primaryLight-circle.svg",
+            iconSize: [25, 41],
+            iconAnchor: [14, 20],
+            popupAnchor: [1, -34],
+          })
+        );
+        next.textOverlay._updateColor(primaryLight);
+      }
+
+      if (latest) {
+        const firstMarker = markers.value[0];
+
+        firstMarker.marker.setIcon(
           new L.icon({
             iconUrl: "/steps/primary-circle.svg",
             iconSize: [25, 41],
@@ -162,11 +179,11 @@ onMounted(() => {
             popupAnchor: [1, -34],
           })
         );
-        next.textOverlay._updateColor(primary);
+        firstMarker.textOverlay._updateColor(primaryLight);
       }
     }
 
-    function resetMarkers(currentIndex) {
+    function resetMarkers(currentIndex, latest) {
       // Reset current marker
       const current = markers.value[currentIndex];
       if (current) {
@@ -179,6 +196,13 @@ onMounted(() => {
       if (next) {
         next.marker.setIcon(customIcon);
         next.textOverlay._updateColor(secondary);
+      }
+
+      if (latest) {
+        const firstMarker = markers.value[0];
+
+        firstMarker.marker.setIcon(customIcon);
+        firstMarker.textOverlay._updateColor(secondary);
       }
     }
 
@@ -271,7 +295,7 @@ function polylineAnimation(polyline) {
     offset -= 1;
     polyline.setStyle({
       dashOffset: offset,
-      color: primary,
+      color: primaryLight,
     });
     animateId = requestAnimationFrame(animate);
   }
