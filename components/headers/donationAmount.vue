@@ -1,6 +1,6 @@
 <template>
 <!-- TODO : Quand j'update la donation, passer le texte de bleu à vert, vert étant la couleur du comptage -->
-  <div class="font-bold text-primary text-3xl w-[130px]" >
+  <div class="font-bold text-primary text-3xl w-[140px]" >
     <CountUp :end="websiteStore.current_amount" /> €
   </div>
 </template>
