@@ -37,5 +37,6 @@
     "nuxt-mail": "^4.0.3",
     "nuxt-swiper": "^1.2.2",
     "qs": "^6.12.0"
-  }
+  },
+  "packageManager": "pnpm@8.6.11+sha256.6713c6bb13a7cd01d0cc86032ed1318188d10f4d87fd9aad6f131c81cb008551"
 }
