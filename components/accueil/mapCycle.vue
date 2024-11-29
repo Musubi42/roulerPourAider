@@ -341,7 +341,6 @@ function resetAnimation(line) {
   line.setStyle({ color: secondary });
 }
 
-console.log(isMobile);
 // const customIcon = new L.icon({
 //   iconUrl: "/steps/blue-circle.svg", // Adjust the path as necessary
 //   iconSize: isMobile.value ? [10, 20] : [25, 41], // Size of the icon

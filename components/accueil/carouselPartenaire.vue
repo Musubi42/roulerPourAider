@@ -96,14 +96,11 @@ const partenairesImage = ref([]);
 
 const transformPartenaireObject = (partenaireData) => {
   return partenaireData.map((data) => {
-    const { image } = data.attributes;
-
-    let url = image.data.attributes.url;
-    let lastPart = url.split("/").pop();
+    const { image } = data;
 
     return {
-      partenairePhotoUrl: "/backoffice/" + lastPart,
-      partenairePhotoAlt: image.data.attributes.name,
+      partenairePhotoUrl: strapiBaseUrl + image.url,
+      partenairePhotoAlt: image.name,
     };
   });
 };

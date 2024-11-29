@@ -23,7 +23,7 @@
           <div v-if="article.tags" class="flex flex-row text-secondary">
             <span v-for="(tag, index) in article.tags" :key="index" class="bg-secondary py-1 px-2 text-white rounded-lg"
             >
-              #{{ tag }}
+              #{{ tag.tag }}
               <span v-if="index < article.tags.length - 1" class="mx-2">|</span>
             </span>
           </div>
@@ -40,7 +40,7 @@
                 <NuxtLink
                   :to="`${article.articleUrl}`"
                   class="rounded-md bg-primary/90 text-white hover:bg-primary py-1 px-2"
-                  target="_blank" >Lire sur {{ article.articleUrlOrigin }}
+                  target="_blank" >Lire sur {{ article.articleUrlOrigine }}
                   </NuxtLink >
               </button>
             </div>
@@ -67,7 +67,7 @@ interface Article {
   title: string;
   articleTvThumbnailUrl: string;
   articleUrl: string;
-  articleUrlOrigin: string;
+  articleUrlOrigine: string;
   datePublication: number;
 }
 
@@ -90,12 +90,12 @@ const formatDate = (date: string): string => {
   return `${day} ${monthNames[monthIndex]} ${year}`;
 };
 
-const transformArticleObject = (articleTvData) => {
+const transformArticleObject = (articleTvData: any) => {
   return articleTvData.map((data) => {
-    const { thumbnail, ...otherAttributes } = data.attributes;
+    const { miniature, title, articleUrl, source, tags, datePublication, articleUrlOrigine } = data;
     return {
-      ...otherAttributes,
-      articleThumbnailUrl: strapiBaseUrl + thumbnail.data.attributes.url,
+      title, articleUrl, source, tags, datePublication, articleUrlOrigine,
+      articleThumbnailUrl: strapiBaseUrl + miniature.url,
       id: data.id,
     };
   });

@@ -181,7 +181,6 @@ let emailError = ref("");
 const validateEmail = () => {
   const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
   if (!regex.test(email)) {
-    console.log(email);
     emailError = 'Email non valide';
   } else {
     emailError = '';
@@ -190,19 +189,18 @@ const validateEmail = () => {
 
 const transformContactObject = (contactData) => {
   return contactData.map((data) => {
-    const { image, prenom, nom, telephone, ...otherAttributes } = data.attributes;
+    const { image, prenom, nom, telephone, ...otherAttributes } = data;
     const telephoneString = telephone.toString();
     const telephoneTransformed = `+33 ${telephoneString.charAt(0)} ${telephoneString.slice(1).match(/.{1,2}/g).join(' ')}`;
 
-    let url = image.data.attributes.url;
-    let lastPart = url.split("/").pop();
+    let url = image.url;
 
     return {
       ...otherAttributes,
       prenom: capitalizePrenom(prenom),
       nom: nom.toUpperCase(),
       telephone: telephoneTransformed,
-      contactPhotoUrl: "/backoffice/" + lastPart,
+      contactPhotoUrl: strapiBaseUrl + url,
     };
   });
 };

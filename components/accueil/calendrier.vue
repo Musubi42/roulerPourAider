@@ -144,7 +144,7 @@ const transformEvenementsObject = (partenaireData) => {
   let eventsByMonth = {};
 
   partenaireData.forEach((data) => {
-    const { titre, description, localisation, debut, fin } = data.attributes;
+    const { titre, description, localisation, debut, fin } = data;
     let mois = monthNames[new Date(debut).getMonth()];
 
     let event = {
