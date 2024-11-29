@@ -328,11 +328,9 @@ onMounted(async () => {
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        console.log("entry");
         if (entry.isIntersecting) {
           isVisible.value = entry.isIntersecting;
           progressBar.value.classList.add("progress-moved");
-          console.log("donationTargetAmountPercentage");
           let percentage = (donations.value.current_amount / donations.value.target_amount) * 100;
           progressBar.value.style.width = `${percentage}%`;
           progressBar.value.style.backgroundColor = "rgba(114, 188, 122)";

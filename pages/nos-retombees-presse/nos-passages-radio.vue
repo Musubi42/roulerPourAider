@@ -12,6 +12,7 @@
           <p class="hidden md:block text-sm font-normal">{{ podcast.resume }}</p>
           <div class="flex flex-row mt-2 gap-x-2">
             <div>
+            {{ podcast.podcastMediaAudioUrl}}
               <button class="bg-black rounded-full w-8 h-8" @click="setCurrentPodcast(podcast)">
                 <!-- <span class="flex justify-center">
                   <IconsLecture class="w-4 h-4 ml-1 text-white" />
@@ -101,11 +102,12 @@ const formatTime = (time: number): string => {
 
 const transformPodcastObject = (podcastData) => {
   return podcastData.map((data) => {
-    const { podcast, thumbnail, ...otherAttributes } = data.attributes;
+    const { podcast, miniature, ...otherAttributes } = data;
+
     return {
       ...otherAttributes,
-      podcastMediaThumbnailUrl: strapiBaseUrl + thumbnail.data.attributes.url,
-      podcastMediaAudioUrl: strapiBaseUrl + podcast.data.attributes.url,
+      podcastMediaThumbnailUrl: strapiBaseUrl + miniature.url,
+      podcastMediaAudioUrl: strapiBaseUrl + podcast.url,
       id: data.id,
       isPlaying: false,
     };
@@ -113,7 +115,7 @@ const transformPodcastObject = (podcastData) => {
 };
 
 const getPodcastMetadata = async () => {
-  const url = `${strapiBaseUrl}/api/podcasts?populate=thumbnail&populate=podcast`;
+  const url = `${strapiBaseUrl}/api/podcasts?populate=miniature&populate=podcast`;
 
   const { data, pending, error } = await useAsyncData("podcasts", () => {
       return $fetch(url, {

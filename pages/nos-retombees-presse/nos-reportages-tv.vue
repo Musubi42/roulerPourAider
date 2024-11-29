@@ -21,10 +21,10 @@
 
         <div class="flex gap-4 flex-col p-4 h-1/2 bg-white rounded-b">
           <div v-if="reportage.tags" class="flex flex-row text-secondary">
-            <span v-for="(tag, index) in reportage.tags" :key="index" class="bg-secondary py-1 px-2 text-white rounded-lg"
+            <span v-for="(tag, index) in reportage.tags" :key="index" class="bg-secondary py-1 px-2 text-white rounded-lg mr-2"
             >
-              #{{ tag }}
-              <span v-if="index < reportage.tags.length - 1" class="mx-2">|</span>
+              #{{ tag.tag }}
+              <!-- <span v-if="index < reportage.tags.length - 1" class="mx-2">|</span> -->
             </span>
           </div>
           <div v-else class="text-white">
@@ -35,7 +35,7 @@
               {{ reportage.title }}
             </h3>
             <div class="flex justify-between">
-              <p class="font-light">{{ formatDate(reportage.dataPublication) }}</p>
+              <p class="font-light">{{ formatDate(reportage.datePublication) }}</p>
               <button type="">
                 <NuxtLink
                   :to="`${reportage.reportageUrl}`"
@@ -93,10 +93,12 @@ const formatDate = (date: string): string => {
 
 const transformReportageTvObject = (reportageTvData) => {
   return reportageTvData.map((data) => {
-    const { thumbnail, ...otherAttributes } = data.attributes;
+    const { miniature, titre, reportageUrlOrigine, ...otherAttributes } = data;
     return {
       ...otherAttributes,
-      reportageTvThumbnailUrl: strapiBaseUrl + thumbnail.data.attributes.url,
+      title: titre,
+      reportageUrlOrigin: reportageUrlOrigine,
+      reportageTvThumbnailUrl: strapiBaseUrl + miniature.url,
       id: data.id,
     };
   });

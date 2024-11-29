@@ -143,7 +143,6 @@ const addLike = async (gallerieId, nombreLike) => {
   });
 
   if (!error.value && !pending.value && data.value) {
-    console.log(data.value.data.attributes);
   } else {
     console.error(error.value);
   }

@@ -16,7 +16,7 @@
           <div class="flex flex-col gap-4 justify-start items-center align-middle w-full md:w-7/12">
             <!-- Title -->
             <div class="font-semibold text-3xl w-full text-left md:text-center">
-              {{ partenaire.title }}
+              {{ partenaire.titre }}
             </div>
             <div
             v-if="isMobile"
@@ -30,7 +30,7 @@
             <NuxtImg
               format="webp"
               quality="80"
-              :src="`${partenaire.partenairePhotoPath}`"
+              :src="`${partenaire.imageUrl}`"
               class="h-full md:h-72 object-contain"
               alt=""
             />
@@ -39,7 +39,7 @@
             <div class="w-full text-left">{{ partenaire.description }}</div>
             <!-- Réseaux sociaux -->
             <div
-              v-if="partenaire.siteWebUrl || partenaire.reseaux"
+              v-if="partenaire.siteWebUrl || partenaire.reseaux_sociaux"
               class="hidden md:absolute mt-7 md:mt-0 bottom-0 left-0 md:flex items-center w-full"
               :class="{
                 'flex-row': index % 2 === 1,
@@ -53,33 +53,33 @@
                 <IconsWeb />
               </NuxtLink>
               <NuxtLink
-                v-if="partenaire?.reseaux?.facebook"
+                v-if="partenaire?.reseaux_sociaux?.facebook"
                 class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                :to="`${partenaire?.facebook}`"
+                :to="`${partenaire?.reseaux_sociaux.facebook}`"
                 target="_blank"
               >
                 <IconsFacebook />
               </NuxtLink>
               <NuxtLink
-                v-if="partenaire?.reseaux?.twitter"
+                v-if="partenaire?.reseaux_sociaux?.twitter"
                 class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                :to="`${partenaire?.twitter}`"
+                :to="`${partenaire?.reseaux_sociaux?.twitter}`"
                 target="_blank"
               >
                 <IconsTwitter />
               </NuxtLink>
               <NuxtLink
-                v-if="partenaire?.reseaux?.linkedin"
+                v-if="partenaire?.reseaux_sociaux?.linkedin"
                 class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                :to="`${partenaire?.linkedin}`"
+                :to="`${partenaire?.reseaux_sociaux?.linkedin}`"
                 target="_blank"
               >
                 <IconsLinkedin />
               </NuxtLink>
               <NuxtLink
-                v-if="partenaire?.reseaux?.instagram"
+                v-if="partenaire?.reseaux_sociaux?.instagram"
                 class="inline-flex items-center justify-center w-12 h-12 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                :to="`${partenaire?.instagram}`"
+                :to="`${partenaire?.reseaux_sociaux?.instagram}`"
                 target="_blank"
               >
                 <IconsInstagram />
@@ -99,7 +99,7 @@
             <NuxtImg
               format="webp"
               quality="80"
-              :src="`${partenaire.partenairePhotoPath}`"
+              :src="`${partenaire.imageUrl}`"
               class="h-full md:h-72 object-contain"
               alt=""
             />
@@ -116,15 +116,15 @@
             <IconsWeb />
           </NuxtLink>
           <NuxtLink
-            v-if="partenaire?.reseaux?.facebook"
+            v-if="true"
             class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-            :to="`${partenaire?.facebook}`"
+            :to="`${partenaire?.reseaux_sociaux?.facebook}`"
             target="_blank"
           >
             <IconsFacebook />
           </NuxtLink>
           <NuxtLink
-            v-if="partenaire?.reseaux?.twitter"
+            v-if="partenaire?.reseaux_sociaux?.twitter"
             class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
             :to="`${partenaire?.twitter}`"
             target="_blank"
@@ -132,7 +132,7 @@
             <IconsTwitter />
           </NuxtLink>
           <NuxtLink
-            v-if="partenaire?.reseaux?.linkedin"
+            v-if="partenaire?.reseaux_sociaux?.linkedin"
             class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
             :to="`${partenaire?.linkedin}`"
             target="_blank"
@@ -140,7 +140,7 @@
             <IconsLinkedin />
           </NuxtLink>
           <NuxtLink
-            v-if="partenaire?.reseaux?.instagram"
+            v-if="partenaire?.reseaux_sociaux?.instagram"
             class="inline-flex items-center justify-center w-12 h-12 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
             :to="`${partenaire?.instagram}`"
             target="_blank"
@@ -170,16 +170,16 @@ useSeoMeta({
 })
 
 interface Partenaire {
-  title: string;
+  titre: string;
   description: string;
-  reseaux: {
+  reseaux_sociaux: {
     facebook: string;
     instagram: string;
     tiktok: string;
     twitter: string;
     linkedin: string;
   };
-  partenairePhotoPath: string;
+  imageUrl: string;
   siteWebUrl: string;
 }
 
@@ -192,20 +192,19 @@ const {
 
 const transformPartenaireObject = (partenaireData) => {
   return partenaireData.map((data) => {
-    const { image, ...otherAttributes } = data.attributes;
-    let url = image.data.attributes.url;
-    let lastPart = url.split("/").pop();
+    const { image, ...otherAttributes } = data;
+
+    let url = image.url;
 
     return {
       ...otherAttributes,
-      partenairePhotoPath: "/backoffice/" + lastPart,
+      imageUrl: strapiBaseUrl + url,
     };
   });
 };
 
 const getPartenaires = async () => {
   const url = `${strapiBaseUrl}/api/partenaires?populate=*`;
-  // if (process.env.GENERATE) {
     const { data, pending, error } = await useAsyncData("partenaires", () => {
       return $fetch(url, {
         method: "get",
@@ -221,7 +220,6 @@ const getPartenaires = async () => {
     } else {
       console.error(error.value);
     }
-  // }
 };
 
 getPartenaires();

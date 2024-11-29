@@ -41,7 +41,6 @@ export default {
       const currentIndex = this.languages.indexOf(this.currentLanguage);
       const nextIndex = (currentIndex + 1) % this.languages.length;
       this.currentLanguage = this.languages[nextIndex];
-      console.log(this.currentLanguage);
       // Call your function to change the language in your app
       this.$i18n.locale = this.currentLanguage;
       Cookies.set("i18n_language", locale);

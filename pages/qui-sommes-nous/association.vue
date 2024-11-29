@@ -28,7 +28,7 @@
       <img src="public/dashedLine-zigzag.png" alt="" />
     </div> -->
 
-    <div v-for="(person, index) in persons" :key="index"
+    <div v-for="(memberAsso, index) in membersAsso" :key="index"
       class="container px-4 mx-auto" >
       <div class="relative max-w-5xl mx-auto mb-20">
         <div class="bg-white md:clip-path-right-top-sm rounded-lg" >
@@ -39,40 +39,40 @@
             <img
               class="w-full md:w-80 h-[350px] object-cover md:clip-path-right-top"
               :class="{ 'md:rounded-l-lg': index % 2 === 0, 'rounded-t-lg': index % 2 === 0, 'rounded-r-lg': index % 2 === 1 }" 
-              :src="person?.personPhotoUrl"
+              :src="memberAsso?.memberAssoPhotoUrl"
               alt=""
             />
             <div class="pl-8 py-10 lg:py-0">
               <h3 class="mb-1 text-3xl font-semibold font-heading text-blue-800">
-                {{ capitalizePrenom(person?.prenom) }} {{ person?.nom }}
+                {{ capitalizePrenom(memberAsso?.prenom) }} {{ memberAsso?.nom }}
               </h3>
-              <p class="mb-4 text-blue-500">{{ person?.Poste }}</p>
+              <p class="mb-4 text-blue-500">{{ memberAsso?.Poste }}</p>
               <p class="text-blue-800 mb-4 mr-4">
-                {{ person.description }}
+                {{ memberAsso.description }}
               </p>
               <div class="flex items-center">
                 <NuxtLink
-                  v-if="person?.reseaux?.facebook"
+                  v-if="memberAsso?.reseaux_sociaux?.facebook"
                   class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                  :to="`${person?.facebook}`" >
+                  :to="`${memberAsso?.reseaux_sociaux?.facebook}`" >
                   <IconsFacebook />
                 </NuxtLink>
                 <NuxtLink
-                  v-if="person?.reseaux?.twitter"
+                  v-if="memberAsso?.reseaux_sociaux?.twitter"
                   class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                  :to="`${person?.twitter}`" >
+                  :to="`${memberAsso?.reseaux_sociaux?.twitter}`" >
                   <IconsTwitter />
                 </NuxtLink>
                 <NuxtLink
-                  v-if="person?.reseaux?.linkedin"
+                  v-if="memberAsso?.reseaux_sociaux?.linkedin"
                   class="inline-flex items-center justify-center w-12 h-12 mr-4 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                  :to="`${person?.linkedin}`" >
+                  :to="`${memberAsso?.reseaux_sociaux?.linkedin}`" >
                   <IconsLinkedin />
                 </NuxtLink>
                 <NuxtLink
-                  v-if="person?.reseaux?.instagram"
+                  v-if="memberAsso?.reseaux_sociaux?.instagram"
                   class="inline-flex items-center justify-center w-12 h-12 bg-primary/20 hover:bg-primary/30 text-primary text-2xl rounded-lg"
-                  :to="`${person?.instagram}`" >
+                  :to="`${memberAsso?.reseaux_sociaux?.instagram}`" >
                   <IconsInstagram />
                 </NuxtLink>
               </div>
@@ -116,13 +116,13 @@ useSeoMeta({
   ogImage: 'https://roulerpouraider.fr/images/logoBig_roulerPourAider.png',
 });
 
-interface Person {
-  personPhotolUrl: string;
+interface memberAsso {
+  memberAssoPhotolUrl: string;
   prenom: string;
   nom: string;
   poste: string;
   description: string;
-  reseaux: {
+  reseaux_sociaux: {
     facebook: string;
     twitter: string;
     linkedin: string;
@@ -135,32 +135,31 @@ interface DescriptionAsso {
   description: string;
 }
 
-const persons = ref<Person[]>([]);
+const membersAsso = ref<memberAsso[]>([]);
 const descriptionAsso = ref<string>("");
 
 const runtimeConfig = useRuntimeConfig();
 const { public: { strapiBaseUrl, strapiToken } } = runtimeConfig;
 
-const transformPersonObject = (personData) => {
-  return personData.map((data) => {
-    const { photo, nom, prenom, ...otherAttributes } = data.attributes;
+const transformMemberAssoObject = (memberAssoData) => {
+  return memberAssoData.map((data) => {
+    const { photo, nom, prenom, ...otherAttributes } = data;
 
-    let url = photo.data.attributes.url;
-    let lastPart = url.split("/").pop();
+    let url = photo.url;
 
     return {
       ...otherAttributes,
       prenom: capitalizePrenom(prenom),
       nom: nom.toUpperCase(),
-      personPhotoUrl: "/backoffice/" + lastPart,
+      memberAssoPhotoUrl: strapiBaseUrl + url,
     };
   });
 };
 
-const getPersons = async () => {
-  const url = `${strapiBaseUrl}/api/who-are-wes?populate=*`;
+const getMemberAssos = async () => {
+  const url = `${strapiBaseUrl}/api/membre-assos?populate=*`;
 
-  const { data, pending, error } = await useAsyncData("persons", () => {
+  const { data, pending, error } = await useAsyncData("membre-assos", () => {
       return $fetch(url, {
         method: "get",
         headers: {
@@ -171,14 +170,14 @@ const getPersons = async () => {
     });
 
   if (!error.value && !pending.value && data.value) {
-    persons.value = transformPersonObject(data.value.data);
+    membersAsso.value = transformMemberAssoObject(data.value.data);
   } else {
     console.error(error.value);
   }
 };
 
 const getDescriptionAsso = async () => {
-  const url = `${strapiBaseUrl}/api/description-asso`;
+  const url = `${strapiBaseUrl}/api/description-assos`;
 
   const { data, pending, error } = await useFetch(url, {
     method: "get",
@@ -199,7 +198,7 @@ const capitalizePrenom = (prenom: string) => {
   return prenom.charAt(0).toUpperCase() + prenom.slice(1);
 };
 
-getPersons();
+getMemberAssos();
 getDescriptionAsso();
 </script>
 

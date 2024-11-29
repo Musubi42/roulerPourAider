@@ -1,6 +1,6 @@
 <template>
   <div class="hero-container flex w-full h-[80vh] bg-cover bg-no-repeat bg-center" 
-    :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url(${ hero?.heroImage })` }">
+    :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), url(${ hero?.heroImageUrl })` }">
     <div class="breadcrumb-container">
       <BreadcrumbComponent />
     </div>
@@ -11,7 +11,7 @@
       <p class="mt-6 text-lg text-white text-center max-w-3xl mx-auto">
       Rejoignez notre tour de France caritatif et aidez-nous à illuminer les vies des enfants de l'Hôpital Necker.
       </p>
-      <NuxtLink v-if="hero?.bouttonVisible" to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr"
+      <NuxtLink v-if="hero?.donateButtonIsVisible" to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr"
         class="bg-white text-primary hover:text-white hover:bg-primary py-3 px-5 rounded-full">Faites un don</NuxtLink>
     </div>
   </div>
@@ -42,13 +42,13 @@ const { public: { strapiBaseUrl, strapiToken } } = runtimeConfig;
 interface PageHero {
   title: string;
   description: string;
-  heroImage: string;
-  buttonVisible?: boolean;
+  heroImageUrl: string;
+  donateButtonIsVisible?: boolean;
 }
 
 const hero = ref<PageHero | null>(null);
 
-const fetchHeroData = async (pageSlug: string) => {
+const getHero = async (pageSlug: string) => {
   const slug = qs.stringify({
     filters: {
       slug: {
@@ -58,33 +58,39 @@ const fetchHeroData = async (pageSlug: string) => {
   }, {
     encodeValuesOnly: true,
   });
-
   const url = `${strapiBaseUrl}/api/heroes?${slug}&populate=*`;
 
-  const { data, pending, error } = await useFetch(url, {
-    method: "get",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${strapiToken}`,
-    },
-  });
-
-  let urle = data.value.data[0].attributes.heroImage.data.attributes.url;
-  let lastPart = urle.split("/").pop();
+  const { data, pending, error } = await useAsyncData("heroes", () => {
+      return $fetch(url, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${strapiToken}`,
+        },
+      });
+    });
 
   if (!error.value && !pending.value && data.value) {
-    hero.value = data.value.data[0]?.attributes ? {
-      title: data.value.data[0].attributes.title,
-      description: data.value.data[0].attributes.description,
-      heroImage: "/backoffice/" + lastPart,
-    } : null;
+    hero.value = transformHeroObject(data.value.data);
   } else {
     console.error(error.value);
   }
 };
 
+const transformHeroObject = (heroData) => {
+    const { titre, description, slug, boutonDonEstVisible, heroImage } = heroData[0];
+
+    return {
+      title: titre,
+      description: description,
+      slug: slug,
+      donateButtonIsVisible: boutonDonEstVisible,
+      heroImageUrl: strapiBaseUrl + heroImage.url,
+    };
+};
+
 watchEffect(() => {
   const pageSlug = route.path;
-  fetchHeroData(pageSlug);
+  getHero(pageSlug);
 });
 </script>

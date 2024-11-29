@@ -48,3 +48,8 @@ logs
 /assets/Rouler pour aider dossier.pages
 
 .output
+
+asset.olds
+export
+
+roulerPourAiderExportNix.tar
