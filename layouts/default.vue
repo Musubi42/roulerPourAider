@@ -1,34 +1,12 @@
 <template>
-  <div>
-    <Header :dynamicStyle="headerStyle" />
-    <Hero />
-    <NuxtPage />
-    <SocialMedia />
+  <div class="bg-warm-white min-h-screen font-omnes">
+    <Header />
+    <main class="pt-16">
+      <NuxtPage />
+    </main>
     <Footer />
   </div>
 </template>
 
-
-<script>
-export default {
-  data() {
-    return {
-      headerStyle: {
-        backgroundColor: 'transparent',
-      },
-    };
-  },
-  methods: {
-    // Pour le bug safari scroll top en négatif
-    handleScroll() {
-      this.headerStyle = (window.scrollY || window.pageYOffset) <= 0 ? 0 : 1;
-    },
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  unmounted() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
-}
+<script setup lang="ts">
 </script>

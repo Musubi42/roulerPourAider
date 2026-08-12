@@ -7,36 +7,39 @@ export default {
     "./plugins/**/*.{js,ts}",
     "./app.vue",
     "./error.vue",
-    "./blocks/**/*.{vue,js}",
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "footer-job": "url('/assets/images/footer-job.png')",
-        "footer-tuned": "url('/assets/images/footer-tuned.png')",
-        "footer-questions": "url('/assets/images/footer-questions.png')",
-        "fond-tableau": "url('/assets/images/BG-tableau.png')",
-        "logo-small": "url('/assets/images/logo-small.jpeg')",
-      },
       colors: {
+        // Vert de la charte / du logo : la route, le mouvement
         primary: "#72BC7A",
+        // Bleu de la charte : texte, liens, aplats clairs
         secondary: "#2A5FA4",
-        "lilas-pop": "#974dff",
-        "rose-neon": "#ff0066",
-        "bleu-ciel": "#99deff",
-        "jaune-citron": "#ffff00",
+        // Navy : fonds de heroes uniquement. Assez sombre pour que le blanc
+        // (14.6:1) et l'or (6.6:1) passent le AA, contrairement au `secondary`
+        // sur lequel le bleu des liens devenait illisible.
+        navy: "#12294A",
+        // Or : reserve aux chiffres du bilan et au souligne des titres
+        gold: "#D4A843",
+        "warm-white": "#FEFCF8",
+        "warm-cream": "#FFF8F0",
       },
       fontFamily: {
-        montserrat: ["Montserrat", "Arial", "sans-serif"],
+        omnes: ["Omnes", "sans-serif"],
       },
-      animation: {
-        "spin-slow": "spin 8s linear infinite",
-      },
-      overflow: {
-        unset: "unset",
+      fontWeight: {
+        // hairline (250) et extralight (260) retirees : aucune occurrence dans
+        // le projet, et leurs WOFF2 ne sont plus generes. Les laisser
+        // permettrait d'ecrire `font-extralight` et d'obtenir un faux-maigre
+        // synthetise par le navigateur.
+        light: "270",
+        normal: "400",
+        medium: "500",
+        semibold: "600",
+        bold: "700",
+        black: "900",
       },
     },
   },
-  safelist: ["lilas-pop", "rose-neon", "bleu-ciel", "jaune-citron", "w-20", "font-semibold", "overflow-y-scroll", "w-20", "flex-row-reverse", "flex-row", "bg-green-500", "bg-secondary", "rounded-b-xl"],
   plugins: [],
 };
