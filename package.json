@@ -5,27 +5,33 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
+    "start": "nuxt start",
+    "generate": "GENERATE=true nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "export:strapi": "node --env-file=.env utils/exportStrapi.mjs",
+    "assets:audit": "node utils/auditAssets.mjs",
+    "assets:archive": "node utils/auditAssets.mjs --archive",
+    "assets:medias": "node utils/optimizeMedias.mjs"
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.0.6",
     "@nuxt/image": "^1.1.0",
-    "@nuxtjs/i18n": "^8.0.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.3",
-    "gsap": "^3.12.4",
+    "d3-geo": "^3.1.1",
     "nuxt": "^3.9.0",
     "nuxt-svgo": "^3.7.0",
     "postcss": "^8.4.32",
+    "sharp": "^0.33.3",
     "tailwindcss": "^3.4.0",
     "vue": "^3.4.3",
-    "vue-i18n": "^9.8.0",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "wawoff2": "^2.0.1"
   },
   "dependencies": {
-    "@vercel/analytics": "^1.1.1",
-    "js-cookie": "^3.0.5"
-  }
+    "gsap": "^3.14.2",
+    "qs": "^6.12.0"
+  },
+  "packageManager": "pnpm@8.6.11+sha256.6713c6bb13a7cd01d0cc86032ed1318188d10f4d87fd9aad6f131c81cb008551"
 }

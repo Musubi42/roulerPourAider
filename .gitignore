@@ -22,3 +22,34 @@ logs
 .env
 .env.*
 !.env.example
+.vercel
+
+.unlighthouse/
+
+# tmp
+/tmp/
+
+# Sources lourdes non livrees : les originaux de travail, pas les rendus.
+# `utils/buildFonts.mjs` et `utils/importSteps.mjs` regenerent ce qu'il faut.
+/assets/*.pdf
+/assets/*.docx
+/assets/france-geojson.json
+/assets/Rouler pour aider dossier.pages
+
+asset.olds
+export
+roulerPourAiderExportNix.tar
+
+# ATTENTION — ne pas reintroduire d'exclusion sur `public/`.
+#
+# Vercel construit le site A PARTIR DU DEPOT : ce qui n'est pas commite n'existe
+# pas au build, et Nitro ne peut pas le recopier dans `.output/public`. Les
+# regles precedentes ignoraient `/public/medias/` et
+# `/public/hopital-necker-visite/` — soit toutes les vignettes de presse et les
+# logos partenaires, qui partaient donc en 404 en production alors qu'elles
+# s'affichaient parfaitement en local.
+#
+# Le poids n'est plus un argument pour les exclure : `utils/optimizeMedias.mjs`
+# a ramene `public/medias/` de 7,4 Mo a 0,9 Mo, et `utils/auditAssets.mjs`
+# sort de `public/` tout ce que plus aucune source ne reference. Les fichiers
+# ecartes vivent dans `archives/`, versionnes et hors build.

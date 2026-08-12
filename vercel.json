@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/1ere-edition", "destination": "/notre-aventure", "permanent": true },
+    { "source": "/premiere-edition", "destination": "/notre-aventure", "permanent": true },
+    { "source": "/tour", "destination": "/notre-aventure", "permanent": true },
+    { "source": "/qui-sommes-nous", "destination": "/equipe", "permanent": true },
+    { "source": "/qui-sommes-nous/association", "destination": "/equipe", "permanent": true },
+    { "source": "/qui-sommes-nous/hopital-necker", "destination": "/notre-aventure", "permanent": true },
+    { "source": "/qui-sommes-nous/gallerie", "destination": "/notre-aventure", "permanent": true },
+    { "source": "/qui-sommes-nous/gallerie-photo", "destination": "/notre-aventure", "permanent": true },
+    { "source": "/nos-partenaires", "destination": "/equipe", "permanent": true },
+    { "source": "/nos-relations-publiques", "destination": "/presse", "permanent": true },
+    { "source": "/nos-retombees-presse/:path*", "destination": "/presse", "permanent": true },
+    { "source": "/faire-un-don", "destination": "/", "permanent": true },
+    { "source": "/calendrier", "destination": "/", "permanent": true },
+    { "source": "/countdown", "destination": "/", "permanent": true },
+    { "source": "/faq", "destination": "/", "permanent": true }
+  ]
+}

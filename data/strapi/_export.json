@@ -1,0 +1,11 @@
+{
+  "source": "https://backoffice.roulerpouraider.fr",
+  "collections": {
+    "partenaires": 9,
+    "contacts": 3,
+    "articles": 8,
+    "podcasts": 0,
+    "reportage-tvs": 8,
+    "heroes": 11
+  }
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": 34,
+    "documentId": "mlkxn1xz9nyv6r7tis1teqqh",
+    "prenom": "hugoo",
+    "nom": "nicaise",
+    "role": "président",
+    "telephone": "762542918",
+    "email": "retire-du-depot@roulerpouraider.fr",
+    "createdAt": "2026-08-11T09:51:20.059Z",
+    "updatedAt": "2026-08-11T09:51:20.059Z",
+    "publishedAt": "2026-08-11T09:51:20.076Z",
+    "locale": "fr",
+    "image": {
+      "url": "/medias/unamed_628bfcde4b.jpeg",
+      "mime": "image/jpeg",
+      "name": "unamed",
+      "alt": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 36,
+    "documentId": "zjbri9jaywrlc126o2ofb4y5",
+    "prenom": "milan",
+    "nom": "hrmo",
+    "role": "co-président",
+    "telephone": "678160673",
+    "email": "retire-du-depot@roulerpouraider.fr",
+    "createdAt": "2026-08-11T09:51:20.105Z",
+    "updatedAt": "2026-08-11T09:51:20.105Z",
+    "publishedAt": "2026-08-11T09:51:20.122Z",
+    "locale": "fr",
+    "image": {
+      "url": "/medias/unamed_769ae7f54c.jpeg",
+      "mime": "image/jpeg",
+      "name": "unamed",
+      "alt": null
+    },
+    "localizations": []
+  },
+  {
+    "id": 38,
+    "documentId": "vrtxwazuo5uqgmou5b25x0pn",
+    "prenom": "yves",
+    "nom": "gerard",
+    "role": "Trésorier",
+    "telephone": "666570181",
+    "email": "retire-du-depot@roulerpouraider.fr",
+    "createdAt": "2026-08-11T09:51:20.151Z",
+    "updatedAt": "2026-08-11T09:51:20.151Z",
+    "publishedAt": "2026-08-11T09:51:20.165Z",
+    "locale": "fr",
+    "image": {
+      "url": "/medias/unamed_42612b7888.jpeg",
+      "mime": "image/jpeg",
+      "name": "unamed",
+      "alt": null
+    },
+    "localizations": []
+  }
+]

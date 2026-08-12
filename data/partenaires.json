@@ -1,0 +1,50 @@
+[
+  {
+    "nom": "Au coeur du Malt",
+    "description": "Au coeur du Malt est un artisan brasseur français basé à Verneuil-en-Halatte dans l'Oise.",
+    "siteWeb": "https://www.aucoeurdumalt.com/bieres-gustave-biere-artisanale-francaise/",
+    "logo": "/medias/unamed_5f7053e1e1.webp"
+  },
+  {
+    "nom": "Banagrumes",
+    "description": "Banagrumes est une entreprise familiale depuis 3 générations, importatrice, grossiste en fruits et installée sur le M.I.N de Rungis depuis 1969. Elle est dirigée par Alain Alarcón depuis 2004. \nA l’écoute des tendances du marché et des réglementations sanitaires, Banagrumes est un véritable multi spécialiste, en perpétuelle évolution et incontournable sur le marché. Elle est également un mûrisseur de bananes, avocats et mangues.",
+    "siteWeb": "https://www.banagrumes.com",
+    "logo": "/medias/unamed_8904737eed.webp"
+  },
+  {
+    "nom": "Ermaflux",
+    "description": "Ermaflux conçoit des installations de traitement d’air clés en main pour la France et l’Europe.\nSpécialisée dans la réalisation et l’installation de zones à atmosphère et empoussièrement contrôlés, ses réalisations dans des secteurs d’activités tels que la chimie, la pharmacie, la cosmétique, l’optique, l’agroalimentaire, l’hospitalier, la microélectronique, la mécanique de précision, témoignent d’un savoir-faire et d’une expérience reconnus par les plus grands.",
+    "siteWeb": "https://ermaflux.fr",
+    "logo": "/medias/unamed_364b0be36e.png"
+  },
+  {
+    "nom": "Kit'atelier",
+    "description": "Premier fabricant Français spécialisé dans la conception et la réalisation de verrières et portes d’intérieur en aluminium.",
+    "siteWeb": "https://www.fl-creation.fr",
+    "logo": "/medias/unamed_4da8ff0270.png"
+  },
+  {
+    "nom": "McDonald's",
+    "description": "Rouler pour aider est soutenue par les McDonald's de Forbach, Creutzwald et de Forges-Les-Eaux.",
+    "siteWeb": "https://www.mcdonalds.fr",
+    "logo": "/medias/unamed_5d3923d21e.webp"
+  },
+  {
+    "nom": "NISSAN COMPIEGNE GUEUDET 1880",
+    "description": "NISSAN COMPIEGNE GUEUDET 1880 est basée à Compiègne et vous propose une large gamme de véhicules neufs et d'occasion.",
+    "siteWeb": "https://www.gueudet.fr/concessions/nissan/nissan-compiegne-gueudet-1880",
+    "logo": "/medias/unamed_3542359458.webp"
+  },
+  {
+    "nom": "TOYOTA GUEUDET 1880 COMPIÈGNE",
+    "description": "Concessionnaire automobile vendant des véhicules d'occasion",
+    "siteWeb": "https://www.toyota.fr/reseau/gueudet-1880-compiegne",
+    "logo": "/medias/unamed_379c634dfc.webp"
+  },
+  {
+    "nom": "Weldom",
+    "description": "Weldom est une enseigne française de magasins de bricolage spécialisée dans le bricolage, le jardinage, la décoration.\n\nNos magasins Weldom partenaires sont : Chaumont, Uzes, Dampierre-sur-Salon et Saujon.",
+    "siteWeb": "https://www.weldom.fr",
+    "logo": "/medias/unamed_dcaf41e52f.webp"
+  }
+]
