@@ -1,41 +1,30 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { resolve } from "path";
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  runtimeConfig: {
-    public: {
-      MAINTENANCE: process.env.MAINTENANCE,
-      APIStreamAudioBaseUrl:
-        process.env.NODE_ENV === "development"
-          ? "http://localhost:3001"
-          : "https://stream.lmlc.musubi.dev",
-    },
+  // Pas d'alias "@" : `resolve(__dirname, "/")` resolvait litteralement vers la
+  // RACINE du systeme de fichiers. Nuxt fournit deja `~` et `@` par defaut.
+  // Pas de tableau `plugins` : Nuxt auto-charge le dossier plugins/.
+  // Les chemins absolus precedents ne resolvaient pas (5 warnings au boot).
+  modules: ["nuxt-svgo", "@nuxt/image"],
+  // Prerendu : `ssr: true` ne veut pas dire serveur Node. Nitro execute les
+  // pages au build et ecrit du HTML statique, servi par le CDN Vercel. C'est
+  // la seule facon d'avoir les balises de partage et le contenu dans le HTML
+  // livre — les robots d'apercu social n'executent pas de JavaScript.
+  ssr: true,
+  nitro: {
+    prerender: { crawlLinks: true, routes: ["/"] },
   },
-  env: {
-    baseUrl:
-      process.env.NODE_ENV === "dev"
-        ? "http://localhost:3001"
-        : "https://stream.lmlc.musubi.dev",
-  },
-  alias: {
-    "@": resolve(__dirname, "/"),
-  },
-  modules: ["nuxt-svgo", "@nuxt/image", "@nuxtjs/i18n"],
-  i18n: {
-    vueI18n: "./i18n.config.js", // if you are using custom path, default
+  image: {
+    provider: 'vercel',
+    // `presets.cover` et `staticFilename` ont ete retires : le preset n'etait
+    // reference nulle part (0 occurrence de `preset=`), et `staticFilename` ne
+    // concerne que le provider `ipxStatic`, pas `vercel`.
   },
   svgo: {
-    autoImportPath: "~/assets/icons/",
+    autoImportPath: "~/assets/svg/",
   },
-  // router: {
-  //   middleware: 'maintenance'
-  // },
   components: true,
   css: ["~/assets/css/main.css"],
-  plugins: [
-    '~/plugins/axios.js',
-    '~/plugins/analytics.client.js',
-  ],
   postcss: {
     plugins: {
       tailwindcss: {},

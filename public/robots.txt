@@ -1,0 +1,7 @@
+# Rouler pour aider — site memorial, clôturé en 2024.
+# Tout le contenu a vocation à être indexé : c'est la trace publique du projet.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://roulerpouraider.fr/sitemap.xml
