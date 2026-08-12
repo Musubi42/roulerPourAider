@@ -1,0 +1,20 @@
+# Ce que Vercel n'a pas besoin de RECEVOIR pour construire le site.
+#
+# Portee exacte, pour eviter le contresens : ce fichier filtre l'envoi des
+# SOURCES vers Vercel. Il n'a aucune prise sur `.output/public`, l'artefact
+# genere — c'est pourquoi alleger le site passe par sortir les fichiers de
+# `public/` (cf. utils/auditAssets.mjs), et non par une ligne ajoutee ici.
+#
+# Ce qui suit ne fait donc qu'une chose, mais elle compte : eviter de televerser
+# ~46 Mo d'originaux a chaque deploiement.
+
+# Les originaux haute definition, conserves dans le depot comme seule copie
+# survivante de l'ancien CMS et des editions passees. Jamais servis.
+archives/
+
+# Notes de refonte, ADR, plans d'etapes : de la documentation de travail.
+.planning/
+
+# Outillage local
+.vscode/
+.clocignore
