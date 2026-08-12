@@ -1,405 +1,174 @@
 <template>
-  <header class="fixed block w-full z-50 bg-transparent" 
-    :style="{ 'box-shadow': ( !dynamicStyle && !isMobile ) ? 'var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)' : 'de', '--tw-shadow-colored': ( dynamicStyle && !isMobile ) ? '0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color)' : '', '--tw-shadow': ( dynamicStyle && !isMobile ) ? '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)' : '' }"
-    :class="{ 'bg-white': (isHovered && !isMobile) }"
-    @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave" >
-    <!-- Partie Desktop -->
-    <nav class="relative h-16 bg-transparent z-[1000]" 
-      :style="{ 'background-color': ( dynamicStyle && !isMobile && !isTop ) ? 'white' : '' }" >
-      <div class="px-4">
-        <div class="flex items-center justify-between relative">
-          <!-- Logo -->
-          <NuxtLink class="flex text-lg font-bold" to="/">
+  <header class="fixed block w-full z-50 transition-colors duration-300"
+    :class="isSolid ? 'bg-white shadow-lg' : 'bg-transparent'">
+    <nav class="z-[1000]">
+      <div class="px-4 md:px-8">
+        <div class="flex h-16 items-center justify-between">
+          <!-- Logo. h-12 dans une barre de h-16 : il respire au lieu de la remplir
+               bord a bord, et `items-center` le centre verticalement. -->
+          <NuxtLink class="flex items-center" to="/" aria-label="Rouler pour aider — accueil">
+            <!-- `width` explicite : sans lui, le provider Vercel retombe sur
+                 la plus grande valeur de `screens` (1536 px) et sert 121 Ko
+                 pour un logo affiché en 48 px de haut. 320 est la plus petite
+                 largeur du jeu par defaut. -->
             <NuxtImg
-              format="webp"
+              width="320"
               quality="80"
-              class="h-16 w-auto cursor-pointer"
+              class="h-12 w-auto cursor-pointer"
               src="/images/logoBig_roulerPourAider.png"
-              alt="Logo rouler pour aider"
+              alt="Logo Rouler pour aider"
             />
           </NuxtLink>
 
           <!-- Menu burger pour mobile -->
           <div class="lg:hidden ml-auto z-50">
-            <IconsMenuBurger
-              aria-label="menuBurger"
-              :style="{ height: burgerHeight + 'px', y: y + 'px' }"
-              :y="y"
-              class="text-[50px] fill-black"
-              ref="menuBurger"
-              @click="toggleMenuBurger"
-            />
+            <button
+              aria-label="Menu"
+              class="flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+              @click="toggleMobileMenu">
+              <span class="block w-7 h-0.5 transition-all duration-300"
+                :class="[barColor, { 'rotate-45 translate-y-2': isMobileMenuOpen }]"></span>
+              <span class="block w-7 h-0.5 transition-all duration-300"
+                :class="[barColor, { 'opacity-0': isMobileMenuOpen }]"></span>
+              <span class="block w-7 h-0.5 transition-all duration-300"
+                :class="[barColor, { '-rotate-45 -translate-y-2': isMobileMenuOpen }]"></span>
+            </button>
           </div>
-          <!-- :style="{ 'color': ( !isTop && ( dynamicStyle || isHovered ) ) ? 'blue' : 'white' }" -->
-          <ul class="hidden lg:flex lg:w-auto lg:space-x-12 h-16 items-stretch text-white"
-            :style="{ 'color': ( dynamicStyle || isHovered ) ? 'blue' : 'white' }" >
-            <HeadersLinkDesktop to="/">Accueil</HeadersLinkDesktop>
-            <HeadersLinkDesktop to="https://solidarite.fondationaphp.fr/projects/rouler-pour-aider-fr" target="_blank" >Faire un don</HeadersLinkDesktop>
-            <HeadersSubNavTest
-              :subMenus="subMenuItemsWhoAreWe"
-              @clicked-link="handleClicked"
-              @clickedOnLink="handleLinkClicked"
-              class="cursor-pointer" >
-              Qui sommes-nous ?
-            </HeadersSubNavTest>
-            <HeadersLinkDesktop to="/premiere-edition">Première édition</HeadersLinkDesktop>
-            <HeadersLinkDesktop to="/nos-partenaires">Nos partenaires</HeadersLinkDesktop>
-            <HeadersSubNavTest
-              class="cursor-pointer"
-              :subMenus="subMenuItemsPress" >
-              Nos relations publiques
-            </HeadersSubNavTest>
-            <HeadersLinkDesktop to="/contact">Contact</HeadersLinkDesktop>
-          </ul>
 
-          <div class="hidden lg:flex">
-            <HeadersDonationAmount />
-          </div>
+          <!-- Desktop nav -->
+          <ul class="hidden lg:flex lg:space-x-8 items-center font-medium transition-colors duration-300"
+            :class="navColor">
+            <li v-for="link in links" :key="link.to">
+              <NuxtLink
+                :to="link.to"
+                class="nav-link hover:text-primary transition-colors"
+                :class="{ 'is-active': estActif(link.to) }"
+                :aria-current="estActif(link.to) ? 'page' : undefined"
+              >{{ link.label }}</NuxtLink>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
 
-    <!-- Partie mobile -->
-      <Menu :isMenuOpen="toggleMenu" @update:isMenuOpen="handleMenuUpdate" class="z-[100] absolute -mt-16" />
+    <!-- Mobile menu -->
+    <Transition name="slide-down">
+      <div v-if="isMobileMenuOpen" class="lg:hidden bg-white shadow-lg">
+        <ul class="flex flex-col items-center py-6 space-y-4 text-secondary font-medium">
+          <li v-for="link in links" :key="link.to">
+            <NuxtLink
+              :to="link.to"
+              class="nav-link hover:text-primary"
+              :class="{ 'is-active': estActif(link.to) }"
+              :aria-current="estActif(link.to) ? 'page' : undefined"
+              @click="closeMobileMenu"
+            >{{ link.label }}</NuxtLink>
+          </li>
+        </ul>
+      </div>
+    </Transition>
   </header>
 </template>
 
-<style>
-.blend-mode {
-  mix-blend-mode: difference;
+<style scoped>
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-down-enter-from,
+.slide-down-leave-to {
+  transform: translateY(-10px);
+  opacity: 0;
 }
 
-.part1-open {
-  animation: part1-open-animation 0.6s none;
-  animation-fill-mode: forwards;
+/*
+  Surlignage de navigation.
+  Le trait vert se deploie de la gauche vers la droite au survol, et reste
+  deploye sur la page courante — c'est ce qui signale ou l'on se trouve.
+  Anime via scaleX plutot que via width : la transformation est composee par le
+  GPU, la largeur declencherait un reflow a chaque frame.
+*/
+.nav-link {
+  position: relative;
+  padding-bottom: 0.35rem;
 }
 
-@keyframes part1-open-animation {
-  /* Start the animation right away */
-  0% {
-    transform: translateY(0px);
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-
-  /* Finish changes by here */
-  35% {
-    transform: translate(3px, 7px);
-    /* transform: translateY(7px); */
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-
-  60% {
-    transform: translate(3px, 7px);
-    width: 10px;
-    height: 6px;
-    fill: white;
-  }
-
-  /* Between 20% and 100%, nothing changes */
-  100% {
-    transform: translate(3px, 0px);
-    width: 10px;
-    height: 25px;
-    fill: white;
-  }
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: theme("colors.primary");
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
 }
 
-/* [class^="i-"][class*="__part2"] { */
-.part2-open {
-  animation: part2-open-animation 0.6s none;
-  animation-fill-mode: forwards;
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link.is-active::after {
+  transform: scaleX(1);
 }
 
-@keyframes part2-open-animation {
-  /* Start the animation right away */
-  0% {
-    transform: translate(0px, 0px);
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-
-  /* Finish changes by here */
-  35% {
-    transform: translate(0px, 0px);
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-
-  60% {
-    transform: translate(16px, 0px);
-    width: 10px;
-    height: 6px;
-    fill: white;
-  }
-
-  /* Between 20% and 100%, nothing changes */
-  100% {
-    transform: translate(16px, -7px);
-    width: 10px;
-    height: 50px;
-    fill: white;
-  }
-}
-
-.part3-open {
-  animation: part3-open-animation 0.6s none;
-  animation-fill-mode: forwards;
-}
-
-@keyframes part3-open-animation {
-  /* Start the animation right away */
-  0% {
-    transform: translateY(0px);
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-
-  /* Finish changes by here */
-  35% {
-    transform: translate(0px, -7px);
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-
-  60% {
-    transform: translate(29px, -7px);
-    width: 10px;
-    height: 6px;
-    fill: white;
-  }
-
-  /* Between 20% and 100%, nothing changes */
-  100% {
-    transform: translate(29px, -14px);
-    width: 10px;
-    height: 50px;
-    fill: white;
-  }
-}
-
-.part1-close {
-  animation: part1-close-animation 0.6s none;
-  animation-fill-mode: forwards;
-}
-
-@keyframes part1-close-animation {
-  0% {
-    transform: translate(0px, 0px);
-    width: 10px;
-    height: 25px;
-    fill: white;
-  }
-
-  35% {
-    transform: translate(0px, 7px);
-    width: 10px;
-    height: 6px;
-    fill: white;
-  }
-
-  60% {
-    transform: translate(0, 7px);
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-
-  100% {
-    transform: translateY(0px);
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-}
-
-.part2-close {
-  animation: part2-close-animation 0.6s none;
-  animation-fill-mode: forwards;
-}
-
-@keyframes part2-close-animation {
-  0% {
-    transform: translate(16px, -7px);
-    width: 10px;
-    height: 50px;
-    fill: white;
-  }
-
-  35% {
-    transform: translate(16px, 0px);
-    width: 10px;
-    height: 6px;
-    fill: white;
-  }
-
-  60% {
-    transform: translate(0px, 0px);
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-
-  100% {
-    transform: translate(0px, 0px);
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-}
-
-.part3-close {
-  animation: part3-close-animation 0.6s none;
-  animation-fill-mode: forwards;
-}
-
-@keyframes part3-close-animation {
-  0% {
-    transform: translate(32px, -14px);
-    width: 10px;
-    height: 50px;
-    fill: white;
-  }
-
-  35% {
-    transform: translate(32px, -7px);
-    width: 10px;
-    height: 6px;
-    fill: white;
-  }
-
-  60% {
-    transform: translate(0px, -7px);
-    width: 32px;
-    height: 6px;
-    fill: black;
-  }
-
-  100% {
-    transform: translateY(0px);
-    width: 32px;
-    height: 6px;
-    fill: black;
+@media (prefers-reduced-motion: reduce) {
+  .nav-link::after {
+    transition: none;
   }
 }
 </style>
 
-<script>
-export default {
-  props: {
-    dynamicStyle: {
-      type: Object,
-      required: false,
-    },
-  },
-  data() {
-    return {
-      isClicked: false,
-      isHovered: false,
-      isAccueilPage: this.$route.fullPath === "/",
-      subMenuItemsPress: [
-        { name: 'Nos articles de presse', path: '/nos-retombees-presse/nos-articles-de-presse' },
-        { name: 'Nos reportages TV', path: '/nos-retombees-presse/nos-reportages-tv' },
-        { name: 'Nos passages radio', path: '/nos-retombees-presse/nos-passages-radio' },
-      ],
-      subMenuItemsWhoAreWe: [
-        { name: "L'association", path: '/qui-sommes-nous/association' },
-        { name: "L’Hôpital Necker – Enfants malades AP-HP", path: '/qui-sommes-nous/hopital-necker' },
-      
-      ],
-      isMenuOpen: false,
-      toggleMenu: false,
-      menuBurgerOpened: false,
-      burgerHeight: 24,
-      y: 0,
-      isMobile: false,
-      isTop: true,
-    };
-  },
-  //   { name: 'Gallerie photo', path: '/qui-sommes-nous/gallerie' },
-  methods: {
-    checkScroll() {
-      this.isTop = window.scrollY === 0;
-    },
-    handleMouseEnter() {
-      this.isHovered = true;
-    },
-    handleMouseLeave() {
-      if (!this.isClicked) {
-        this.isHovered = false;
-      }
-    },
-    handleClicked() {
-      this.isClicked = !this.isClicked;
-    },
-    handleLinkClicked() {
-      this.isClicked = false;
-      this.isHovered = false;
-    },
-    toggleMenuBurger() {
-      this.isMenuOpen = !this.isMenuOpen;
-      this.toggleMenu = !this.toggleMenu;
-      this.menuBurgerOpened = !this.menuBurgerOpened;
+<script setup lang="ts">
+const route = useRoute();
 
-      // change the height here
-      this.burgerHeight = this.menuBurgerOpened ? 50 : 24;
+const links = [
+  { to: "/", label: "Accueil" },
+  { to: "/notre-aventure", label: "Notre aventure" },
+  { to: "/equipe", label: "L'équipe" },
+  { to: "/presse", label: "Presse" },
+  { to: "/contact", label: "Contact" },
+];
 
-      const svgElement = this.$refs.menuBurger.$el;
-      const rectElements = svgElement.querySelectorAll("rect");
-      const rect1 = rectElements[0];
-      const rect2 = rectElements[1];
-      const rect3 = rectElements[2];
+// `/` doit correspondre exactement, sinon l'accueil resterait actif sur toutes
+// les pages. Les autres acceptent les sous-routes eventuelles.
+const estActif = (to: string) =>
+  to === '/' ? route.path === '/' : route.path.startsWith(to);
 
-      rect1.style.y = this.menuBurgerOpened ? "-13px" : "0px";
-      rect2.style.y = this.menuBurgerOpened ? "-6px" : "8px";
-      rect3.style.y = this.menuBurgerOpened ? "1px" : "16px";
+const isScrolled = ref(false);
+const isMobileMenuOpen = ref(false);
 
-      if (this.menuBurgerOpened) {
-        // Block the scrolling, so no problem with the image on hover
-        document.body.style.overflow = "hidden";
+// Les pages a hero sombre (`heroHeader: true` dans definePageMeta) tolerent un
+// header transparent a texte blanc. Les autres (contact, cookies, mentions)
+// ont un fond clair des le haut : le header doit y etre opaque d'emblee,
+// sinon le texte blanc devient invisible.
+const isOverHero = computed(() => route.meta.heroHeader === true);
+const isSolid = computed(() => isScrolled.value || !isOverHero.value);
 
-        rect1.classList.remove("part1-close");
-        rect2.classList.remove("part2-close");
-        rect3.classList.remove("part3-close");
+const navColor = computed(() => (isSolid.value ? "text-secondary" : "text-white"));
+const barColor = computed(() => (isSolid.value ? "bg-secondary" : "bg-white"));
 
-        rect1.classList.add("part1-open");
-        rect2.classList.add("part2-open");
-        rect3.classList.add("part3-open");
-      } else {
-        document.body.style.overflow = "auto";
-
-        rect1.classList.remove("part1-open");
-        rect2.classList.remove("part2-open");
-        rect3.classList.remove("part3-open");
-
-        rect1.classList.add("part1-close");
-        rect2.classList.add("part2-close");
-        rect3.classList.add("part3-close");
-      }
-    },
-
-    handleMenuUpdate(event) {
-      this.toggleMenuBurger();
-
-      // // Update current language in use
-      // this.isMobileUpdateLanguage++;
-    },
-  },
-
-  mounted() {
-    this.isMobile = window.innerWidth <= 768;
-    window.addEventListener('scroll', this.checkScroll);
-  },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.checkScroll);
-  },
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value;
+  document.body.style.overflow = isMobileMenuOpen.value ? 'hidden' : '';
 };
+
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false;
+  document.body.style.overflow = '';
+};
+
+const checkScroll = () => {
+  isScrolled.value = window.scrollY > 0;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', checkScroll);
+  checkScroll();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', checkScroll);
+});
 </script>
