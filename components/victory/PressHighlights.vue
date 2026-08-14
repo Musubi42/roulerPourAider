@@ -60,11 +60,24 @@ import presse from '~/data/presse.json';
 
 type Item = (typeof presse)[number];
 
-// Un media peut avoir plusieurs retombees : on le n'affiche qu'une fois.
+// Un media peut avoir plusieurs retombees : on ne l'affiche qu'une fois.
+// Le logo vient du champ `logo` de data/presse.json — il est porte par chaque
+// entree, mais c'est bien une propriete du MEDIA : toutes les entrees d'un meme
+// media portent le meme. On garde donc le premier renseigne, et les medias qui
+// n'en ont pas encore s'affichent en typographie (cf. ACTIONS-HUMAINES.md).
+//
+// Seuls les medias qui ONT un logo defilent. Le repli typographique existe
+// toujours dans le template — il a servi tant qu'aucun logo n'etait fourni —
+// mais un nom en toutes lettres au milieu de quinze logos ne se lit plus comme
+// un choix, il se lit comme une image cassee. Le seul concerne aujourd'hui est
+// « France 3 » sans region (3 retombees de 2020, logo generique non fourni,
+// arbitrage du client) : ses articles restent sur /presse, c'est bien le
+// carrousel qu'il quitte, pas la revue de presse.
 const medias = computed(() => {
   const vus = new Map<string, { nom: string; logo: string | null }>();
   for (const p of presse as Item[]) {
-    if (!vus.has(p.media)) vus.set(p.media, { nom: p.media, logo: null });
+    if (!p.logo) continue;
+    if (!vus.has(p.media)) vus.set(p.media, { nom: p.media, logo: p.logo });
   }
   return [...vus.values()];
 });

@@ -50,7 +50,7 @@
               class="group block h-full bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-shadow duration-300"
               :class="item.statut === 'mort' ? 'opacity-75' : 'hover:shadow-lg focus-visible:shadow-lg'"
             >
-              <div class="relative aspect-[16/10] overflow-hidden bg-gray-100">
+              <div class="relative aspect-[16/10] overflow-hidden bg-warm-cream">
                 <img
                   v-if="item.image"
                   :src="item.image"
@@ -60,6 +60,19 @@
                   class="w-full h-full object-cover transition-transform duration-500"
                   :class="item.statut === 'mort' ? 'grayscale' : 'group-hover:scale-105'"
                 />
+                <!--
+                  Sans vignette, le nom du média en typographie plutôt qu'un
+                  aplat gris vide. Les retombées 2024 n'ont aucune image : les
+                  logos manquent (cf. ACTIONS-HUMAINES) et les médias bloquent
+                  l'aspiration de leurs visuels.
+                -->
+                <span
+                  v-else
+                  class="absolute inset-0 flex items-center justify-center px-5 text-center font-black leading-tight text-secondary/70"
+                  aria-hidden="true"
+                >
+                  {{ item.media }}
+                </span>
                 <span
                   class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm"
                   :class="item.type === 'tv' ? 'bg-secondary/90' : 'bg-primary/90'"
@@ -122,7 +135,7 @@
       <div class="max-w-5xl mx-auto">
         <div class="card-victory flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="text-xl md:text-2xl font-bold text-secondary">Le dossier de presse</h2>
+            <h2 class="text-xl md:text-2xl font-bold text-secondary">Le dossier de presse 2024</h2>
             <p class="mt-2 text-gray-600 max-w-xl">
               L'association, les deux éditions, les chiffres et les photos — de quoi
               raconter l'histoire, en 19 pages.
@@ -188,7 +201,7 @@ const editions = computed(() => [
     faits: [
       { valeur: '3 000 km', label: 'parcourus' },
       { valeur: '18', label: 'étapes' },
-      { valeur: '70 458 €', label: 'récoltés' },
+      { valeur: '70 523 €', label: 'récoltés' },
     ],
     retombees: parEdition(2024),
     vide: "Les retombées de cette édition n'ont pas encore été rassemblées ici.",
