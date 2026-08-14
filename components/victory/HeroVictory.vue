@@ -26,8 +26,16 @@
         <!-- La valeur FINALE est rendue dans le HTML. Le compteur ne repart de
              zero que cote client, dans onMounted. Sinon le prerendu figeait
              « 0 merci » dans le fichier servi aux robots et aux visiteurs sans
-             JavaScript. -->
-        <span ref="counterEl" class="text-gold">{{ TOTAL_EUROS.toLocaleString('fr-FR') }}</span> merci.
+             JavaScript.
+
+             Le fantome `counter-sizer` reserve la largeur du nombre fini :
+             sans lui, chaque chiffre gagne repoussait « merci. » et recentrait
+             tout le titre. En text-9xl, c'etait le plus gros contributeur au
+             CLS de la page. Cf. ADR-019 et .counter-slot dans main.css. -->
+        <span class="counter-slot text-gold align-bottom">
+          <span class="counter-sizer" aria-hidden="true">{{ TOTAL_EUROS.toLocaleString('fr-FR') }}</span>
+          <span ref="counterEl" class="counter-value">{{ TOTAL_EUROS.toLocaleString('fr-FR') }}</span>
+        </span> merci.
       </h1>
 
       <p class="hero-text mt-6 text-xl md:text-2xl font-light max-w-2xl mx-auto leading-relaxed opacity-0">
