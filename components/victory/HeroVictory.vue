@@ -31,7 +31,7 @@
       </h1>
 
       <p class="hero-text mt-6 text-xl md:text-2xl font-light max-w-2xl mx-auto leading-relaxed opacity-0">
-        103&nbsp;782&nbsp;euros récoltés pour les enfants de l'Hôpital Necker.
+        103&nbsp;847&nbsp;euros récoltés pour les enfants de l'Hôpital Necker.
       </p>
 
       <!-- Chiffres cles : formules comme un roadbook de course plutot qu'en prose -->
@@ -85,12 +85,13 @@ import { gsap } from 'gsap';
 const faits = [
   { valeur: '2', label: 'éditions' },
   { valeur: '4 327 km', label: 'à vélo' },
-  { valeur: '605', label: 'donateurs' },
+  // 605 = edition 2024 uniquement, cf. le commentaire de StatCounter.vue.
+  { valeur: '605', label: 'donateurs en 2024' },
 ];
 
-// 103 782 = 33 324 EUR (edition 2020) + 70 458 EUR (edition 2024). Chiffre reel,
+// 103 847 = 33 324 EUR (edition 2020) + 70 523 EUR (edition 2024). Chiffre reel,
 // pas l'arrondi « 100 000 » qui ne correspond a aucune des deux collectes.
-const TOTAL_EUROS = 103782;
+const TOTAL_EUROS = 103847;
 
 const counterEl = ref<HTMLElement | null>(null);
 const heroContent = ref<HTMLElement | null>(null);

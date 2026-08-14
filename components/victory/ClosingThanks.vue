@@ -11,11 +11,11 @@
       <div class="mt-8 max-w-2xl mx-auto space-y-4 text-gray-600 leading-relaxed">
         <p>
           Deux éditions, cinq ans, et une promesse tenue&nbsp;:
-          <strong class="text-secondary">103&nbsp;782&nbsp;euros</strong> récoltés pour
+          <strong class="text-secondary">103&nbsp;847&nbsp;euros</strong> récoltés pour
           les enfants de l'Hôpital Necker – Enfants malades AP-HP.
         </p>
         <p>
-          Rouler pour aider ne repartira pas sur les routes. Mais ce que 605 donateurs
+          Rouler pour aider ne repartira pas sur les routes. Mais ce que les donateurs
           ont rendu possible reste, chaque jour, entre les murs de l'hôpital.
         </p>
         <p class="text-lg font-bold text-secondary pt-4">
