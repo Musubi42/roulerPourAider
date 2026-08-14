@@ -232,7 +232,7 @@ interface Celebrity {
 // Noms et roles issus de l'export Strapi du 11/08/2026, fige puis retire du
 // depot : il contenait des adresses et des telephones personnels, et plus
 // aucun code ne le lisait (ADR-009). Pour le reconsulter :
-//   git show cdecfd1:data/strapi/contacts.json
+//   git show archive/export-strapi:data/strapi/contacts.json
 // Les noms precedents (« Hugo Petrucci », « Maxence Gil ») etaient une
 // recombinaison des donnees de demo de l'ancien Edition1/lesCyclistes.vue avec
 // les vrais prenoms. Ne JAMAIS remonter d'email ou de telephone dans l'affichage.
