@@ -4,9 +4,9 @@
 
 @layer base {
   /* Omnes en WOFF2, généré par `node utils/buildFonts.mjs` depuis les TTF
-     d'origine restés dans assets/fonts/Omnes_Font_Family/ (795 → 260 Ko).
+     d'origine restés dans assets/fonts/Omnes_Font_Family/ (795 → 140 Ko).
      Le TTF n'est pas compressé pour le réseau ; le WOFF2 l'est, à rendu
-     identique.
+     identique, et les fichiers sont sous-ensemblés au latin.
 
      Hairline (250) et ExtraLight (260) ne sont plus déclarées : zéro
      occurrence de `font-hairline` / `font-extralight` dans tout le projet.
@@ -14,13 +14,24 @@
 
      `font-display: swap` : le texte s'affiche immédiatement dans la police de
      substitution puis bascule, au lieu de rester invisible le temps du
-     téléchargement. */
+     téléchargement.
+
+     `unicode-range` : les fichiers ne contiennent QUE la plage latine. Sans ce
+     descripteur le navigateur croirait la police universelle et dessinerait un
+     carré vide pour tout caractère absent ; avec lui, il se rabat proprement
+     sur la police de substitution. La plage est donc la copie exacte de
+     `PLAGE_LATIN` dans utils/buildFonts.mjs — modifier l'une sans l'autre
+     casse le rendu. Elle couvre l'ASCII, Latin-1 (les accents français),
+     Œ/œ, la ponctuation typographique et l'euro. */
   @font-face {
     font-family: "Omnes";
     src: url("/assets/fonts/woff2/Omnes-Light.woff2") format("woff2");
     font-weight: 270;
     font-style: normal;
     font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+      U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215,
+      U+FEFF, U+FFFD;
   }
   @font-face {
     font-family: "Omnes";
@@ -28,6 +39,9 @@
     font-weight: 400;
     font-style: normal;
     font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+      U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215,
+      U+FEFF, U+FFFD;
   }
   @font-face {
     font-family: "Omnes";
@@ -35,6 +49,9 @@
     font-weight: 500;
     font-style: normal;
     font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+      U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215,
+      U+FEFF, U+FFFD;
   }
   @font-face {
     font-family: "Omnes";
@@ -42,6 +59,9 @@
     font-weight: 600;
     font-style: normal;
     font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+      U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215,
+      U+FEFF, U+FFFD;
   }
   @font-face {
     font-family: "Omnes";
@@ -49,6 +69,9 @@
     font-weight: 700;
     font-style: normal;
     font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+      U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215,
+      U+FEFF, U+FFFD;
   }
   @font-face {
     font-family: "Omnes";
@@ -56,6 +79,9 @@
     font-weight: 900;
     font-style: normal;
     font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+      U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2212, U+2215,
+      U+FEFF, U+FFFD;
   }
 }
 
