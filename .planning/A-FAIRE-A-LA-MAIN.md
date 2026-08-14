@@ -81,8 +81,15 @@ Parmi eux, les masters JPEG des photos de l'hôpital Necker (`fresque.jpeg`
 11 Mo, `image00060.jpeg` 10 Mo, `fauteuil-lit.jpeg` 9,8 Mo), dont les versions
 `.webp` utilisées par le site restent en place.
 
-`node utils/auditAssets.mjs --restore` remet tout dans `public/` si besoin.
-À décider : garder cet historique dans le dépôt, ou l'externaliser.
+⚠️ **`utils/auditAssets.mjs` a depuis été supprimé** — c'était un outil
+one-shot, son travail est fait et le déplacement est enregistré dans
+l'historique Git. Pour remettre un original dans `public/`, le copier à la
+main depuis `archives/`, ou récupérer le script via
+`git show <commit-avant-suppression>:utils/auditAssets.mjs`.
+
+À décider : garder cet historique dans le dépôt, ou l'externaliser. Noter que
+supprimer `archives/` ne réduirait **pas** la taille d'un clone : les fichiers
+resteraient dans l'historique. Seule une réécriture d'historique le ferait.
 
 ---
 
