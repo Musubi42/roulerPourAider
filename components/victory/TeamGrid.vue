@@ -63,9 +63,9 @@
             ministériel.
           </p>
           <p class="font-semibold text-secondary">
-            Cinq ans plus tard, le bilan est chiffré : 103&nbsp;782&nbsp;euros récoltés
-            auprès de 605&nbsp;donateurs, 4&nbsp;327&nbsp;kilomètres parcourus sur deux
-            éditions, et un projet labellisé Grande Cause Nationale.
+            Cinq ans plus tard, le bilan est chiffré : 103&nbsp;847&nbsp;euros remis à
+            l'Hôpital Necker, 4&nbsp;327&nbsp;kilomètres parcourus sur deux éditions,
+            et un projet labellisé Grande Cause Nationale.
           </p>
         </div>
       </div>
@@ -250,6 +250,16 @@ const founders: Founder[] = [
     role: 'Co-président et co-fondateur',
     bgClass: 'bg-primary',
   },
+  // Le role exact reste a confirmer aupres de Hugo : il n'apparait pas dans
+  // `data/strapi/contacts.json`, qui ne liste que le bureau en fin de vie de
+  // l'association. « Co-fondateur » est le libelle le plus sur en attendant.
+  // Cf. .planning/ACTIONS-HUMAINES.md
+  {
+    name: 'Alexandre Ioos',
+    initials: 'AI',
+    role: 'Co-fondateur',
+    bgClass: 'bg-secondary/80',
+  },
 ];
 
 const bureau: Founder[] = [
@@ -266,12 +276,16 @@ const bureau: Founder[] = [
 // donnees de demo et ont ete retires : mieux vaut ne rien afficher que du faux.
 // Cf. .planning/ACTIONS-HUMAINES.md
 // Les deux editions n'ont pas roule avec le meme trio.
-// 2020 : Hugo, Milan et un troisieme cycliste dont le nom reste a retrouver
-//        (cf. .planning/ACTIONS-HUMAINES.md) — on ne l'invente pas (ADR-012).
+// 2020 : Hugo, Milan et Alexandre Ioos. Le nom du troisieme manquait a
+//        l'export Strapi ; l'association l'a nomme elle-meme dans sa
+//        publication de novembre 2024 (« nous y associons Alexandre Ioos avec
+//        qui nous avons partage la premiere edition »). Source publique de
+//        l'association, donc pas une reconstitution (ADR-012).
 // 2024 : Hugo, Milan et Yves Gerard.
 const cyclists2020: Cyclist[] = [
   { name: 'Hugo Nicaise' },
   { name: 'Milan Hrmo' },
+  { name: 'Alexandre Ioos' },
 ];
 const cyclists2024: Cyclist[] = [
   { name: 'Hugo Nicaise' },
@@ -286,7 +300,9 @@ const editions = [
     parcours: '1 327 km',
     cyclistes: cyclists2020,
     avatarClass: 'bg-primary/80',
-    note: "Un troisième cycliste a participé à cette première édition.",
+    // La mention « un troisième cycliste a participé » n'a plus lieu d'être :
+    // il est nommé, cf. `cyclists2020`.
+    note: '',
     resume: '1 327 kilomètres parcourus du nord au sud de la France.',
   },
   {
