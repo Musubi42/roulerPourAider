@@ -49,6 +49,11 @@
       "x": 447.25,
       "y": 179.22,
       "photo": "/steps/verneuil-en-halatte.webp",
+      "cadrage": {
+        "zoom": 1.15,
+        "x": -0.07,
+        "y": 0.1
+      },
       "distanceKm": 105,
       "estime": false,
       "cumulKm": 0,
@@ -63,6 +68,11 @@
       "x": 425.12,
       "y": 220.43,
       "photo": "/steps/versailles.webp",
+      "cadrage": {
+        "zoom": 1.45,
+        "x": -0.07,
+        "y": -0.05
+      },
       "distanceKm": 178,
       "estime": false,
       "cumulKm": 105,
@@ -77,6 +87,7 @@
       "x": 377.57,
       "y": 323.35,
       "photo": "/steps/blois.webp",
+      "cadrage": null,
       "distanceKm": 175,
       "estime": false,
       "cumulKm": 283,
@@ -91,6 +102,11 @@
       "x": 317.49,
       "y": 408.72,
       "photo": "/steps/poitiers.webp",
+      "cadrage": {
+        "zoom": 1.15,
+        "x": 0.1,
+        "y": 0
+      },
       "distanceKm": 197,
       "estime": false,
       "cumulKm": 458,
@@ -105,6 +121,11 @@
       "x": 232.68,
       "y": 486.92,
       "photo": "/steps/royan.webp",
+      "cadrage": {
+        "zoom": 1.45,
+        "x": 0.08,
+        "y": -0.02
+      },
       "distanceKm": 241,
       "estime": false,
       "cumulKm": 655,
@@ -119,6 +140,7 @@
       "x": 257.86,
       "y": 637.42,
       "photo": "/steps/mont-de-marsan.webp",
+      "cadrage": null,
       "distanceKm": 113,
       "estime": false,
       "cumulKm": 896,
@@ -133,6 +155,7 @@
       "x": 283.2,
       "y": 706.7,
       "photo": "/steps/lourdes.webp",
+      "cadrage": null,
       "distanceKm": 83,
       "estime": false,
       "cumulKm": 1009,
@@ -147,6 +170,11 @@
       "x": 311.07,
       "y": 733.68,
       "photo": "/steps/loudenvielle.webp",
+      "cadrage": {
+        "zoom": 1.45,
+        "x": -0.08,
+        "y": 0.05
+      },
       "distanceKm": 203,
       "estime": false,
       "cumulKm": 1092,
@@ -161,6 +189,11 @@
       "x": 391.44,
       "y": 742.01,
       "photo": "/steps/plateau-de-beille.webp",
+      "cadrage": {
+        "zoom": 1.17,
+        "x": -0.08,
+        "y": 0.11
+      },
       "distanceKm": 219,
       "estime": false,
       "cumulKm": 1295,
@@ -175,6 +208,7 @@
       "x": 487.82,
       "y": 689.18,
       "photo": "/steps/beziers.webp",
+      "cadrage": null,
       "distanceKm": 176,
       "estime": false,
       "cumulKm": 1514,
@@ -189,6 +223,7 @@
       "x": 585.98,
       "y": 635.93,
       "photo": "/steps/avignon.webp",
+      "cadrage": null,
       "distanceKm": 165,
       "estime": true,
       "cumulKm": 1690,
@@ -203,6 +238,11 @@
       "x": 655.29,
       "y": 612.43,
       "photo": "/steps/sisteron.webp",
+      "cadrage": {
+        "zoom": 1.05,
+        "x": -0.05,
+        "y": 0
+      },
       "distanceKm": 105,
       "estime": true,
       "cumulKm": 1855,
@@ -217,6 +257,11 @@
       "x": 698.28,
       "y": 594.5,
       "photo": "/steps/barcelonnette.webp",
+      "cadrage": {
+        "zoom": 1,
+        "x": 0.02,
+        "y": 0
+      },
       "distanceKm": 124,
       "estime": false,
       "cumulKm": 1960,
@@ -231,6 +276,11 @@
       "x": 676.31,
       "y": 519.07,
       "photo": "/steps/st-jean-de-maurienne.webp",
+      "cadrage": {
+        "zoom": 1.1,
+        "x": -0.02,
+        "y": -0.08
+      },
       "distanceKm": 125,
       "estime": true,
       "cumulKm": 2084,
@@ -245,6 +295,7 @@
       "x": 661.18,
       "y": 466.1,
       "photo": "/steps/annecy.webp",
+      "cadrage": null,
       "distanceKm": 142,
       "estime": false,
       "cumulKm": 2209,
@@ -259,6 +310,11 @@
       "x": 624.51,
       "y": 401.11,
       "photo": "/steps/lons-le-saunier.webp",
+      "cadrage": {
+        "zoom": 1.1,
+        "x": 0.04,
+        "y": 0.08
+      },
       "distanceKm": 191,
       "estime": false,
       "cumulKm": 2351,
@@ -273,6 +329,7 @@
       "x": 596.92,
       "y": 278.24,
       "photo": "/steps/chaumont.webp",
+      "cadrage": null,
       "distanceKm": 265,
       "estime": true,
       "cumulKm": 2542,
@@ -287,6 +344,11 @@
       "x": 532.18,
       "y": 181.08,
       "photo": "/steps/reims.webp",
+      "cadrage": {
+        "zoom": 1.15,
+        "x": 0,
+        "y": 0.1
+      },
       "distanceKm": 193,
       "estime": true,
       "cumulKm": 2807,

@@ -2,22 +2,33 @@
 
 ## Project Overview
 
-A French charitable cycling association website celebrating the successful €100K fundraiser for **Hôpital Necker - Enfants malades AP-HP** (Paris children's hospital). Founded in 2019 by two students from Oise.
+A French charitable cycling association website documenting the money raised for **Hôpital Necker - Enfants malades AP-HP** (Paris children's hospital). Founded in 2019 by students from the Oise.
 
-- **1st edition (2020):** Lille to Nice, raised €33,000+
-- **2nd edition (2024):** Tour de France (3,000 km, 18 stages, July 7-25), raised €100,000+
-- **Status:** Campaign completed - site is a victory/celebration page ("100 000 merci")
+- **1st edition (2020):** Lille to Nice, 1 327 km, **33 324 €**
+- **2nd edition (2024):** Tour de France (3 000 km, 18 stages, July 7-25), **70 523 €**
+- **Total handed over:** **103 847 €** on 22 November 2024, in two cheques, from 605 donors, over 4 327 km
+- **Status:** Over — no third edition. The site is a memorial ("100 000 merci")
+
+> ⚠️ **Never write "100 000 €" in body copy.** It is the brand tagline, not an
+> amount. The real figures are the ones above, taken from the cheques
+> photographed on 22/11/2024 (`public/remise-des-fonds/`). See ADR-011 / ADR-015.
 
 ## Tech Stack
 
-- **Framework:** Nuxt 3 (v3.9.0) - SPA mode (`ssr: false`)
+- **Framework:** Nuxt 3 (v3.9.0), `ssr: true` — prerendered at build time by
+  Nitro, served as static HTML by the Vercel CDN. This is NOT a Node server:
+  `ssr: true` is what puts the content and the share tags in the delivered
+  HTML, which social preview bots need since they don't run JavaScript.
 - **UI:** Vue 3 + TypeScript
-- **Styling:** Tailwind CSS 3.4 + custom Omnes font family (8 weights)
-- **Animations:** GSAP (ScrollTrigger + MotionPathPlugin) + @vueuse/motion
-- **Carousel:** Swiper (nuxt-swiper)
-- **State:** Pinia
-- **Deployment:** Vercel (static SPA)
+- **Styling:** Tailwind CSS 3.4 + custom Omnes font family (6 weights, subset
+  to latin — see `utils/buildFonts.mjs`)
+- **Animations:** GSAP (ScrollTrigger + MotionPathPlugin)
+- **Deployment:** Vercel (static, prerendered)
 - **Package manager:** pnpm
+
+No Pinia, no Swiper, no @vueuse/motion, and **no third-party scripts at all** —
+no analytics, no tag manager. The site loads nothing from an external origin;
+keep it that way.
 
 ## Color Palette
 
@@ -34,7 +45,7 @@ A French charitable cycling association website celebrating the successful €10
 ```
 pages/
   index.vue              # Victory landing page (hero, impact, map, press, closing)
-  notre-aventure.vue     # Documentary timeline (2019-2024)
+  notre-aventure.vue     # Le récit en 6 actes (2019 → après)
   equipe.vue             # Founders, cyclists, partners, supporters
   presse.vue             # Consolidated press (articles, TV, radio)
   contact.vue            # Static contact info
@@ -46,7 +57,8 @@ components/
     HeroVictory.vue      # Full-screen hero with "100 000 merci" counter
     ImpactCards.vue       # What donations achieved (6 goals)
     FranceMap.vue         # SVG France map with GSAP cyclist animation
-    Timeline.vue          # Vertical scroll timeline (5 milestones)
+    RouteStory.vue        # Le récit : rail sticky (la route de TourMap redressée) + 6 chapitres
+                          #   contenu dans data/recit.js
     StatCounter.vue       # GSAP animated number counters
     PressHighlights.vue   # Homepage press preview with quotes
     PressFull.vue         # Full press page with tabs
@@ -62,15 +74,17 @@ layouts/
 
 plugins/
   gsap.client.js         # GSAP ScrollTrigger + MotionPath registration
-  clarity-plugin.js      # Microsoft Clarity
-  google-analytics.client.js  # GA4
+                         #   (the only plugin — Clarity and GA4 are gone)
 
 composables/
   useScrollAnimation.js  # Reusable GSAP scroll animations (fadeIn, bounceIn, stagger, drawLine)
   useHeaderActiveLink.js # Header nav state
 
 data/
-  locations.js           # 18 cycling stages with coordinates
+  etapes-2024.js         # Les 18 étapes (source de vérité, → utils/buildMap.mjs)
+  recit.js               # Les 6 actes de /notre-aventure (textes, chiffres, photos)
+  presse.json            # Retombées presse curées
+  partenaires.json       # Partenaires
 ```
 
 ## Key Patterns
@@ -97,10 +111,23 @@ pnpm build          # Production build
 pnpm preview        # Preview production build
 ```
 
+⚠️ **Arrêter le serveur de dev proprement.** `nuxt dev` lance un processus enfant
+`nuxi.mjs _dev` que `pkill -f "nuxt dev"` ne tue pas. L'orphelin continue de
+réécrire `.nuxt` en mode dev, ce qui casse le build suivant (500 au prérendu, ou
+`#internal/nitro` en production) et sature les ports 3000-3100.
+
+```bash
+pkill -f "nuxi.mjs _dev"
+lsof -ti tcp:3000 -sTCP:LISTEN | xargs -r kill -9
+rm -rf .nuxt .output   # si un build a déjà été corrompu
+```
+
+Ne jamais lancer `pnpm build` pendant qu'un serveur de dev tourne. Voir ADR-017.
+
 ## TODOs
 
 - Replace founder/cyclist placeholder photos with real images
-- Add real 2024 cyclist names
+- Récupérer le mot signé de clôture de Hugo et Milan (`motFondateurs`, pages/notre-aventure.vue)
 - Add remaining partner data (logos, descriptions) from old Strapi database
 - Replace placeholder press article URLs with real links
 - Fix Yoann Offredo image filename (has leading space)
