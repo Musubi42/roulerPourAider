@@ -63,10 +63,7 @@
                   v-for="(layer, li) in layers"
                   :key="li"
                   :href="layer.href || undefined"
-                  :x="vb.x"
-                  :y="vb.y"
-                  :width="vb.width"
-                  :height="vb.height"
+                  v-bind="rectPhoto(layer.cadrage)"
                   preserveAspectRatio="xMidYMid slice"
                   class="tourmap-photo transition-opacity duration-500 ease-out"
                   :style="{ opacity: layer.href && frontLayer === li ? 1 : 0 }"
@@ -324,16 +321,55 @@ const staticMode = ref(true);
 
 const active = computed(() => etapes[activeIndex.value]);
 
+/**
+ * Le socle des photos : la silhouette de la France, et rien d'autre.
+ *
+ * Les photos NE sont PAS calées sur la fenêtre de la carte, qui s'élargit sur
+ * grand écran pour loger les étiquettes de villes. Elles le seraient que le
+ * même réglage donnerait deux cadrages différents selon la taille d'écran, et
+ * sur des axes différents : la fenêtre large est en 1,25, la serrée en 0,98,
+ * et les photos en 1,19 tombent entre les deux. Calées sur la silhouette, qui
+ * ne change jamais, un réglage vaut pour les deux affichages.
+ */
+const socle = mapData.viewBoxTight;
+
+/**
+ * Le rectangle où poser une photo, d'après le `cadrage` de son étape.
+ *
+ * À `zoom: 1` la photo couvre tout juste la silhouette : la décaler
+ * découvrirait le fond vert. La latitude de décalage est donc de ±(zoom−1)/2 —
+ * pour bouger, il faut d'abord agrandir. Même règle que dans `data/recit.js`.
+ */
+type Cadrage = { zoom?: number; x?: number; y?: number } | null;
+
+const rectPhoto = (cadrage: Cadrage) => {
+  const { zoom = 1, x = 0, y = 0 } = cadrage || {};
+  const width = socle.width * zoom;
+  const height = socle.height * zoom;
+  return {
+    x: socle.x - (width - socle.width) / 2 + x * socle.width,
+    y: socle.y - (height - socle.height) / 2 + y * socle.height,
+    width,
+    height,
+  };
+};
+
 // Deux calques d'image qui alternent : on ne charge la photo qu'au moment
 // où l'étape devient active, jamais les 18 d'un coup (4,9 Mo au total).
-const layers = ref<{ href: string | null }[]>([{ href: null }, { href: null }]);
+// Le cadrage voyage avec le calque, pas avec l'étape active : pendant le
+// fondu, la photo sortante doit garder le sien.
+const layers = ref<{ href: string | null; cadrage: Cadrage }[]>([
+  { href: null, cadrage: null },
+  { href: null, cadrage: null },
+]);
 const frontLayer = ref(0);
 const loaded = new Map<string, boolean>();
 
-function showPhoto(src: string) {
+function showPhoto(etape: { photo: string; cadrage?: Cadrage }) {
+  const src = etape.photo;
   const back = 1 - frontLayer.value;
   const swap = () => {
-    layers.value[back].href = src;
+    layers.value[back] = { href: src, cadrage: etape.cadrage ?? null };
     frontLayer.value = back;
   };
   if (loaded.get(src)) return swap();
@@ -349,7 +385,7 @@ function showPhoto(src: string) {
 }
 
 watch(activeIndex, (i) => {
-  showPhoto(etapes[i].photo);
+  showPhoto(etapes[i]);
 
   // On amorce les DEUX étapes suivantes pendant qu'on regarde l'actuelle.
   // Chaque étape occupe ~23vh de scroll et une photo met environ 750 ms à
@@ -405,7 +441,7 @@ onMounted(async () => {
   if (!path || !halo || !rider || !sectionEl.value) return;
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    showPhoto(etapes[0].photo);
+    showPhoto(etapes[0]);
     return; // staticMode reste vrai : tracé complet, pas de vélo, liste des étapes
   }
 
@@ -491,7 +527,7 @@ onMounted(async () => {
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update, { passive: true });
     update();
-    showPhoto(etapes[0].photo);
+    showPhoto(etapes[0]);
   };
 
   const io = new IntersectionObserver(

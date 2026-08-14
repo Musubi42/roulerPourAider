@@ -22,10 +22,56 @@
  *   fb     identifiant du post Facebook (la partie après /posts/).
  *          `null` = post non retrouvé.
  *   label  côté où poser l'étiquette sur la carte : left | right | bottom
+ *
+ *   cadrage  Où placer la photo derrière la silhouette de la France, quand le
+ *            cadrage par défaut tombe mal (un poteau au centre, un panneau
+ *            coupé par la Bretagne). Absent = photo centrée, ce qui convient à
+ *            la plupart. `{ zoom, x, y }` :
+ *
+ *              zoom  1 = la photo couvre juste la silhouette. 1.2 = +20 %.
+ *              x, y  décalage, en fraction de la silhouette. Positif = la photo
+ *                    descend / part à droite, donc on voit plus HAUT / plus à
+ *                    GAUCHE dedans.
+ *
+ *            Au-delà de ±((zoom−1)/2 + 3 %), le décalage découvre le fond vert
+ *            aux extrémités du contour. Les 3 % sont le PADDING que `buildMap`
+ *            laisse autour de la silhouette : ils offrent un peu de course même
+ *            à `zoom: 1`, mais guère plus. Pour décaler franchement, il faut
+ *            zoomer.
+ *
+ *            Les valeurs valent pour les deux affichages : la photo est calée
+ *            sur la silhouette (`viewBoxTight`), pas sur la fenêtre de la carte,
+ *            qui elle s'élargit sur grand écran pour loger les étiquettes.
+ *
+ * ── RÉGLER UN CADRAGE, DANS LE NAVIGATEUR ────────────────────────────────
+ * Se régler à l'œil, sur la carte de l'accueil, plutôt qu'à l'aveugle ici.
+ * Ouvrir la console sur `/`, coller une fois :
+ *
+ *   window.carte = (zoom = 1, dx = 0, dy = 0) => {
+ *     const S = { x: 6.81, y: 0, w: 786.38, h: 800 };   // la silhouette
+ *     const width = S.w * zoom, height = S.h * zoom;
+ *     const r = {
+ *       x: S.x - (width - S.w) / 2 + dx * S.w,
+ *       y: S.y - (height - S.h) / 2 + dy * S.h,
+ *       width, height,
+ *     };
+ *     document.querySelectorAll('.tourmap-photo').forEach(img =>
+ *       Object.entries(r).forEach(([k, v]) => img.setAttribute(k, v)));
+ *     const marge = ((zoom - 1) / 2 * 100 + 3).toFixed(1);
+ *     console.log(`cadrage: { zoom: ${zoom}, x: ${dx}, y: ${dy} },   // marge ±${marge}%`);
+ *   };
+ *
+ * puis, arrêté sur l'étape à régler : `carte(1.15, 0.1, 0)`. La console recrache
+ * la ligne à recopier ici. Deux pièges : dès qu'on scrolle vers une autre étape,
+ * Vue redessine et efface les attributs posés à la main ; et l'outil ne vérifie
+ * PAS que le contour reste couvert. Après recopie, faire tourner
+ * `node utils/buildMap.mjs`, qui lui le vérifie et refuse les cadrages qui
+ * laissent apparaître le fond.
  */
 export const etapes2024 = [
   {
     slug: 'verneuil-en-halatte',
+    cadrage: { zoom: 1.15, x: -0.07, y: 0.1 },
     ville: 'Verneuil-en-Halatte',
     vers: 'Versailles',
     latLng: [49.2833, 2.5167],
@@ -35,6 +81,7 @@ export const etapes2024 = [
   },
   {
     slug: 'versailles',
+    cadrage: { zoom: 1.45, x: -0.07, y: -0.05 },
     ville: 'Versailles',
     vers: 'Blois',
     latLng: [48.8014, 2.1301],
@@ -53,6 +100,7 @@ export const etapes2024 = [
   },
   {
     slug: 'poitiers',
+    cadrage: { zoom: 1.15, x: 0.1, y: 0 },
     ville: 'Poitiers',
     vers: 'Royan',
     latLng: [46.5802, 0.3404],
@@ -62,6 +110,7 @@ export const etapes2024 = [
   },
   {
     slug: 'royan',
+    cadrage: { zoom: 1.45, x: 0.08, y: -0.02 },
     ville: 'Royan',
     vers: 'Mont-de-Marsan',
     latLng: [45.628, -1.0281],
@@ -89,6 +138,7 @@ export const etapes2024 = [
   },
   {
     slug: 'loudenvielle',
+    cadrage: { zoom: 1.45, x: -0.08, y: 0.05 },
     ville: 'Loudenvielle',
     vers: 'Plateau de Beille',
     latLng: [42.7957, 0.4122],
@@ -98,6 +148,7 @@ export const etapes2024 = [
   },
   {
     slug: 'plateau-de-beille',
+    cadrage: { zoom: 1.17, x: -0.08, y: 0.11 },
     ville: 'Plateau de Beille',
     vers: 'Béziers',
     latLng: [42.7219, 1.6879],
@@ -127,6 +178,7 @@ export const etapes2024 = [
   {
     // Étape suivie par France Télévisions. Le post ne donne pas de kilométrage.
     slug: 'sisteron',
+    cadrage: { zoom: 1.05, x: -0.05, y: 0 },
     ville: 'Sisteron',
     vers: 'Barcelonnette',
     latLng: [44.1985, 5.9396],
@@ -136,6 +188,7 @@ export const etapes2024 = [
   },
   {
     slug: 'barcelonnette',
+    cadrage: { zoom: 1, x: 0.02, y: 0 },
     ville: 'Barcelonnette',
     vers: 'Saint-Jean-de-Maurienne',
     latLng: [44.3863, 6.6505],
@@ -147,6 +200,7 @@ export const etapes2024 = [
     // ⬅ POST À RETROUVER. L'étape « en chanson » : elle est décrite dans les
     // publications, mais sans kilométrage ni permalien identifié.
     slug: 'st-jean-de-maurienne',
+    cadrage: { zoom: 1.1, x: -0.02, y: -0.08 },
     ville: 'Saint-Jean-de-Maurienne',
     vers: 'Annecy',
     latLng: [45.2754, 6.3449],
@@ -168,6 +222,7 @@ export const etapes2024 = [
   },
   {
     slug: 'lons-le-saunier',
+    cadrage: { zoom: 1.1, x: 0.04, y: 0.08 },
     ville: 'Lons-le-Saunier',
     vers: 'Chaumont',
     latLng: [46.6714, 5.5508],
@@ -189,6 +244,7 @@ export const etapes2024 = [
     // ⬅ POST À RETROUVER. Dernière étape, passée par Soissons.
     // Arrivée à Verneuil-en-Halatte le 24 juillet 2024.
     slug: 'reims',
+    cadrage: { zoom: 1.15, x: 0, y: 0.1 },
     ville: 'Reims',
     vers: 'Verneuil-en-Halatte',
     latLng: [49.2583, 4.0317],
