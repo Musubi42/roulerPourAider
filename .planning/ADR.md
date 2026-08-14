@@ -443,13 +443,17 @@ et 2 numéros de téléphone personnels**, dans `contacts.json`, `articles.json`
 
 **Décision.** Le dossier est supprimé du dépôt. Les commentaires de `TeamGrid.vue`,
 `PartnerThanks.vue` et `PressFull.vue` qui le citaient renvoient désormais vers
-`git show cdecfd1:data/strapi/<fichier>` : la traçabilité est conservée sans que le
+`git show archive/export-strapi:data/strapi/<fichier>` : la traçabilité est conservée sans que le
 fichier traîne dans l'arbre de travail.
+
+> 🔄 **Le point ci-dessous a été traité depuis — voir ADR-020.** L'historique a
+> été réécrit le 14/08/2026 et les trois adresses n'y figurent plus. Le reste de
+> cet ADR reste valable ; ce paragraphe décrit l'état entre les deux décisions.
 
 **⚠️ Ce que cette décision ne fait PAS.** Supprimer un fichier ne l'efface pas de
 l'historique Git. Les coordonnées personnelles restent lisibles dans le commit
-`cdecfd1`, présent sur `main` comme sur `staging`, dans **un dépôt GitHub public**.
-Quiconque clone le dépôt les obtient.
+qui a ajouté l'export, présent sur `main` comme sur `staging`, dans **un dépôt
+GitHub public**. Quiconque clone le dépôt les obtient.
 
 Les effacer vraiment demanderait de réécrire l'historique (`git filter-repo`), de
 forcer la publication, et de demander à GitHub de purger ses caches — une opération
@@ -518,3 +522,65 @@ de 0,0216 vient de l'animation d'entrée du hero, largement sous le seuil.
 chaîne finale, suffixe compris (`103 847 €`, pas `103 847`), sinon la largeur
 réservée est fausse. Il est `aria-hidden` : sans cela, les lecteurs d'écran
 annonceraient le nombre deux fois.
+
+---
+
+## ADR-020 — L'historique est réécrit pour retirer les trois adresses
+
+**Date** : 2026-08-14 · **Remplace** le point en suspens d'ADR-018
+
+**Contexte.** ADR-018 laissait ouvert le sort des trois adresses e-mail
+personnelles de Hugo Nicaise, Milan Hrmo et Yves Gérard, présentes dans
+`data/strapi/contacts.json` et donc dans l'historique d'un dépôt GitHub public,
+même après suppression du fichier. Trois issues étaient posées ; l'association a
+tranché pour la réécriture.
+
+**Décision.** `git filter-repo --replace-text` a substitué les trois adresses par
+`retire-du-depot@roulerpouraider.fr` dans **tout** l'historique, puis `main` a été
+republié en forçant.
+
+**Redaction plutôt que suppression.** Le fichier n'a pas été effacé de
+l'historique : seules les adresses y ont été remplacées. Le reste de l'export —
+noms, rôles, partenaires, retombées presse — est la **source de provenance** des
+données affichées sur le site, celle qui permet de répondre à « d'où vient ce
+nom ? » sans avoir à faire confiance à quelqu'un. C'est exactement ce qu'ADR-012
+cherche à protéger. Retirer le tout aurait réglé le problème de vie privée en
+détruisant une garantie d'exactitude.
+
+**Vérifications faites après coup**, dans cet ordre :
+
+1. Plus aucune des trois adresses dans le moindre blob de l'historique.
+2. `roulerpouraider60@gmail.com`, l'adresse **générique** de l'association, est
+   intacte — elle est publiée sur `/contact` et `/mentions-legales`, elle devait
+   survivre. Elle est en `@gmail.com`, donc un filtre trop large l'aurait emportée.
+3. **L'arbre de `HEAD` est bit-pour-bit identique** à celui d'avant réécriture
+   (`e1e5973`) : aucun fichier livré n'a changé, le site déployé est le même.
+4. 109 commits avant, 109 après : aucun commit perdu.
+
+**Le tag `archive/export-strapi`.** La réécriture change le SHA de tous les
+commits à partir du commit touché. Les commentaires de `TeamGrid.vue`,
+`PartnerThanks.vue`, `PressFull.vue` et d'ADR-018 pointaient vers `cdecfd1`, qui
+n'existe plus. Ils renvoient désormais vers un **tag**, pas un SHA :
+
+```bash
+git show archive/export-strapi:data/strapi/contacts.json
+```
+
+Un tag survit aux réécritures futures ; un SHA écrit en dur, non. Toute référence
+durable à un commit dans ce dépôt doit passer par un tag.
+
+**Ce que la réécriture ne garantit pas.** Elle ne rattrape pas ce qui est déjà
+sorti : les clones et forks existants gardent l'ancien historique, et GitHub
+conserve un temps les objets orphelins, accessibles par URL directe si on connaît
+le SHA. Pour une purge complète côté GitHub il faut ouvrir un ticket au support.
+Vu l'enjeu — trois adresses de contact d'association, exposées quelques jours sur
+un dépôt à faible audience, sans fork connu — cela n'a pas été demandé.
+
+**Conséquences.**
+- Une sauvegarde complète de l'état d'avant existe en dehors du dépôt :
+  `../roulerPourAider-AVANT-REWRITE.bundle`. **À détruire une fois la réécriture
+  jugée définitive** : elle contient les adresses.
+- Tout clone antérieur au 14/08/2026 est désynchronisé. Le remède est de
+  recloner, pas de tirer.
+- Ne plus jamais commiter un export de backoffice : le passer par un chemin
+  ignoré de Git.
