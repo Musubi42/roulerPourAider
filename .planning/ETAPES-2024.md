@@ -137,7 +137,7 @@ assumé, pas une mesure.
 
 **Montants.** Le dernier récit publié à l'arrivée annonce « plus de 58 000 € »
 puis « 60 000 mercis ». Ce ne sont pas les chiffres finaux : les dons ont
-continué après l'arrivée. Le montant retenu reste **70 458 €** pour 2024
+continué après l'arrivée. Le montant retenu reste **70 523 €** pour 2024
 (cf. ADR-011).
 
 ---

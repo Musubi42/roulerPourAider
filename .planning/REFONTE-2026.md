@@ -35,7 +35,7 @@ Décidé. On assume une clôture définitive. Pas d'architecture "réactivable",
 ## 2. Le storytelling
 
 ### Le fil rouge
-> **Deux éditions, cinq ans, 103 782 €. Une promesse tenue.**
+> **Deux éditions, cinq ans, 103 847 €. Une promesse tenue.**
 
 L'angle n'est pas le tire-larmes ("ceux qui ne peuvent plus courir"). L'angle est **la promesse tenue** : des étudiants ont annoncé un truc dingue, ils l'ont fait, et voici la preuve chiffrée. C'est plus sobre, plus adulte, et infiniment plus efficace en portfolio.
 
@@ -62,10 +62,10 @@ Chaque acte est une section sur la home, et se déplie en page dédiée.
 L'accroche est bonne, **à condition de l'énoncer comme un cumul** :
 
 ```
-33 324 € (édition 1) + 70 458 € (édition 2) = 103 782 €
+33 324 € (édition 1) + 70 523 € (édition 2) = 103 847 €
 ```
 
-Formulation validée : « **100 000 merci** — deux éditions, cinq ans, 103 782 € récoltés pour l'Hôpital Necker. »
+Formulation validée : « **100 000 merci** — deux éditions, cinq ans, 103 847 € récoltés pour l'Hôpital Necker. »
 
 À ne jamais faire : attribuer 100 000 € à la seule édition 2024.
 
@@ -87,8 +87,8 @@ Rôle : **le résumé exécutif**. Quelqu'un qui ne lit que cette page doit avoi
 | # | Section | Contenu | Données nécessaires | Source |
 |---|---|---|---|---|
 | 1 | **Hero** | "100 000 merci" + sous-titre cumul + photo/vidéo de fond du tour | 1 visuel fort du tour 2024 | ❌ à fournir |
-| 2 | **Le bilan en chiffres** | 103 782 € · 605 donateurs · 4 327 km · 2 éditions · 5 ans | Chiffres | ✅ vérifiés (sauf km) |
-| 3 | **Les deux éditions** | 2 blocs côte à côte : 2019/20 Lille→Nice 1 327 km 33 324 € — 2024 Tour de France 3 000 km 70 458 € | Dates, km, montants | ⚠️ date éd. 1 à trancher |
+| 2 | **Le bilan en chiffres** | 103 847 € · 605 donateurs · 4 327 km · 2 éditions · 5 ans | Chiffres | ✅ vérifiés (sauf km) |
+| 3 | **Les deux éditions** | 2 blocs côte à côte : 2019/20 Lille→Nice 1 327 km 33 324 € — 2024 Tour de France 3 000 km 70 523 € | Dates, km, montants | ⚠️ date éd. 1 à trancher |
 | 4 | **Ce que vos dons ont financé** | Les 4 projets Necker, barres à 100 %, au passé | Libellés + montants réels | ⚠️ à confirmer avec l'asso |
 | 5 | **La carte** | Le tour 2024, 18 étapes, animation auto (voir §4) | GeoJSON + étapes + distances réelles | ⚠️ distances placeholder |
 | 6 | **Les gens** | Aperçu : fondateurs + compteur bénévoles/partenaires → lien `/equipe` | Photos | ❌ Strapi |
@@ -196,7 +196,7 @@ Constaté sur les captures : les liens du header sont en **bleu `#2A5FA4` sur un
 | Fondateurs restants | Hugo Nicaise, Milan Hrmo |
 | Nombre initial de fondateurs | 3 (un est parti) |
 | Édition 1 | Lille → Nice, **1 327 km**, **33 324 €** |
-| Édition 2 | Tour de France, 18 étapes, **70 458 €**, 7–25 juillet 2024 |
+| Édition 2 | Tour de France, 18 étapes, **70 523 €**, 7–25 juillet 2024 |
 | Donateurs | **605** |
 | Objectif éd. 2 | 60 000 € → atteint à **117 %** |
 | Label | Grande Cause Nationale (Ministère des Sports et des JOP) |

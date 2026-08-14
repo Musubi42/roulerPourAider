@@ -203,12 +203,12 @@ de conversion ni de campagne à optimiser, l'audience mesurée ne sert aucune d�
 
 **Contexte.** Le refactor affichait « 100 000 € » un peu partout, y compris attribués à la
 seule édition 2024. Or la réalité est : **33 324 €** en 2020 (Lille → Nice, 1 327 km) et
-**70 458 €** en 2024 (Tour de France, 3 000 km, 18 étapes, 117 % d'un objectif de
-60 000 €), soit **103 782 € cumulés** auprès de **605 donateurs** sur **4 327 km**.
+**70 523 €** en 2024 (Tour de France, 3 000 km, 18 étapes, 117 % d'un objectif de
+60 000 €), soit **103 847 € cumulés** auprès de **605 donateurs** sur **4 327 km**.
 
 **Décision.** Tous les chiffres affichés sont les montants réels.
 **« 100 000 merci » reste l'accroche de marque** (titre de la home, `<title>` SEO) — c'est
-une formule, pas un montant. Partout ailleurs, on écrit 103 782 €.
+une formule, pas un montant. Partout ailleurs, on écrit 103 847 €.
 
 **Conséquences.** Ne jamais réintroduire « 100 000 euros récoltés » dans un texte courant.
 Si un chiffre doit changer, le corriger dans `StatCounter.vue`, `HeroVictory.vue`,
@@ -295,3 +295,132 @@ publiée.** Aucun email ni téléphone personnel ne doit apparaître dans le ren
 **Conséquences.** Attention en branchant `contacts.json` sur la page équipe : ne mapper
 que `prenom`, `nom`, `role`. Le fichier étant commité, ne jamais l'exposer tel quel via
 une route ou un endpoint.
+
+---
+
+## ADR-015 — Les montants sont ceux des chèques, pas ceux estimés en août
+
+**Date** : 2026-08-13
+
+**Contexte.** L'ADR-011 avait figé le bilan à 70 458 € (édition 2) et 103 782 €
+(cumul), reconstitués à partir des sources disponibles à l'époque. Les photos de
+la remise des fonds, fournies depuis, montrent les **chèques eux-mêmes** :
+70 523 € et 103 847 €, datés du 22/11/2024, signés Hugo Nicaise et Milan Hrmo.
+La page Grande Cause Nationale du 13/12/2024 donne exactement les mêmes montants.
+
+**Décision.** Les montants affichés sont ceux des chèques :
+
+```
+33 324 € (édition 1) + 70 523 € (édition 2) = 103 847 €
+```
+
+L'écart avec les anciennes valeurs (+65 € sur le cumul) a été répercuté partout :
+`StatCounter.vue`, `HeroVictory.vue`, `PressFull.vue`, `ProofCards.vue`,
+`TeamGrid.vue`, `useSiteSeo.js`, les `useSeoMeta` des pages, et cette
+documentation.
+
+**Conséquences.**
+- Les originaux des trois photos sont archivés dans `archives/remise-des-fonds/`
+  (source de vérité), la sortie webp dans `public/remise-des-fonds/`.
+- `100 000 merci` reste l'accroche de marque. La règle de l'ADR-011 ne change pas,
+  seuls les chiffres changent.
+- Une preuve photographique prime sur une reconstitution : ne pas « corriger »
+  ces montants sans une source de même niveau.
+
+---
+
+## ADR-016 — Le récit n'a plus de timeline : il a un rail
+
+**Date** : 2026-08-13
+
+**Contexte.** `/notre-aventure` affichait une timeline verticale classique — ligne
+centrale, pastilles d'année, cartes alternées gauche/droite. Deux problèmes. Le
+motif est le plus générique qui existe, sur un site dont l'objectif n°1 est de
+servir de vitrine. Et il travaillait contre son propre contenu : les cartes
+plafonnaient à 45 % de largeur, donc les photos d'étapes — le meilleur matériau
+du projet — étaient réduites à des vignettes de 190 px de haut. La ligne verte
+centrale répétait par-dessus le marché le tracé de la carte d'accueil, sans rien
+y ajouter.
+
+**Décision.** `components/victory/RouteStory.vue` remplace `Timeline.vue`. Le fil
+de la page est **le tracé de `TourMap.vue` redressé à la verticale** : mêmes
+couleurs (`#2A5FA4` plein sur halo crème, filigrane pointillé `10 9` pour ce qui
+reste à lire), mêmes pastilles, **même vélo dessiné en primitives**. Le cycliste
+qui fait le tour de France sur l'accueil descend ici les cinq ans. Les cartes
+disparaissent : chaque acte est un chapitre pleine largeur.
+
+Le rail porte un compteur, en or, **discret et non interpolé** — ce sont des
+faits, pas un odomètre. Il monte à 1 327 km en 2020, **ne bouge pas pendant
+2021-2023** (c'est précisément ce que cet acte raconte), repart à 4 327 km en
+juillet 2024, puis **change d'unité** à la remise des chèques : la route s'arrête,
+le chiffre qui reste est en euros.
+
+**Conséquences.**
+- Les valeurs de tracé sont **copiées de `TourMap.vue`**. Ne pas les
+  « harmoniser » avec d'autres composants : leur seul intérêt est d'être
+  identiques à celles de la carte.
+- Le contenu vit dans `data/recit.js`, pas dans le composant.
+- Les jalons du rail sont de vrais liens (`<a href="#acte-…">`) : il sert aussi de
+  sommaire, navigable au clavier. Les cercles SVG sont décoratifs.
+- En dessous de `lg`, le rail se replie en bandeau collant sous le header.
+- `prefers-reduced-motion` : tracé entier visible, pas de vélo, mais l'acte
+  courant et le compteur restent suivis.
+
+---
+
+## ADR-017 — La console de `pnpm dev` est tenue propre
+
+**Date** : 2026-08-13
+
+**Contexte.** `pnpm dev` sortait, à chaque démarrage et en boucle pendant le
+travail, une trentaine de lignes de bruit : deux `DeprecationWarning` (DEP0180
+`fs.Stats`, DEP0187 `fs.existsSync`) et une répétition sans fin de
+`Warning: File descriptor NNN opened in unmanaged mode twice`. Aucune ne vient du
+code du projet : ce sont les internes de Nitro 2.8 et du watcher de Vite, sur un
+Node 24 bien plus récent que Nuxt 3.9 (janvier 2024). Le bruit avait un coût
+réel : il noyait les vrais avertissements — dont celui, légitime, du provider
+d'images Vercel sur les `NuxtImg` sans `width`.
+
+**Décision.** `"dev": "NODE_NO_WARNINGS=1 nuxt dev"`.
+
+Ce drapeau ne masque **que les avertissements de process Node**. Tout ce que Nuxt,
+Vite et Nitro émettent passe par consola et reste affiché — y compris les erreurs
+et les `WARN`. Le projet, lui, n'émet aucun avertissement de process.
+
+`caniuse-lite` a été remis à jour dans la foulée, ce qui supprime le dernier
+avertissement restant.
+
+Les trois scripts (`dev`, `build`, `generate`) le portent, pour que la sortie de
+build soit lisible elle aussi.
+
+**⚠️ Le vrai piège, découvert au passage : les processus `nuxi _dev` orphelins.**
+`nuxt dev` lance un **processus enfant** `nuxi.mjs _dev` qui fait le vrai travail.
+Tuer le parent (`pkill -f "nuxt dev"`) ne le tue PAS : l'enfant survit, continue de
+surveiller le projet, et **réécrit `.nuxt/dist/server/server.mjs` en mode dev**.
+Sept orphelins s'étaient ainsi accumulés. Leurs conséquences, toutes déroutantes :
+
+- `pnpm build` échoue au prérendu sur un `Cannot read properties of undefined
+  (reading 'startsWith')` — le bundle serveur pointe vers le runtime `vite-node`,
+  qui n'existe qu'en dev ;
+- ou pire, il **passe** en produisant un bundle corrompu, et le site sert un 500
+  `Package import specifier "#internal/nitro" is not defined` ;
+- `pnpm dev` ne trouve plus un seul port libre entre 3000 et 3100.
+
+Pour arrêter proprement un serveur de dev :
+
+```bash
+pkill -f "nuxi.mjs _dev"     # l'enfant, celui qui écrit dans .nuxt
+lsof -ti tcp:3000 -sTCP:LISTEN | xargs -r kill -9
+```
+
+En cas de doute après un `.nuxt` douteux : `rm -rf .nuxt .output` puis rebuild.
+Ne jamais lancer `pnpm build` pendant qu'un serveur de dev tourne.
+
+**Conséquences.**
+- Ne pas remplacer par `--no-deprecation` seul : les avertissements de descripteur
+  de fichier, les plus nombreux, ne sont pas des dépréciations.
+- La bonne correction de fond serait de monter Nuxt de version. Sur un site figé
+  qui doit tenir des années sans maintenance (ADR-001), la mise à jour apporte
+  plus de risque que de valeur : on tait le bruit, on ne touche pas au moteur.
+- Si un jour un vrai avertissement Node doit être diagnostiqué :
+  `NODE_NO_WARNINGS=0 pnpm dev`.
