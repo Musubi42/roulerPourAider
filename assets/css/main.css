@@ -97,6 +97,42 @@ body {
     @apply px-6 py-16 md:px-12 md:py-24 lg:px-24;
   }
 
+  /* Compteurs animés : réserver la largeur finale.
+
+     Un compteur qui monte de 0 à 103 847 s'élargit d'un chiffre à la fois.
+     Chaque élargissement repousse ce qui suit et recentre la ligne — soit,
+     sur la durée de l'animation, une centaine de micro-décalages que le
+     navigateur compte comme du Cumulative Layout Shift. Sur mobile l'effet
+     restait sous le seuil ; sur écran large il portait le CLS de la page à
+     0,19, en zone « à améliorer ». Cf. ADR-019.
+
+     Le principe : un fantôme porte la valeur FINALE et fixe la largeur du
+     bloc une fois pour toutes ; la valeur qui s'anime se superpose à lui
+     dans la même cellule de grille. La boîte ne bouge donc jamais.
+
+     `tabular-nums` complète le dispositif : sans lui, un « 1 » est plus
+     étroit qu'un « 8 » et la largeur du nombre changerait encore à nombre
+     de chiffres constant. */
+  .counter-slot {
+    display: inline-grid;
+  }
+  .counter-slot > * {
+    grid-area: 1 / 1;
+  }
+  .counter-sizer {
+    visibility: hidden;
+  }
+  /* `justify-self` reste a `stretch` (la valeur par defaut) et le centrage se
+     fait par `text-align`. La nuance est tout le correctif : centrer la BOITE
+     la ferait retrecir autour du texte et se recentrer a chaque chiffre — le
+     navigateur y verrait encore un decalage. Etiree sur toute la cellule, sa
+     position ne change jamais ; seuls les glyphes se recentrent a l'interieur,
+     ce qui n'est pas un decalage de mise en page. */
+  .counter-value {
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
   /* Gold-accented section titles */
   .title-victory {
     @apply font-omnes font-bold text-3xl md:text-4xl text-secondary;

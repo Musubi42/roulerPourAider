@@ -469,3 +469,52 @@ Trois issues possibles, par ordre de coût croissant :
 **Conséquences.** Tant que le point 1 tient, ne pas présenter le dépôt comme exempt
 de données personnelles. Toute réintroduction d'un export de backoffice doit passer
 par un fichier ignoré de Git, jamais par un commit.
+
+---
+
+## ADR-019 — Un compteur animé réserve sa largeur finale
+
+**Date** : 2026-08-14
+
+**Contexte.** Deux compteurs montent de 0 à leur valeur : le titre du hero
+(`103 847 merci.`, en `text-9xl` sur grand écran) et les cinq chiffres de
+`StatCounter`. À chaque chiffre gagné, le nombre s'élargissait. Dans le hero, il
+repoussait « merci. » et recentrait tout le titre ; dans `StatCounter`, chaque
+nombre se recentrait dans sa colonne.
+
+Sur la durée des animations, cela produisait ~125 micro-décalages que le
+navigateur compte en Cumulative Layout Shift. **En viewport mobile l'effet
+restait sous le seuil (0,05) — c'est pourquoi il était passé inaperçu : les
+mesures de référence étaient prises en 500 px.** Mesuré en 1440 px, le CLS de la
+page montait à 0,0815, et à 0,19 en 1920 px : zone « à améliorer ».
+
+**Décision.** Un fantôme (`.counter-sizer`) porte la valeur **finale** et fixe la
+largeur du bloc une fois pour toutes. La valeur animée (`.counter-value`) se
+superpose à lui dans la même cellule d'une grille en ligne. `tabular-nums`
+complète : sans lui, un « 1 » plus étroit qu'un « 8 » ferait encore varier la
+largeur à nombre de chiffres constant.
+
+**Le détail qui fait tout le correctif.** La valeur animée doit rester en
+`justify-self: stretch` (la valeur par défaut) et se centrer par `text-align`.
+Une première version la centrait avec `justify-self: center` : la boîte se
+resserrait alors autour du texte et se recentrait à chaque chiffre. Le CLS
+n'était descendu qu'à 0,0815 → 0,0216 seulement après être passé à `text-align`.
+Étirée sur toute la cellule, la boîte ne bouge jamais ; seuls les glyphes se
+recentrent à l'intérieur, ce qui n'est pas un décalage de mise en page.
+
+**Mesures**, viewport 1440 × 900, même build servi localement :
+
+| | CLS | décalages |
+|---|---|---|
+| Avant | 0,0815 | 125 |
+| `justify-self: center` | 0,0815 | 125 |
+| `text-align: center` | **0,0216** | 17 |
+
+`SPAN.counter-value` disparaît entièrement des sources de décalage. Le reliquat
+de 0,0216 vient de l'animation d'entrée du hero, largement sous le seuil.
+
+**Conséquences.** Tout nouveau compteur animé doit utiliser `.counter-slot` /
+`.counter-sizer` / `.counter-value`. Le fantôme doit porter **exactement** la
+chaîne finale, suffixe compris (`103 847 €`, pas `103 847`), sinon la largeur
+réservée est fausse. Il est `aria-hidden` : sans cela, les lecteurs d'écran
+annonceraient le nombre deux fois.

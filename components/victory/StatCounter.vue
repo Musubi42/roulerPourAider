@@ -5,8 +5,15 @@
         <!-- Valeur finale dans le HTML : le prerendu figeait « 0 » pour les
              robots et les visiteurs sans JavaScript. L'animation repart de zero
              cote client uniquement (voir onMounted). -->
-        <span ref="statEls" class="text-3xl md:text-4xl font-black text-gold" :data-target="stat.value" :data-suffix="stat.suffix">
-          {{ stat.value.toLocaleString('fr-FR') }}{{ stat.suffix }}
+        <!-- Le fantome `counter-sizer` fige la largeur sur la valeur finale.
+             Sans lui, chaque chiffre gagne elargissait le nombre, qui se
+             recentrait dans sa colonne : une centaine de micro-decalages
+             comptes en CLS. Cf. ADR-019 et .counter-slot dans main.css. -->
+        <span class="counter-slot text-3xl md:text-4xl font-black text-gold">
+          <span class="counter-sizer" aria-hidden="true">{{ stat.value.toLocaleString('fr-FR') }}{{ stat.suffix }}</span>
+          <span ref="statEls" class="counter-value" :data-target="stat.value" :data-suffix="stat.suffix">
+            {{ stat.value.toLocaleString('fr-FR') }}{{ stat.suffix }}
+          </span>
         </span>
         <span class="mt-2 text-sm md:text-base text-secondary font-medium">{{ stat.label }}</span>
       </div>
