@@ -86,7 +86,7 @@ const proofs = [
     icone: 'roue',
     titre: 'Une promesse tenue',
     texte:
-      '4 327 kilomètres parcourus, 605 donateurs, 103 782 euros récoltés. Un projet mené jusqu\'au bout vaut mieux qu\'une bonne intention.',
+      '4 327 kilomètres parcourus, 103 847 euros remis à un hôpital. Un projet mené jusqu\'au bout vaut mieux qu\'une bonne intention.',
   },
   {
     icone: 'label',
