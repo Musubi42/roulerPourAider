@@ -160,11 +160,14 @@
 
 <script setup lang="ts">
 /**
- * Donnees figees depuis l'export Strapi du 11/08/2026 (ADR-002).
+ * Donnees figees depuis l'export Strapi du 11/08/2026 (ADR-002). L'export
+ * lui-meme a ete retire du depot ; il reste consultable via
+ * `git show cdecfd1:data/strapi/articles.json`.
  * Les 21 entrees inventees du refactor de fevrier ont ete supprimees (ADR-007).
  *
- * L'onglet « Passages radio » a ete retire : la collection `podcasts` du backoffice
- * est vide, et un onglet perpetuellement a zero n'apprend rien au visiteur.
+ * L'onglet « Passages radio » a ete retire : la collection `podcasts` de l'ancien
+ * backoffice etait vide, et un onglet perpetuellement a zero n'apprend rien au
+ * visiteur.
  */
 import presse from '~/data/presse.json';
 import { useScrollAnimation } from '~/composables/useScrollAnimation';

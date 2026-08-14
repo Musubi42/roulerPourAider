@@ -424,3 +424,48 @@ Ne jamais lancer `pnpm build` pendant qu'un serveur de dev tourne.
   plus de risque que de valeur : on tait le bruit, on ne touche pas au moteur.
 - Si un jour un vrai avertissement Node doit être diagnostiqué :
   `NODE_NO_WARNINGS=0 pnpm dev`.
+
+---
+
+## ADR-018 — L'export Strapi sort du dépôt, mais reste dans l'historique
+
+**Date** : 2026-08-14
+
+**Contexte.** `data/strapi/` (7 fichiers, 44 Ko) était l'export figé de l'ancien
+backoffice, fait le 11/08/2026. Depuis, plus une ligne de code ne le lisait : les
+données qu'il portait sont écrites en dur dans `data/*.js|json` et dans les
+composants. Il ne restait qu'une valeur de traçabilité — savoir d'où viennent les
+noms affichés sur le site.
+
+Un relevé automatique y a confirmé ce qu'annonçait l'ADR-009 : **3 adresses e-mail
+et 2 numéros de téléphone personnels**, dans `contacts.json`, `articles.json` et
+`reportage-tvs.json`.
+
+**Décision.** Le dossier est supprimé du dépôt. Les commentaires de `TeamGrid.vue`,
+`PartnerThanks.vue` et `PressFull.vue` qui le citaient renvoient désormais vers
+`git show cdecfd1:data/strapi/<fichier>` : la traçabilité est conservée sans que le
+fichier traîne dans l'arbre de travail.
+
+**⚠️ Ce que cette décision ne fait PAS.** Supprimer un fichier ne l'efface pas de
+l'historique Git. Les coordonnées personnelles restent lisibles dans le commit
+`cdecfd1`, présent sur `main` comme sur `staging`, dans **un dépôt GitHub public**.
+Quiconque clone le dépôt les obtient.
+
+Les effacer vraiment demanderait de réécrire l'historique (`git filter-repo`), de
+forcer la publication, et de demander à GitHub de purger ses caches — une opération
+qui invalide tous les clones existants. Elle n'a **pas** été menée ici : c'est un
+arbitrage à prendre en connaissance de cause, pas un oubli.
+
+Trois issues possibles, par ordre de coût croissant :
+
+1. **Ne rien faire.** Les trois personnes concernées sont les fondateurs et le
+   trésorier de l'association ; leurs coordonnées ont pu circuler par ailleurs. À
+   valider avec eux, pas à décider à leur place.
+2. **Passer le dépôt en privé.** Immédiat, réversible, sans réécriture. Coupe
+   l'accès public à l'historique. Le site déployé n'est pas affecté.
+3. **Réécrire l'historique.** La seule option qui efface réellement, la seule aussi
+   qui casse les clones et les liens de commit existants.
+
+**Conséquences.** Tant que le point 1 tient, ne pas présenter le dépôt comme exempt
+de données personnelles. Toute réintroduction d'un export de backoffice doit passer
+par un fichier ignoré de Git, jamais par un commit.
