@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
+    "build": "NODE_NO_WARNINGS=1 nuxt build",
+    "dev": "NODE_NO_WARNINGS=1 nuxt dev",
     "start": "nuxt start",
-    "generate": "GENERATE=true nuxt generate",
+    "generate": "NODE_NO_WARNINGS=1 GENERATE=true nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "export:strapi": "node --env-file=.env utils/exportStrapi.mjs",
@@ -33,5 +33,8 @@
     "gsap": "^3.14.2",
     "qs": "^6.12.0"
   },
-  "packageManager": "pnpm@8.6.11+sha256.6713c6bb13a7cd01d0cc86032ed1318188d10f4d87fd9aad6f131c81cb008551"
+  "packageManager": "pnpm@8.6.11+sha256.6713c6bb13a7cd01d0cc86032ed1318188d10f4d87fd9aad6f131c81cb008551",
+  "engines": {
+    "node": ">=20"
+  }
 }
