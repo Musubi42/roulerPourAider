@@ -5,7 +5,11 @@ export default defineNuxtConfig({
   // RACINE du systeme de fichiers. Nuxt fournit deja `~` et `@` par defaut.
   // Pas de tableau `plugins` : Nuxt auto-charge le dossier plugins/.
   // Les chemins absolus precedents ne resolvaient pas (5 warnings au boot).
-  modules: ["nuxt-svgo", "@nuxt/image"],
+  // `nuxt-svgo` a ete retire avec le dernier fichier de `assets/svg/` : le
+  // projet n'importe aucun SVG en composant. Les icones sont des composants
+  // Vue ecrits a la main dans `components/icons/`, et les traces de la carte
+  // sont generes dans le template de TourMap.
+  modules: ["@nuxt/image"],
   // Prerendu : `ssr: true` ne veut pas dire serveur Node. Nitro execute les
   // pages au build et ecrit du HTML statique, servi par le CDN Vercel. C'est
   // la seule facon d'avoir les balises de partage et le contenu dans le HTML
@@ -19,9 +23,6 @@ export default defineNuxtConfig({
     // `presets.cover` et `staticFilename` ont ete retires : le preset n'etait
     // reference nulle part (0 occurrence de `preset=`), et `staticFilename` ne
     // concerne que le provider `ipxStatic`, pas `vercel`.
-  },
-  svgo: {
-    autoImportPath: "~/assets/svg/",
   },
   components: true,
   css: ["~/assets/css/main.css"],
