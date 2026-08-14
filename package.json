@@ -9,10 +9,9 @@
     "generate": "NODE_NO_WARNINGS=1 GENERATE=true nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "export:strapi": "node --env-file=.env utils/exportStrapi.mjs",
-    "assets:audit": "node utils/auditAssets.mjs",
-    "assets:archive": "node utils/auditAssets.mjs --archive",
-    "assets:medias": "node utils/optimizeMedias.mjs"
+    "build:fonts": "node utils/buildFonts.mjs",
+    "build:favicon": "node utils/buildFavicon.mjs",
+    "build:map": "node utils/buildMap.mjs"
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.0.6",

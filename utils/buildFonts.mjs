@@ -153,4 +153,9 @@ console.log(
   `\n${POIDS.length} polices · ${ko(avantTotal)} → ${ko(apresTotal)} Ko  (−${Math.round((1 - apresTotal / avantTotal) * 100)} %)` +
     (sousEnsemblageDisponible ? '  · sous-ensemblées au latin' : '  · SANS sous-ensemblage')
 );
-console.log(`Non converties car inutilisées : Omnes-Hairline, Omnes-ExtraLight, et les 10 italiques.`);
+console.log(
+  `Seuls ces six masters sont conservés dans assets/fonts/Omnes_Font_Family/.\n` +
+    `Hairline, ExtraLight, Thin et les 10 italiques ont été retirées du dépôt :\n` +
+    `zéro occurrence dans le projet. Les rétablir suppose de les récupérer\n` +
+    `depuis la famille d'origine, puis de les ajouter à POIDS ci-dessus.`
+);
