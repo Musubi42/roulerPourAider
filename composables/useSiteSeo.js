@@ -38,7 +38,7 @@ export function useSiteSeo() {
     ogImageHeight: 630,
     ogImageType: 'image/jpeg',
     ogImageAlt:
-      "Rouler pour aider — 103 782 € récoltés pour l'hôpital Necker, 4 327 km à vélo",
+      "Rouler pour aider — 103 847 € récoltés pour l'hôpital Necker, 4 327 km à vélo",
     // Sans `summary_large_image`, X affiche une vignette carrée minuscule au
     // lieu d'une bannière.
     twitterCard: 'summary_large_image',

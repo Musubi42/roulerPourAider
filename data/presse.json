@@ -1,5 +1,125 @@
 [
   {
+    "type": "tv",
+    "media": "Courrier picard",
+    "titre": "Étoiles picardes 2024 : Hugo Nicaise, 1er de la catégorie « héros du quotidien »",
+    "date": "2024-12-20",
+    "url": "https://www.courrier-picard.fr/videos/etoiles-picardes/Etoiles-picardes-2024hugo-nicaise-categorie-heros-du-quotidien",
+    "image": "/medias/etoiles-picardes-2024.webp",
+    "archiveUrl": null,
+    "edition": 2024,
+    "statut": "ok",
+    "logo": "/medias/logos/courrier-picard.webp"
+  },
+  {
+    "type": "article",
+    "media": "Grande Cause Nationale",
+    "titre": "Rouler pour Aider : quand le sport se met au service des enfants malades",
+    "date": "2024-12-13",
+    "url": "https://archive.grandecause-sport.fr/actu/rouler-pour-aider-quand-le-sport-se-met-au-service-des-enfants-malades",
+    "image": "/medias/grande-cause-nationale.webp",
+    "archiveUrl": null,
+    "edition": 2024,
+    "statut": "ok",
+    "logo": "/medias/logos/grande-cause-nationale.webp"
+  },
+  {
+    "type": "article",
+    "media": "Courrier picard",
+    "titre": "Verneuil-en-Halatte : ces deux amis d’enfance ont fait 3 000 km à vélo et récolté 61 000 euros au profit des enfants hospitalisés",
+    "date": "2024-07-28",
+    "url": "https://www.courrier-picard.fr/id546329/article/2024-07-28/verneuil-en-halatte-ces-deux-amis-denfance-ont-fait-3000-km-velo-et-recolte-61",
+    "image": "/steps/reims.webp",
+    "archiveUrl": null,
+    "edition": 2024,
+    "statut": "bloque-robots",
+    "logo": "/medias/logos/courrier-picard.webp"
+  },
+  {
+    "type": "article",
+    "media": "La Dépêche du Midi",
+    "titre": "Lourdes. Rouler pour aider, un tour de France caritatif a fait étape dans la cité mariale",
+    "date": "2024-07-18",
+    "url": "https://www.ladepeche.fr/2024/07/18/rouler-pour-aider-un-tour-de-france-caritatif-a-fait-etape-dans-la-cite-mariale-12089121.php",
+    "image": "/medias/lourdes-remise-mairie.webp",
+    "archiveUrl": null,
+    "edition": 2024,
+    "statut": "bloque-robots",
+    "logo": "/medias/logos/la-depeche.webp"
+  },
+  {
+    "type": "tv",
+    "media": "France 2",
+    "titre": "Reportage sur la 12e étape, de Sisteron à Barcelonnette",
+    "date": "2024-07-18",
+    "url": "https://www.facebook.com/share/v/1F7tsFAoXo/",
+    "image": "/medias/france-2-reportage.webp",
+    "archiveUrl": null,
+    "edition": 2024,
+    "statut": "ok",
+    "logo": "/medias/logos/france-2.webp"
+  },
+  {
+    "type": "article",
+    "media": "Oise Hebdo",
+    "titre": "Tour de France caritatif : des étudiants de Verneuil-en-Halatte veulent récolter 50 000 €",
+    "date": "2024-07-16",
+    "url": "https://www.oisehebdo.fr/2024/07/16/tour-de-france-caritatif-etudiants-verneuil-en-halatte-recolter-50-000/",
+    "image": "/medias/oise-hebdo-reportage.webp",
+    "archiveUrl": null,
+    "edition": 2024,
+    "statut": "bloque-robots",
+    "logo": "/medias/logos/oise-hebdo.webp"
+  },
+  {
+    "type": "tv",
+    "media": "France 3 Poitou-Charentes",
+    "titre": "Reportage sur la 3e étape, de Blois à Poitiers",
+    "date": "2024-07-10",
+    "url": "https://www.facebook.com/reel/850787276417416/",
+    "image": "/medias/france-3-poitou-charentes-reportage.webp",
+    "archiveUrl": null,
+    "edition": 2024,
+    "statut": "ok",
+    "logo": "/medias/logos/france-3-poitou-charentes.webp"
+  },
+  {
+    "type": "article",
+    "media": "Sud Ouest",
+    "titre": "Royan : le projet Rouler pour aider fait étape dans la ville",
+    "date": "2024-07-10",
+    "url": "https://www.sudouest.fr/charente-maritime/la-rochelle/royan-le-projet-rouler-pour-aider-fait-etape-dans-la-ville-20505130.php",
+    "image": "/medias/sud-ouest-royan.webp",
+    "archiveUrl": null,
+    "edition": 2024,
+    "statut": "bloque-robots",
+    "logo": "/medias/logos/sud-ouest.webp"
+  },
+  {
+    "type": "tv",
+    "media": "France 3 Picardie",
+    "titre": "Reportage sur le départ de Verneuil-en-Halatte",
+    "date": "2024-07-08",
+    "url": "https://www.facebook.com/reel/1932569560512723/",
+    "image": "/medias/france-3-picardie-reportage.webp",
+    "archiveUrl": null,
+    "edition": 2024,
+    "statut": "ok",
+    "logo": "/medias/logos/france-3-picardie.webp"
+  },
+  {
+    "type": "article",
+    "media": "Le Parisien",
+    "titre": "Ils veulent « rouler pour aider » : deux jeunes Oisiens vont pédaler pour les enfants malades",
+    "date": "2024-05-16",
+    "url": "https://www.leparisien.fr/oise-60/ils-veulent-rouler-pour-aider-deux-jeunes-oisiens-vont-pedaler-pour-les-enfants-malades-16-05-2024-QPMELQQGORHVPF7RWCBCO3KSIM.php",
+    "image": "/medias/le-parisien-article.webp",
+    "archiveUrl": null,
+    "edition": 2024,
+    "statut": "bloque-robots",
+    "logo": "/medias/logos/le-parisien.webp"
+  },
+  {
     "type": "article",
     "media": "EPF Troyes",
     "titre": "Top départ du projet «Rouler pour aider» une aventure sportive et solidaire par un étudiant EPF !",
@@ -8,7 +128,8 @@
     "image": "/medias/unamed_da7e3f0382.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "ok"
+    "statut": "ok",
+    "logo": "/medias/logos/epf-troyes.webp"
   },
   {
     "type": "tv",
@@ -19,7 +140,8 @@
     "image": "/medias/unamed_ac1b1802f8.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "ok"
+    "statut": "ok",
+    "logo": null
   },
   {
     "type": "tv",
@@ -30,7 +152,8 @@
     "image": "/medias/unamed_31cd0df342.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "ok"
+    "statut": "ok",
+    "logo": null
   },
   {
     "type": "tv",
@@ -41,7 +164,8 @@
     "image": "/medias/unamed_fe3ac25bdb.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "ok"
+    "statut": "ok",
+    "logo": null
   },
   {
     "type": "article",
@@ -52,7 +176,8 @@
     "image": "/medias/unamed_6ea5956886.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "bloque-robots"
+    "statut": "bloque-robots",
+    "logo": "/medias/logos/nice-matin.webp"
   },
   {
     "type": "article",
@@ -63,7 +188,8 @@
     "image": "/medias/unamed_a9d89662f2.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "ok"
+    "statut": "ok",
+    "logo": "/medias/logos/france-3-paca.webp"
   },
   {
     "type": "tv",
@@ -74,7 +200,8 @@
     "image": "/medias/unamed_17302b62fe.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "ok"
+    "statut": "ok",
+    "logo": "/medias/logos/etre-etudiant.webp"
   },
   {
     "type": "tv",
@@ -85,7 +212,8 @@
     "image": "/medias/unamed_380dafcde9.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "ok"
+    "statut": "ok",
+    "logo": "/medias/logos/france-3-picardie.webp"
   },
   {
     "type": "tv",
@@ -96,7 +224,8 @@
     "image": "/medias/unamed_ceb2a2f31d.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "mort"
+    "statut": "mort",
+    "logo": "/medias/logos/canal-32.webp"
   },
   {
     "type": "tv",
@@ -107,7 +236,8 @@
     "image": "/medias/unamed_7a117a115c.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "ok"
+    "statut": "ok",
+    "logo": "/medias/logos/bfm-grand-lille.webp"
   },
   {
     "type": "tv",
@@ -118,7 +248,8 @@
     "image": "/medias/unamed_ee0e30e647.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "ok"
+    "statut": "ok",
+    "logo": "/medias/logos/france-3-hauts-de-france.webp"
   },
   {
     "type": "article",
@@ -126,10 +257,11 @@
     "titre": "Trois étudiants de Verneuil-en-Halatte roulent pour les enfants hospitalisés",
     "date": "2020-07-24",
     "url": "https://www.leparisien.fr/oise-60/trois-etudiants-de-verneuil-en-halatte-roulent-pour-les-enfants-hospitalises-24-07-2020-8358405.php",
-    "image": "/medias/unamed_6bf1002668.webp",
+    "image": "/medias/le-parisien-article.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "bloque-robots"
+    "statut": "bloque-robots",
+    "logo": "/medias/logos/le-parisien.webp"
   },
   {
     "type": "article",
@@ -140,7 +272,8 @@
     "image": "/medias/unamed_6d03845049.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "bloque-robots"
+    "statut": "bloque-robots",
+    "logo": "/medias/logos/est-eclair.webp"
   },
   {
     "type": "article",
@@ -151,7 +284,8 @@
     "image": "/medias/unamed_6d03845049.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "bloque-robots"
+    "statut": "bloque-robots",
+    "logo": "/medias/logos/courrier-picard.webp"
   },
   {
     "type": "article",
@@ -162,6 +296,7 @@
     "image": "/medias/unamed_ca34fed9e1.webp",
     "archiveUrl": null,
     "edition": 2020,
-    "statut": "ok"
+    "statut": "ok",
+    "logo": "/medias/logos/france-3-hauts-de-france.webp"
   }
 ]

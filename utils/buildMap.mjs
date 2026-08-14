@@ -203,12 +203,40 @@ const etapes = etapesSource.map((e, i) => {
     x: points[i][0],
     y: points[i][1],
     photo: `/steps/${e.slug}.webp`,
+    cadrage: e.cadrage ?? null,
     distanceKm: distances[i],
     estime: e.km === null,
     cumulKm,
     fbUrl: e.fb ? FB_BASE + e.fb : null,
   };
 });
+
+// Garde-fou sur les cadrages de photo : décalée de trop, une photo cesse de
+// couvrir le contour et l'aplat vert apparaît sur un bord — un liseré de
+// quelques pixels à la pointe de l'Alsace ou à celle du Nord, qu'on ne voit pas
+// en réglant à l'œil sur un autre bout de la carte. Le calcul reprend celui de
+// `rectPhoto()` dans `components/victory/TourMap.vue`.
+const decouvertes = etapes.flatMap((e) => {
+  if (!e.cadrage) return [];
+  const { zoom = 1, x: dx = 0, y: dy = 0 } = e.cadrage;
+  const w = viewBoxTight.width * zoom;
+  const h = viewBoxTight.height * zoom;
+  const px = viewBoxTight.x - (w - viewBoxTight.width) / 2 + dx * viewBoxTight.width;
+  const py = viewBoxTight.y - (h - viewBoxTight.height) / 2 + dy * viewBoxTight.height;
+  const trous = [];
+  if (px > x0) trous.push(`gauche ${(px - x0).toFixed(1)}`);
+  if (px + w < x1) trous.push(`droite ${(x1 - px - w).toFixed(1)}`);
+  if (py > y0) trous.push(`haut ${(py - y0).toFixed(1)}`);
+  if (py + h < y1) trous.push(`bas ${(y1 - py - h).toFixed(1)}`);
+  return trous.length ? [`${e.slug} — fond vert visible : ${trous.join(', ')}`] : [];
+});
+
+if (decouvertes.length) {
+  console.error('✗ cadrages qui ne couvrent plus le contour :');
+  decouvertes.forEach((d) => console.error(`  ${d}`));
+  console.error('  → augmenter `zoom`, ou réduire le décalage. Cf. data/etapes-2024.js');
+  process.exit(1);
+}
 
 const totalKm = cumul;
 

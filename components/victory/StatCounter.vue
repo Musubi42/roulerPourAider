@@ -22,14 +22,21 @@ import { useScrollAnimation } from '~/composables/useScrollAnimation';
 
 const { countUpOnScroll } = useScrollAnimation();
 
-// Chiffres verifies (source : page de collecte Fondation AP-HP).
+// Chiffres verifies (chèques du 22/11/2024 + page Grande Cause Nationale).
 //   Edition 2020 Lille-Nice : 1 327 km, 33 324 EUR
-//   Edition 2024 Tour de France : 3 000 km, 18 etapes, 70 458 EUR (117 % de l'objectif)
-//   Cumul : 103 782 EUR, 4 327 km, 605 donateurs
+//   Edition 2024 Tour de France : 3 000 km, 18 etapes, 70 523 EUR
+//   Cumul : 103 847 EUR, 4 327 km
 // Ne pas arrondir a 100 000 : « 100 000 merci » est l'accroche, pas le montant.
+//
+// ⚠️ LES 605 DONATEURS SONT CEUX DE LA SEULE EDITION 2024. Le decompte de
+// l'edition 2020 n'a jamais ete retrouve — la cagnotte a ete cloturee et son
+// API est morte. Le libelle doit donc TOUJOURS porter « en 2024 » : presente
+// comme un cumul, ce chiffre sous-estime le nombre reel de donateurs et
+// affirme quelque chose qu'on ne sait pas (ADR-012).
+// Cf. .planning/ACTIONS-HUMAINES.md — chiffre a demander a Hugo.
 const stats = [
-  { value: 103782, suffix: ' €', label: 'récoltés en cinq ans' },
-  { value: 605, suffix: '', label: 'donateurs' },
+  { value: 103847, suffix: ' €', label: 'récoltés en cinq ans' },
+  { value: 605, suffix: '', label: 'donateurs en 2024' },
   { value: 4327, suffix: ' km', label: 'parcourus à vélo' },
   { value: 18, suffix: '', label: 'étapes en 2024' },
   { value: 2, suffix: '', label: 'éditions' },
