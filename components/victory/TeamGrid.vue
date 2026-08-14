@@ -229,11 +229,13 @@ interface Celebrity {
   photo: string | null;
 }
 
-// Noms et roles issus de l'export Strapi du 11/08/2026 (data/strapi/contacts.json).
-// Les precedents (« Hugo Petrucci », « Maxence Gil ») etaient une recombinaison des
-// donnees de demo de l'ancien Edition1/lesCyclistes.vue avec les vrais prenoms.
-// ATTENTION : contacts.json contient aussi des emails et telephones personnels.
-// Ne jamais les afficher — cf. ADR-009.
+// Noms et roles issus de l'export Strapi du 11/08/2026, fige puis retire du
+// depot : il contenait des adresses et des telephones personnels, et plus
+// aucun code ne le lisait (ADR-009). Pour le reconsulter :
+//   git show cdecfd1:data/strapi/contacts.json
+// Les noms precedents (« Hugo Petrucci », « Maxence Gil ») etaient une
+// recombinaison des donnees de demo de l'ancien Edition1/lesCyclistes.vue avec
+// les vrais prenoms. Ne JAMAIS remonter d'email ou de telephone dans l'affichage.
 // Hugo et Milan sont les deux fondateurs restants (ils etaient trois au depart).
 // Yves Gerard n'est PAS fondateur : il administrait la tresorerie, et a pris part
 // a l'edition 2024 comme cycliste. Il figure donc dans « le bureau », pas ici.
@@ -250,8 +252,8 @@ const founders: Founder[] = [
     role: 'Co-président et co-fondateur',
     bgClass: 'bg-primary',
   },
-  // Le role exact reste a confirmer aupres de Hugo : il n'apparait pas dans
-  // `data/strapi/contacts.json`, qui ne liste que le bureau en fin de vie de
+  // Le role exact reste a confirmer aupres de Hugo : il n'apparaissait pas dans
+  // l'export Strapi, qui ne listait que le bureau en fin de vie de
   // l'association. « Co-fondateur » est le libelle le plus sur en attendant.
   // Cf. .planning/ACTIONS-HUMAINES.md
   {
