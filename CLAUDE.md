@@ -126,9 +126,6 @@ Ne jamais lancer `pnpm build` pendant qu'un serveur de dev tourne. Voir ADR-017.
 
 ## TODOs
 
-- Replace founder/cyclist placeholder photos with real images
-- Récupérer le mot signé de clôture de Hugo et Milan (`motFondateurs`, pages/notre-aventure.vue)
 - Add remaining partner data (logos, descriptions) from old Strapi database
 - Replace placeholder press article URLs with real links
-- Fix Yoann Offredo image filename (has leading space)
 - Add real video embeds for TV reportages section

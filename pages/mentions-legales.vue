@@ -28,7 +28,7 @@
 
         <section>
           <h2 class="text-xl font-bold text-secondary mb-3">Direction de la publication</h2>
-          <p>Hugo Nicaise, président de l'association.</p>
+          <p>Hugo Nicaise, co-président de l'association.</p>
         </section>
 
         <section>

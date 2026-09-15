@@ -33,12 +33,21 @@
               <div class="absolute top-0 right-0 w-28 h-28 -translate-y-1/2 translate-x-1/2 bg-primary/10 rounded-full"></div>
             </div>
 
-            <!-- Initiales en attendant les portraits.
-                 Cf. .planning/ACTIONS-HUMAINES.md § « Photos de l'équipe ». -->
-            <div class="w-32 h-32 mx-auto rounded-full flex items-center justify-center text-3xl font-bold text-white"
+            <!-- Portrait, ou initiales si la photo manque. -->
+            <div class="w-32 h-32 mx-auto rounded-full overflow-hidden flex items-center justify-center text-3xl font-bold text-white ring-4 ring-white shadow-md"
               :class="founder.bgClass"
             >
-              {{ founder.initials }}
+              <img
+                v-if="founder.photo"
+                :src="founder.photo"
+                :alt="founder.name"
+                class="w-full h-full object-cover"
+                width="128"
+                height="128"
+                loading="lazy"
+                decoding="async"
+              />
+              <template v-else>{{ founder.initials }}</template>
             </div>
 
             <div class="text-center mt-6">
@@ -105,10 +114,20 @@
               class="card-victory text-center p-4 md:p-6"
             >
               <div
-                class="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-lg font-bold text-white"
+                class="w-20 h-20 mx-auto rounded-full overflow-hidden flex items-center justify-center text-lg font-bold text-white"
                 :class="edition.avatarClass"
               >
-                {{ getInitials(cyclist.name) }}
+                <img
+                  v-if="photos[cyclist.name]"
+                  :src="photos[cyclist.name]"
+                  :alt="cyclist.name"
+                  class="w-full h-full object-cover"
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <template v-else>{{ getInitials(cyclist.name) }}</template>
               </div>
               <h4 class="mt-3 font-bold text-secondary text-sm md:text-base">{{ cyclist.name }}</h4>
             </div>
@@ -135,10 +154,20 @@
               class="card-victory text-center p-6 w-full sm:w-64"
             >
               <div
-                class="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-lg font-bold text-white"
+                class="w-20 h-20 mx-auto rounded-full overflow-hidden flex items-center justify-center text-lg font-bold text-white"
                 :class="membre.bgClass"
               >
-                {{ membre.initials }}
+                <img
+                  v-if="membre.photo"
+                  :src="membre.photo"
+                  :alt="membre.name"
+                  class="w-full h-full object-cover"
+                  width="80"
+                  height="80"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <template v-else>{{ membre.initials }}</template>
               </div>
               <h4 class="mt-3 font-bold text-secondary">{{ membre.name }}</h4>
               <p class="text-sm text-secondary/70 font-semibold">{{ membre.role }}</p>
@@ -217,6 +246,7 @@ interface Founder {
   initials: string;
   role: string;
   bgClass: string;
+  photo: string | null;
 }
 
 interface Cyclist {
@@ -239,37 +269,66 @@ interface Celebrity {
 // Hugo et Milan sont les deux fondateurs restants (ils etaient trois au depart).
 // Yves Gerard n'est PAS fondateur : il administrait la tresorerie, et a pris part
 // a l'edition 2024 comme cycliste. Il figure donc dans « le bureau », pas ici.
+
+// Portraits : carres 320 px WebP, recadres sur le visage (affiches en 128 et
+// 80 px, donc nets en retina). Originaux dans `archives/equipe/`.
+// Une seule source par personne, reprise par les fondateurs, le bureau et les
+// cyclistes.
+const photos: Record<string, string> = {
+  'Hugo Nicaise': '/portraits/hugo-nicaise.webp',
+  'Milan Hrmo': '/portraits/milan-hrmo.webp',
+  'Alexandre Ioos': '/portraits/alexandre-ioos.webp',
+  'Yves Gérard': '/portraits/yves-gerard.webp',
+};
+
 const founders: Founder[] = [
   {
     name: 'Hugo Nicaise',
     initials: 'HN',
-    role: 'Président et co-fondateur',
+    role: 'Co-président et co-fondateur',
     bgClass: 'bg-secondary',
+    photo: photos['Hugo Nicaise'],
   },
   {
     name: 'Milan Hrmo',
     initials: 'MH',
     role: 'Co-président et co-fondateur',
     bgClass: 'bg-primary',
+    photo: photos['Milan Hrmo'],
   },
-  // Le role exact reste a confirmer aupres de Hugo : il n'apparaissait pas dans
-  // l'export Strapi, qui ne listait que le bureau en fin de vie de
-  // l'association. « Co-fondateur » est le libelle le plus sur en attendant.
-  // Cf. .planning/ACTIONS-HUMAINES.md
+  // Absent de l'export Strapi (qui ne listait que le bureau en fin de vie de
+  // l'association) ; role de co-fondateur confirme par Hugo le 15/09/2026.
   {
     name: 'Alexandre Ioos',
     initials: 'AI',
     role: 'Co-fondateur',
     bgClass: 'bg-secondary/80',
+    photo: photos['Alexandre Ioos'],
   },
 ];
 
+// Hugo et Milan co-presidaient l'association.
 const bureau: Founder[] = [
+  {
+    name: 'Hugo Nicaise',
+    initials: 'HN',
+    role: 'Co-président',
+    bgClass: 'bg-secondary',
+    photo: photos['Hugo Nicaise'],
+  },
+  {
+    name: 'Milan Hrmo',
+    initials: 'MH',
+    role: 'Co-président',
+    bgClass: 'bg-primary',
+    photo: photos['Milan Hrmo'],
+  },
   {
     name: 'Yves Gérard',
     initials: 'YG',
     role: 'Trésorier',
     bgClass: 'bg-secondary/70',
+    photo: photos['Yves Gérard'],
   },
 ];
 
@@ -327,17 +386,17 @@ const celebrities: Celebrity[] = [
   {
     name: 'Stella Akakpo',
     title: 'Athlète',
-    photo: '/soutiens/Stella-Akakpo.jpeg',
+    photo: '/soutiens/stella-akakpo.webp',
   },
   {
     name: 'Steve Chainel',
     title: 'Cycliste professionnel',
-    photo: '/soutiens/Steve-Chainel.jpeg',
+    photo: '/soutiens/steve-chainel.webp',
   },
   {
     name: 'Yoann Offredo',
     title: 'Cycliste professionnel',
-    photo: '/soutiens/Yoann-Offredo.jpeg',
+    photo: '/soutiens/yoann-offredo.webp',
   },
 ];
 

@@ -25,20 +25,25 @@ Légende : 🔴 bloquant · 🟠 important · 🟢 confort
 
 ---
 
-## 🔴 À remplir — Photos de l'équipe
+## ✅ Résolu (15/09/2026) — Photos de l'équipe
 
-Aucune photo de personne n'existe dans les assets, hors `public/Avatar-hugo.png` et
-`public/PP_hugo.jpg` (Hugo uniquement, qualité et cadrage à vérifier). Les cartes
-affichent donc des initiales sur aplat de couleur.
+Portraits recadrés en carrés 320 px WebP dans `public/portraits/`, originaux dans
+`archives/equipe/`. Branchés dans `TeamGrid.vue` (map `photos`).
 
-Idéalement : portrait cadré serré, format carré, 600 × 600 px minimum.
-
-| Personne | Rôle | Photo (chemin ou URL) |
+| Personne | Rôle | Photo |
 |---|---|---|
-| Hugo Nicaise | Président, co-fondateur | `                                    ` |
-| Milan Hrmo | Co-président, co-fondateur |
-| Alexandre Ioos | Co-président, co-fondateur |`                                    ` |
-| Yves Gérard | Trésorier | `                                    ` |
+| Hugo Nicaise | Co-président, co-fondateur | `public/portraits/hugo-nicaise.webp` |
+| Milan Hrmo | Co-président, co-fondateur | `public/portraits/milan-hrmo.webp` |
+| Alexandre Ioos | Co-fondateur | `public/portraits/alexandre-ioos.webp` |
+| Yves Gérard | Trésorier | `public/portraits/yves-gerard.webp` |
+
+Photos de Milan et Hugo validées telles quelles. Photo d'Yves : pas de crédit
+nécessaire, validé le 15/09/2026.
+
+Les photos des soutiens (`public/soutiens/`) ont suivi le même traitement,
+originaux dans `archives/soutiens/`.
+
+> Ne pas créer de dossier `public/equipe/` : il entre en collision avec la route `/equipe`.
 
 ## ✅ Résolu — Le troisième cycliste de 2020 : Alexandre Ioos
 
@@ -52,12 +57,8 @@ Il figure dans `cyclists2020` (`TeamGrid.vue`) et dans le récit
 Il figure désormais aussi dans **« Les fondateurs »** sur `/equipe`, avec le
 libellé `Co-fondateur`.
 
-- [ ] **Demander à Hugo la position exacte d'Alexandre.** Il n'apparaît pas dans
-  `data/strapi/contacts.json`, qui ne liste que le bureau en fin de vie de
-  l'association (Hugo président, Milan co-président, Yves trésorier).
-  « Co-fondateur » est le libellé le plus sûr en attendant — à corriger dans
-  `TeamGrid.vue` (`founders`) si ce n'est pas le bon.
-- [ ] Une photo de lui.
+- [x] Position d'Alexandre : co-fondateur, confirmé par Hugo le 15/09/2026.
+- [x] Une photo de lui.
 
 ## 🔴 À demander à Hugo — Le nombre de donateurs de l'édition 2020
 
@@ -79,19 +80,10 @@ par défaut** (il sous-estime le total) et affirmerait ce qu'on ne sait pas.
   d'argument de redevabilité envers les donateurs : une erreur y coûte plus cher
   qu'ailleurs.
 
-## 🔴 À remplir — Le mot de clôture des fondateurs
+## ✅ Abandonné (15/09/2026) — Le mot de clôture des fondateurs
 
-`pages/notre-aventure.vue` réserve l'emplacement (`motFondateurs`, aujourd'hui
-`null`). Tant qu'il est vide, la page affiche le texte de remerciement générique,
-et un repère en pointillés apparaît **en développement uniquement**.
-
-Deux ou trois phrases signées de Hugo et Milan, sur ce que le projet leur laisse.
-C'est ce qui manque le plus à la page.
-
-| Champ | À compléter |
-|---|---|
-| Texte | `                                    ` |
-| Signature | `Hugo Nicaise et Milan Hrmo` ? |
+Pas de mot signé. `pages/notre-aventure.vue` garde le texte de remerciement
+générique ; l'emplacement `motFondateurs` a été retiré.
 
 ## ✅ Résolu — Courrier picard, « 1er héros du quotidien 2024 »
 
