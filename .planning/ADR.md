@@ -584,3 +584,46 @@ un dépôt à faible audience, sans fork connu — cela n'a pas été demandé.
   recloner, pas de tirer.
 - Ne plus jamais commiter un export de backoffice : le passer par un chemin
   ignoré de Git.
+
+---
+
+## ADR-021 — Mise en sommeil : l'export Strapi et `archives/` quittent l'historique
+
+**Date** : 2026-09-15 · **Remplace** ADR-018 et ADR-020 sur le sort de l'export
+
+**Contexte.** Le projet est mis en sommeil pour des années, et le dépôt doit se
+suffire à lui-même : pouvoir supprimer la copie locale sans rien perdre. L'état
+des lieux a montré deux choses :
+
+- ADR-020 avait remplacé les adresses e-mail, mais **deux numéros de téléphone
+  personnels** restaient lisibles dans `data/strapi/*.json`, dans l'historique
+  d'un dépôt public et dans le tag `archive/export-strapi`.
+- `archives/` (≈ 60 Mo d'originaux) n'était lu par aucun code ni script de build.
+
+Le backoffice Strapi est éteint, et l'association n'a plus besoin ni de l'export
+ni des originaux. Le dépôt reste public.
+
+**Décision.** `git filter-repo --invert-paths` retire de **tout** l'historique :
+`data/strapi/`, `utils/fetchBackoffice.js` (un ancien token y était en dur),
+`utils/exportStrapi.mjs`, `.env.example` et `archives/`. Le tag
+`archive/export-strapi` est supprimé. `main` est republié en forçant, après
+validation d'un déploiement de preview sur une branche de test.
+
+**Ce qu'on perd, en connaissance de cause.** La traçabilité « d'où vient ce
+nom ? » défendue par ADR-020 : les données affichées restent, leur source brute
+non. Les anciens commits qui référençaient des images d'`archives/` ne les
+retrouvent plus. Les originaux des portraits de l'équipe ne sont pas conservés :
+seules les versions WebP de `public/` font foi.
+
+**Garde-fous.** Une sauvegarde complète de l'état d'avant existe hors du dépôt
+(`../roulerPourAider-avant-reecriture-2026-09-15.bundle`) : **à détruire une fois
+la réécriture jugée définitive**, elle contient les numéros. L'arbre de `HEAD`
+après réécriture est identique à celui d'avant, fichiers retirés mis à part.
+
+**Conséquences.**
+- Tout clone antérieur au 15/09/2026 est désynchronisé : recloner, ne pas tirer.
+- GitHub garde un temps les objets orphelins accessibles par SHA ; une purge
+  complète passe par le support GitHub.
+- Versions d'outillage figées (Node 24, pnpm 8.6.11) et procédure de montée de
+  version dans le README.
+

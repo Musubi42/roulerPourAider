@@ -260,9 +260,8 @@ interface Celebrity {
 }
 
 // Noms et roles issus de l'export Strapi du 11/08/2026, fige puis retire du
-// depot : il contenait des adresses et des telephones personnels, et plus
-// aucun code ne le lisait (ADR-009). Pour le reconsulter :
-//   git show archive/export-strapi:data/strapi/contacts.json
+// depot et de son historique : il contenait des adresses et des telephones
+// personnels, et plus aucun code ne le lisait (ADR-009, ADR-021).
 // Les noms precedents (« Hugo Petrucci », « Maxence Gil ») etaient une
 // recombinaison des donnees de demo de l'ancien Edition1/lesCyclistes.vue avec
 // les vrais prenoms. Ne JAMAIS remonter d'email ou de telephone dans l'affichage.
@@ -271,7 +270,7 @@ interface Celebrity {
 // a l'edition 2024 comme cycliste. Il figure donc dans « le bureau », pas ici.
 
 // Portraits : carres 320 px WebP, recadres sur le visage (affiches en 128 et
-// 80 px, donc nets en retina). Originaux dans `archives/equipe/`.
+// 80 px, donc nets en retina).
 // Une seule source par personne, reprise par les fondateurs, le bureau et les
 // cyclistes.
 const photos: Record<string, string> = {

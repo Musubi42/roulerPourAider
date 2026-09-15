@@ -49,7 +49,5 @@ roulerPourAiderExportNix.tar
 # logos partenaires, qui partaient donc en 404 en production alors qu'elles
 # s'affichaient parfaitement en local.
 #
-# Le poids n'est plus un argument pour les exclure : `utils/optimizeMedias.mjs`
-# a ramene `public/medias/` de 7,4 Mo a 0,9 Mo, et `utils/auditAssets.mjs`
-# sort de `public/` tout ce que plus aucune source ne reference. Les fichiers
-# ecartes vivent dans `archives/`, versionnes et hors build.
+# `public/` ne contient que ce que le site affiche, deja optimise (WebP).
+# Les anciens originaux (`archives/`) ont ete retires du depot (ADR-021).

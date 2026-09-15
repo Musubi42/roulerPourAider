@@ -12,23 +12,18 @@ Légende : 🔴 bloquant · 🟠 important · 🟢 confort
 
 ## 🔴 Sécurité — à faire vite
 
-- [ ] **Révoquer le token Strapi read-only fourni le 11/08/2026.**
-  Il a servi à l'export, il est dans `.env` (non commité) **et dans l'historique de la
-  conversation**. Les données sont figées dans `data/strapi/`, le site n'en a plus besoin.
+- [x] **Tokens Strapi (read-only et ancien token en dur).** Sans objet : le backoffice
+  Strapi est éteint (confirmé le 15/09/2026). `utils/fetchBackoffice.js`,
+  `utils/exportStrapi.mjs` et `data/strapi/` ont été retirés de tout l'historique (ADR-021).
 
-- [ ] **Révoquer l'ancien token** qui était en dur dans `utils/fetchBackoffice.js`.
-  J'ai supprimé le fichier, mais **le token reste dans l'historique git** — la suppression
-  ne suffit pas.
-
-- [ ] **Décider du sort du backoffice Strapi.** Plus rien ne le consomme. L'éteindre
-  supprime un coût d'hébergement et une surface d'attaque (ADR-002).
+- [x] **Backoffice Strapi.** Éteint (confirmé le 15/09/2026).
 
 ---
 
 ## ✅ Résolu (15/09/2026) — Photos de l'équipe
 
-Portraits recadrés en carrés 320 px WebP dans `public/portraits/`, originaux dans
-`archives/equipe/`. Branchés dans `TeamGrid.vue` (map `photos`).
+Portraits recadrés en carrés 320 px WebP dans `public/portraits/`. Branchés dans
+`TeamGrid.vue` (map `photos`). Les originaux n'ont pas été conservés (ADR-021).
 
 | Personne | Rôle | Photo |
 |---|---|---|
@@ -40,8 +35,7 @@ Portraits recadrés en carrés 320 px WebP dans `public/portraits/`, originaux d
 Photos de Milan et Hugo validées telles quelles. Photo d'Yves : pas de crédit
 nécessaire, validé le 15/09/2026.
 
-Les photos des soutiens (`public/soutiens/`) ont suivi le même traitement,
-originaux dans `archives/soutiens/`.
+Les photos des soutiens (`public/soutiens/`) ont suivi le même traitement.
 
 > Ne pas créer de dossier `public/equipe/` : il entre en collision avec la route `/equipe`.
 
@@ -149,8 +143,8 @@ l'association. Sa place est sur la **page d'accueil**.
 - Deux minutes, personne ne les regarde sur une page de bilan. **20 à 40 secondes**
   bien choisies, oui.
 
-Donc : tu télécharges la vidéo en bonne qualité, je garde **l'intégrale dans
-`archives/`** (source de vérité, hors build) et je publie **un extrait** en
+Donc : tu télécharges la vidéo en bonne qualité, je garde **l'intégrale hors
+du dépôt** (le poids n'a rien à faire dans Git) et je publie **un extrait** en
 `<video>` auto-hébergé — affiche de démarrage, contrôles visibles, pas de lecture
 automatique, sous-titré si possible. Et je double le tout d'une **citation écrite**
 de la phrase forte, attribuée et datée : elle porte le message même sans lecture,
@@ -260,8 +254,7 @@ existent mais sont des photos de villes, pas de l'équipe en action.
 
 - [ ] **Liste des ~40 bénévoles** — les afficher ou non, et avec quel consentement.
 
-  ⚠️ Ne jamais publier les emails et téléphones personnels présents dans
-  `data/strapi/contacts.json` (ADR-009).
+  ⚠️ Ne jamais publier d'email ni de téléphone personnel (ADR-009).
 
 ---
 

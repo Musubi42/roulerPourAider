@@ -161,8 +161,7 @@
 <script setup lang="ts">
 /**
  * Donnees figees depuis l'export Strapi du 11/08/2026 (ADR-002). L'export
- * lui-meme a ete retire du depot ; il reste consultable via
- * `git show archive/export-strapi:data/strapi/articles.json`.
+ * lui-meme a ete retire du depot et de son historique (ADR-021).
  * Les 21 entrees inventees du refactor de fevrier ont ete supprimees (ADR-007).
  *
  * L'onglet « Passages radio » a ete retire : la collection `podcasts` de l'ancien

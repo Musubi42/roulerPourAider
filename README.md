@@ -37,9 +37,11 @@ jour au fil de l'eau. Il est fait pour tenir des années sans maintenance.
 
 ## Démarrer
 
-Il faut **Node 20 ou plus** et **pnpm**.
+Il faut **Node 24** et **pnpm 8.6.11** (versions figées, voir
+[Versions](#versions-figées-et-montée-de-version)).
 
 ```bash
+corepack enable  # installe la version de pnpm déclarée dans package.json
 pnpm install     # installer les dépendances
 pnpm dev         # le site sur http://localhost:3000
 ```
@@ -103,9 +105,52 @@ C'est le scénario pour lequel ce dépôt est rangé comme il l'est. Dans l'ordr
    qui pourrait surprendre y est expliquée, avec son contexte et ce qu'elle
    coûte. C'est le document qui évite de refaire une erreur déjà écartée.
 3. **`.planning/ACTIONS-HUMAINES.md`** — ce qui reste en attente d'une réponse de
-   l'association : le mot signé de clôture de Hugo et Milan, le nombre de
-   donateurs de l'édition 2020, le rôle exact d'Alexandre Ioos. Ces trous sont
-   **assumés et documentés** : on préfère ne rien afficher plutôt qu'inventer.
+   l'association, par exemple le nombre de donateurs de l'édition 2020. Ces trous
+   sont **assumés et documentés** : on préfère ne rien afficher plutôt qu'inventer.
+
+**Tout est dans le dépôt.** Il n'y a rien à récupérer ailleurs : pas de `.env`,
+pas de base de données, pas de backoffice (l'ancien Strapi est éteint), pas
+d'originaux d'images à retrouver. Un `git clone` suffit.
+
+Pour pouvoir redéployer depuis ta machine (facultatif, pousser sur `main`
+suffit) : `pnpm dlx vercel link`, puis choisir le projet existant. Ça recrée le
+dossier `.vercel/`, ignoré de Git.
+
+### Versions figées et montée de version
+
+Le site a été construit et vérifié le 15/09/2026 avec :
+
+| Outil | Version | Où elle est fixée |
+|---|---|---|
+| Node | 24.x (testé en 24.16) | `.nvmrc` et `engines.node` de `package.json` — **Vercel lit ce dernier** |
+| pnpm | 8.6.11 | `packageManager` de `package.json`, lockfile au format v6 |
+| Nuxt | 3.9.0 (Nitro 2.8.1) | `pnpm-lock.yaml` |
+| Vue | 3.4.3 | `pnpm-lock.yaml` |
+| Tailwind CSS | 3.4.0 | `pnpm-lock.yaml` |
+| GSAP | 3.14.2 | `pnpm-lock.yaml` |
+
+`package.json` déclare des plages (`^3.9.0`) : ce sont les **versions du
+lockfile** qui sont réellement installées. Ne pas supprimer `pnpm-lock.yaml`.
+
+**Le site en ligne ne casse pas avec le temps** : c'est du HTML statique déjà
+construit. Ce qui peut casser, c'est le **prochain build**, quand Vercel ne
+proposera plus Node 24. Symptôme : le déploiement échoue avec un message sur la
+version de Node. Dans ce cas, dans l'ordre et un changement à la fois :
+
+1. **Node** — passer `.nvmrc` et `engines.node` à la version LTS proposée par
+   Vercel (*Settings → Build and Deployment → Node.js Version* liste les
+   versions disponibles). Lancer `pnpm install && pnpm build` en local avec
+   cette version. Si ça passe, pousser : c'est souvent suffisant.
+2. **pnpm** — si l'installation échoue : `corepack use pnpm@latest-9` (ou la
+   version courante), puis `pnpm install` régénère le lockfile. Commiter
+   `package.json` et `pnpm-lock.yaml` ensemble.
+3. **Nuxt 3** — rester sur Nuxt 3 : `pnpm up nuxt@^3 @nuxt/image@^1 @nuxt/devtools`
+   puis `pnpm build`. Nuxt 4 est une migration, pas une mise à jour : à ne faire
+   que si Nuxt 3 ne s'installe plus.
+4. **Vérifier** avant de pousser : `pnpm build`, puis `pnpm preview` et un tour
+   des pages (carte animée de l'accueil, `/equipe`, `/presse`). Pousser sur une
+   **branche** d'abord : Vercel en fait un déploiement de *preview* à tester
+   avant de fusionner dans `main`.
 
 ### Les fichiers qui se régénèrent
 

@@ -101,8 +101,7 @@
 
 <script setup lang="ts">
 // Donnees figees depuis l'export Strapi du 11/08/2026 (cf. ADR-002). L'export
-// lui-meme a ete retire du depot ; il reste consultable via
-// `git show archive/export-strapi:data/strapi/partenaires.json`.
+// lui-meme a ete retire du depot et de son historique (ADR-021).
 // Le label Grande Cause Nationale a ete sorti de la liste : il a sa propre section.
 import partenaires from '~/data/partenaires.json';
 import { useScrollAnimation } from '~/composables/useScrollAnimation';

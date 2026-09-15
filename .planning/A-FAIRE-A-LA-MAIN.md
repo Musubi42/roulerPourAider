@@ -71,7 +71,11 @@ lien silencieusement. À arbitrer.
 
 ---
 
-## 5. Les originaux archivés
+## 5. Les originaux archivés — ✅ tranché le 15/09/2026
+
+`archives/` a été supprimé du dépôt **et de son historique** (ADR-021) : le site
+n'en lisait rien, et l'association n'a plus besoin de ces originaux. Ce qui suit
+est conservé pour mémoire.
 
 `node utils/auditAssets.mjs --archive` a déplacé **43 fichiers, 37,5 Mo** de
 `public/` vers `archives/`. Ils restent versionnés sur GitHub mais ne partent

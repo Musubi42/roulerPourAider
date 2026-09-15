@@ -15,6 +15,10 @@ A French charitable cycling association website documenting the money raised for
 
 ## Tech Stack
 
+- **Runtime (pinned):** Node 24.x (`.nvmrc` + `engines.node`, which Vercel reads),
+  pnpm 8.6.11 (`packageManager`), lockfile v6. Real versions come from
+  `pnpm-lock.yaml`. Upgrade procedure: README § « Versions figées et montée de
+  version » — bump one tool at a time, build locally, test on a preview branch.
 - **Framework:** Nuxt 3 (v3.9.0), `ssr: true` — prerendered at build time by
   Nitro, served as static HTML by the Vercel CDN. This is NOT a Node server:
   `ssr: true` is what puts the content and the share tags in the delivered
@@ -126,6 +130,6 @@ Ne jamais lancer `pnpm build` pendant qu'un serveur de dev tourne. Voir ADR-017.
 
 ## TODOs
 
-- Add remaining partner data (logos, descriptions) from old Strapi database
-- Replace placeholder press article URLs with real links
-- Add real video embeds for TV reportages section
+The project is in hibernation (September 2026). Open items needing an answer from
+the association live in `.planning/ACTIONS-HUMAINES.md`. Everything needed to
+rebuild the site is in the repo: no `.env`, no CMS, no external originals.
